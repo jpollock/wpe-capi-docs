@@ -1,36 +1,52 @@
 ---
-title: Welcome to Starlight
-description: Get started building your docs site with Starlight.
+title: WP Engine Customer API
+description: Comprehensive documentation for the WP Engine Customer API
 template: splash
 hero:
-  tagline: Congrats on setting up a new Starlight project!
+  tagline: Build powerful applications with the WP Engine Customer API
   image:
     file: ../../assets/houston.webp
+    alt: WP Engine logo
   actions:
-    - text: Example Guide
-      link: /guides/example/
+    - text: Get Started
+      link: /getting-started/introduction/
       icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
-      icon: external
+    - text: API Reference
+      link: /api-reference/overview/
+      icon: open-book
+    - text: View on GitHub
+      link: https://github.com/wpengine/customer-api
+      icon: github
       variant: minimal
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-## Next steps
+## Explore the API
 
 <CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
+	<Card title="Authentication" icon="lock">
+		Learn how to authenticate with the WP Engine Customer API.
+		[Get started with authentication →](/getting-started/authentication/)
 	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
+	<Card title="API Reference" icon="document">
+		Explore the complete API reference documentation.
+		[View API reference →](/api-reference/overview/)
 	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
+	<Card title="Pagination" icon="list">
+		Learn how to work with paginated responses.
+		[Pagination guide →](/api-reference/pagination/)
 	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
+	<Card title="Examples" icon="rocket">
+		See practical examples of using the API.
+		[View examples →](/examples/)
 	</Card>
 </CardGrid>
+
+## Key Features
+
+- **Comprehensive Access**: Manage your WP Engine sites programmatically
+- **RESTful Design**: Intuitive API design following REST principles
+- **Secure Authentication**: OAuth 2.0 authentication for secure access
+- **Detailed Documentation**: Complete reference with examples
+- **Interactive Playground**: Test API calls directly in the browser

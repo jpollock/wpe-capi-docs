@@ -1,40 +1,39 @@
-# Starlight Starter Kit: Basics
+# WP Engine Customer API Documentation
 
 [![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
 
-```
-npm create astro@latest -- --template starlight
-```
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/starlight/tree/main/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/starlight/tree/main/examples/basics)
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/withastro/starlight&create_from_path=examples/basics)
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwithastro%2Fstarlight%2Ftree%2Fmain%2Fexamples%2Fbasics&project-name=my-starlight-docs&repository-name=my-starlight-docs)
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+This repository contains the documentation for the WP Engine Customer API, built using [Astro](https://astro.build) and [Starlight](https://starlight.astro.build).
 
 ## 🚀 Project Structure
 
-Inside of your Astro + Starlight project, you'll see the following folders and files:
-
 ```
 .
-├── public/
+├── public/                 # Static assets
 ├── src/
-│   ├── assets/
+│   ├── assets/             # Images and other assets
+│   ├── components/         # Custom Astro components
+│   │   └── Head.astro      # Custom head component
 │   ├── content/
-│   │   ├── docs/
-│   └── content.config.ts
-├── astro.config.mjs
+│   │   └── docs/           # Documentation content (Markdown)
+│   │       ├── getting-started/
+│   │       ├── api-reference/
+│   │       ├── guides/
+│   │       └── examples/
+│   └── styles/
+│       └── custom.css      # Custom CSS styles
+├── astro.config.mjs        # Astro configuration
 ├── package.json
 └── tsconfig.json
 ```
 
-Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
+## 📚 Documentation Structure
 
-Images can be added to `src/assets/` and embedded in Markdown with a relative link.
+The documentation follows a clear structure:
 
-Static assets, like favicons, can be placed in the `public/` directory.
+- **Getting Started**: Introduction, authentication, and quick start guides
+- **API Reference**: Detailed technical reference for the API
+- **Guides**: How-to guides for common tasks
+- **Examples**: Complete code examples
 
 ## 🧞 Commands
 
@@ -49,6 +48,26 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-## 👀 Want to learn more?
+## 🎨 Customization
 
-Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
+The documentation site uses WP Engine branding colors and styles. These can be customized in:
+
+- `src/styles/custom.css`: Custom CSS variables and styles
+- `astro.config.mjs`: Starlight configuration, including sidebar structure
+
+## 🚀 Deployment
+
+The documentation site is designed to be deployed to WP Engine's Node.js infrastructure. The build process generates static HTML files that can be served from any web server.
+
+## 👥 Contributing
+
+Contributions to the documentation are welcome! Please follow these steps:
+
+1. Fork the repository
+2. Create a new branch for your changes
+3. Make your changes
+4. Submit a pull request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
