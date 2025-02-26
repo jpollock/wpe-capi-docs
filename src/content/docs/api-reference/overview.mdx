@@ -81,6 +81,8 @@ Here's an example of each method:
   </TabItem>
 </Tabs>
 
+
+
 ### Status Codes
 
 The API uses standard HTTP status codes:
@@ -132,6 +134,8 @@ List endpoints return paginated results:
 
 See the [Pagination guide](/api-reference/pagination/) for details on working with paginated responses.
 
+
+
 ## Error Responses
 
 When an error occurs, the API returns an error object:
@@ -167,62 +171,19 @@ When an error occurs, the API returns an error object:
   </TabItem>
 </Tabs>
 
+
+
 ## Available Resources
 
 | Resource | Description | Endpoints |
 |----------|-------------|-----------|
 | Status | System status and health | GET /status |
-| Accounts | Manage WP Engine accounts | GET /accounts, GET /accounts/{id} |
-| Account Users | Manage account users | GET, POST, PATCH, DELETE /accounts/{id}/account_users |
+| Accounts | Manage WP Engine accounts | GET /accounts, GET /accounts/\{id\} |
+| Account Users | Manage account users | GET, POST, PATCH, DELETE /accounts/\{id\}/account_users |
 | Sites | Manage sites | GET, POST, PATCH, DELETE /sites |
 | Installs | Manage WordPress installations | GET, POST, PATCH, DELETE /installs |
-| Domains | Manage domains and redirects | GET, POST, PATCH, DELETE /installs/{id}/domains |
-| Backups | Create and manage backups | POST /installs/{id}/backups |
-| Cache | Purge various caches | POST /installs/{id}/purge_cache |
+| Domains | Manage domains and redirects | GET, POST, PATCH, DELETE /installs/\{id\}/domains |
+| Backups | Create and manage backups | POST /installs/\{id\}/backups |
+| Cache | Purge various caches | POST /installs/\{id\}/purge_cache |
 | User | Current user information | GET /user |
 | SSH Keys | Manage SSH keys | GET, POST, DELETE /ssh_keys |
-
-## Testing the API
-
-You can test if the API is working by making a request to the status endpoint:
-
-<Tabs>
-  <TabItem label="cURL">
-    ```bash
-    curl -X GET "https://api.wpengineapi.com/v1/status"
-    ```
-  </TabItem>
-  <TabItem label="PHP">
-    ```php
-    $client = new GuzzleHttp\Client();
-    $response = $client->get('https://api.wpengineapi.com/v1/status');
-    ```
-  </TabItem>
-  <TabItem label="Python">
-    ```python
-    import requests
-    response = requests.get('https://api.wpengineapi.com/v1/status')
-    ```
-  </TabItem>
-  <TabItem label="Node.js">
-    ```javascript
-    const axios = require('axios');
-    const response = await axios.get('https://api.wpengineapi.com/v1/status');
-    ```
-  </TabItem>
-</Tabs>
-
-A successful response looks like:
-
-```json
-{
-  "success": true,
-  "created_on": "2023-05-17T16:20:40+00:00"
-}
-```
-
-## Next Steps
-
-- Learn about [Authentication](/api-reference/authentication/)
-- Understand [Pagination](/api-reference/pagination/)
-- Explore the [API Endpoints](/api-reference/endpoints/)
