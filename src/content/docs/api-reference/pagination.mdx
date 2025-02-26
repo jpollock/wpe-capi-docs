@@ -1,0 +1,225 @@
+---
+title: Pagination
+description: Learn how to work with paginated responses in the WP Engine Customer API
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+# Pagination
+
+The WP Engine Customer API uses pagination to limit the amount of data returned in a single response. This helps improve performance and reduces the load on both the client and server.
+
+## How Pagination Works
+
+When you make a request to an endpoint that returns multiple items (like `/sites` or `/installs`), the API returns:
+
+- A subset of results in the `results` array
+- Pagination metadata including `previous` and `next` page URLs
+- A total count of items
+
+## Response Format
+
+Paginated responses follow this structure:
+
+```json
+{
+  "previous": "https://api.wpengineapi.com/v1/sites?limit=100&offset=0",
+  "next": "https://api.wpengineapi.com/v1/sites?limit=100&offset=200",
+  "count": 225,
+  "results": [
+    // Array of items
+  ]
+}
+```
+
+- `previous`: URL for the previous page (null if on first page)
+- `next`: URL for the next page (null if on last page)
+- `count`: Total number of items across all pages
+- `results`: Array of items for the current page
+
+## Pagination Parameters
+
+Use these query parameters to control pagination:
+
+- `limit`: Number of items per page (default: 100, max: 100)
+- `offset`: Number of items to skip (default: 0)
+
+## Example Usage
+
+Here's how to fetch paginated results in different programming languages:
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    # First page (100 items)
+    curl -X GET "https://api.wpengineapi.com/v1/sites?limit=100&offset=0" \
+      -u "API_USER_ID:API_USER_PASSWORD"
+
+    # Second page (next 100 items)
+    curl -X GET "https://api.wpengineapi.com/v1/sites?limit=100&offset=100" \
+      -u "API_USER_ID:API_USER_PASSWORD"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+
+    // Function to fetch all pages
+    function getAllPages($client, $auth, $endpoint) {
+        $allResults = [];
+        $offset = 0;
+        $limit = 100;
+        
+        do {
+            $response = $client->get("https://api.wpengineapi.com/v1/{$endpoint}", [
+                'headers' => [
+                    'Authorization' => 'Basic ' . $auth
+                ],
+                'query' => [
+                    'limit' => $limit,
+                    'offset' => $offset
+                ]
+            ]);
+            
+            $data = json_decode($response->getBody(), true);
+            $allResults = array_merge($allResults, $data['results']);
+            
+            // Prepare for next page
+            $offset += $limit;
+        } while ($data['next'] !== null);
+        
+        return $allResults;
+    }
+
+    // Get all sites
+    $allSites = getAllPages($client, $auth, 'sites');
+    echo "Retrieved " . count($allSites) . " sites";
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    headers = {'Authorization': f'Basic {auth}'}
+
+    def get_all_pages(endpoint):
+        all_results = []
+        offset = 0
+        limit = 100
+        
+        while True:
+            response = requests.get(
+                f'https://api.wpengineapi.com/v1/{endpoint}',
+                headers=headers,
+                params={'limit': limit, 'offset': offset}
+            )
+            data = response.json()
+            
+            all_results.extend(data['results'])
+            
+            if data['next'] is None:
+                break
+                
+            offset += limit
+        
+        return all_results
+
+    # Get all sites
+    all_sites = get_all_pages('sites')
+    print(f"Retrieved {len(all_sites)} sites")
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    const headers = { 'Authorization': `Basic ${auth}` };
+
+    async function getAllPages(endpoint) {
+        const allResults = [];
+        let offset = 0;
+        const limit = 100;
+        
+        while (true) {
+            const response = await axios.get(
+                `https://api.wpengineapi.com/v1/${endpoint}`,
+                {
+                    headers,
+                    params: { limit, offset }
+                }
+            );
+            
+            const data = response.data;
+            allResults.push(...data.results);
+            
+            if (data.next === null) {
+                break;
+            }
+            
+            offset += limit;
+        }
+        
+        return allResults;
+    }
+
+    // Get all sites
+    getAllPages('sites')
+        .then(allSites => console.log(`Retrieved ${allSites.length} sites`))
+        .catch(error => console.error('Error:', error));
+    ```
+  </TabItem>
+</Tabs>
+
+## Example Response
+
+Here's an example of a paginated response from the `/sites` endpoint:
+
+```json
+{
+  "previous": "https://api.wpengineapi.com/v1/sites?limit=100&offset=0",
+  "next": "https://api.wpengineapi.com/v1/sites?limit=100&offset=200",
+  "count": 225,
+  "results": [
+    {
+      "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+      "name": "Torque Magazine",
+      "account": {
+        "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+      }
+    },
+    // ... more sites
+  ]
+}
+```
+
+## Best Practices
+
+1. **Use Appropriate Page Sizes**
+   - Start with the default limit of 100
+   - Adjust based on your application's needs
+   - Consider response time and data usage
+
+2. **Handle Rate Limits**
+   - Implement exponential backoff for 429 responses
+   - Add delays between requests when fetching multiple pages
+   - Monitor your API usage
+
+3. **Implement Efficient Pagination**
+   - Only fetch pages as needed
+   - Consider implementing infinite scroll or "Load More" buttons
+   - Cache results when appropriate
+
+4. **Error Handling**
+   - Handle network errors gracefully
+   - Implement retry logic for failed requests
+   - Preserve pagination state during errors
+
+## Next Steps
+
+- Learn about [Error Handling](/api-reference/error-handling/)
+- Explore the [API Reference](/api-reference/overview/)
+- Try the [Quick Start Guide](/getting-started/quick-start/)

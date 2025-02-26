@@ -1,0 +1,228 @@
+---
+title: API Reference Overview
+description: Overview of the WP Engine Customer API endpoints and functionality
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+# API Reference Overview
+
+The WP Engine Customer API provides a comprehensive set of endpoints for managing your WordPress sites, accounts, and users. This reference documentation will help you understand the available resources and how to interact with them.
+
+## Base URL & Versioning
+
+All API requests should be made to:
+
+```
+https://api.wpengineapi.com/v1
+```
+
+The current version of the API is `v1`. The version is included in the URL path to ensure compatibility as the API evolves.
+
+## Authentication
+
+The API uses Basic Authentication. You'll need your API username and password from the [WP Engine User Portal](https://my.wpengine.com/api_access). See the [Authentication guide](/api-reference/authentication/) for detailed instructions.
+
+## Making Requests
+
+### Content Types
+
+The API accepts JSON-encoded request bodies:
+- For JSON requests: `Content-Type: application/json`
+
+### HTTP Methods
+
+The API uses standard HTTP methods:
+
+- `GET`: Retrieve resources
+- `POST`: Create new resources
+- `PATCH`: Update existing resources
+- `DELETE`: Remove resources
+
+Here's an example of each method:
+
+<Tabs>
+  <TabItem label="GET">
+    ```bash
+    # Retrieve a site
+    curl -X GET "https://api.wpengineapi.com/v1/sites/28c78b6d-c2da-4f09-85f5-1ad588089b2d" \
+      -u "API_USER_ID:API_USER_PASSWORD"
+    ```
+  </TabItem>
+  <TabItem label="POST">
+    ```bash
+    # Create a new site
+    curl -X POST "https://api.wpengineapi.com/v1/sites" \
+      -u "API_USER_ID:API_USER_PASSWORD" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "name": "Torque Magazine",
+        "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+      }'
+    ```
+  </TabItem>
+  <TabItem label="PATCH">
+    ```bash
+    # Update a site's name
+    curl -X PATCH "https://api.wpengineapi.com/v1/sites/28c78b6d-c2da-4f09-85f5-1ad588089b2d" \
+      -u "API_USER_ID:API_USER_PASSWORD" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "name": "My New Name"
+      }'
+    ```
+  </TabItem>
+  <TabItem label="DELETE">
+    ```bash
+    # Delete a site
+    curl -X DELETE "https://api.wpengineapi.com/v1/sites/28c78b6d-c2da-4f09-85f5-1ad588089b2d" \
+      -u "API_USER_ID:API_USER_PASSWORD"
+    ```
+  </TabItem>
+</Tabs>
+
+### Status Codes
+
+The API uses standard HTTP status codes:
+
+| Code | Description |
+|------|-------------|
+| 200 | Success - The request was successful |
+| 201 | Created - The resource was successfully created |
+| 204 | No Content - The request was successful (often for DELETE operations) |
+| 400 | Bad Request - The request was invalid |
+| 401 | Authentication Error - Invalid credentials |
+| 403 | Not Authorized - You don't have permission |
+| 404 | Not Found - The resource doesn't exist |
+| 429 | Too Many Requests - Rate limit exceeded |
+| 503 | Service Unavailable - The service is temporarily unavailable |
+
+## Response Format
+
+Most endpoints return data in this format:
+
+```json
+{
+  "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "name": "Torque Magazine",
+  "account": {
+    "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+  }
+}
+```
+
+List endpoints return paginated results:
+
+```json
+{
+  "previous": "https://api.wpengineapi.com/v1/sites?limit=100&offset=0",
+  "next": "https://api.wpengineapi.com/v1/sites?limit=100&offset=200",
+  "count": 225,
+  "results": [
+    {
+      "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+      "name": "Torque Magazine",
+      "account": {
+        "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+      }
+    }
+  ]
+}
+```
+
+See the [Pagination guide](/api-reference/pagination/) for details on working with paginated responses.
+
+## Error Responses
+
+When an error occurs, the API returns an error object:
+
+<Tabs>
+  <TabItem label="Authentication Error">
+    ```json
+    {
+      "message": "Bad Credentials"
+    }
+    ```
+  </TabItem>
+  <TabItem label="Bad Request">
+    ```json
+    {
+      "message": "Invalid Site: Name cannot be empty."
+    }
+    ```
+  </TabItem>
+  <TabItem label="Not Found">
+    ```json
+    {
+      "message": "Not Found"
+    }
+    ```
+  </TabItem>
+  <TabItem label="Rate Limited">
+    ```json
+    {
+      "message": "Domain status checks are rate-limited to one request every 5 seconds for each install"
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+## Available Resources
+
+| Resource | Description | Endpoints |
+|----------|-------------|-----------|
+| Status | System status and health | GET /status |
+| Accounts | Manage WP Engine accounts | GET /accounts, GET /accounts/{id} |
+| Account Users | Manage account users | GET, POST, PATCH, DELETE /accounts/{id}/account_users |
+| Sites | Manage sites | GET, POST, PATCH, DELETE /sites |
+| Installs | Manage WordPress installations | GET, POST, PATCH, DELETE /installs |
+| Domains | Manage domains and redirects | GET, POST, PATCH, DELETE /installs/{id}/domains |
+| Backups | Create and manage backups | POST /installs/{id}/backups |
+| Cache | Purge various caches | POST /installs/{id}/purge_cache |
+| User | Current user information | GET /user |
+| SSH Keys | Manage SSH keys | GET, POST, DELETE /ssh_keys |
+
+## Testing the API
+
+You can test if the API is working by making a request to the status endpoint:
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X GET "https://api.wpengineapi.com/v1/status"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $response = $client->get('https://api.wpengineapi.com/v1/status');
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import requests
+    response = requests.get('https://api.wpengineapi.com/v1/status')
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+    const response = await axios.get('https://api.wpengineapi.com/v1/status');
+    ```
+  </TabItem>
+</Tabs>
+
+A successful response looks like:
+
+```json
+{
+  "success": true,
+  "created_on": "2023-05-17T16:20:40+00:00"
+}
+```
+
+## Next Steps
+
+- Learn about [Authentication](/api-reference/authentication/)
+- Understand [Pagination](/api-reference/pagination/)
+- Explore the [API Endpoints](/api-reference/endpoints/)

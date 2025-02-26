@@ -1,0 +1,144 @@
+---
+title: API Authentication
+description: Authentication guide for the WP Engine Customer API
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+# API Authentication
+
+This page provides detailed technical reference for authenticating with the WP Engine Customer API. For a more beginner-friendly guide, see the [Authentication Getting Started Guide](/getting-started/authentication/).
+
+## Authentication Method
+
+The WP Engine Customer API uses Basic Authentication. To authenticate your requests, you'll need:
+
+- API username
+- API password
+
+These credentials can be found in the [WP Engine User Portal](https://my.wpengine.com/api_access) under API Access.
+
+## Using Basic Auth
+
+To authenticate your API requests, include your credentials in the `Authorization` header using Basic Authentication. The header should be constructed as follows:
+
+1. Combine your API username and password with a colon: `API_USER_ID:API_USER_PASSWORD`
+2. Base64 encode this string
+3. Prefix with "Basic " (note the space)
+
+Here's how to authenticate your requests in different programming languages:
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X GET "https://api.wpengineapi.com/v1/user" \
+      -u "API_USER_ID:API_USER_PASSWORD"
+    ```
+    
+    Note: cURL's -u flag handles the Base64 encoding automatically
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    
+    $response = $client->get('https://api.wpengineapi.com/v1/user', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth
+        ]
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    
+    response = requests.get(
+        'https://api.wpengineapi.com/v1/user',
+        headers={'Authorization': f'Basic {auth}'}
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    
+    const response = await axios.get('https://api.wpengineapi.com/v1/user', {
+        headers: { 'Authorization': `Basic ${auth}` }
+    });
+    ```
+  </TabItem>
+</Tabs>
+
+## Testing Authentication
+
+To verify your authentication credentials are working correctly, you can make a request to the `/user` endpoint. This endpoint returns information about the authenticated user:
+
+<Tabs>
+  <TabItem label="Request">
+    ```bash
+    curl -X GET "https://api.wpengineapi.com/v1/user" \
+      -u "API_USER_ID:API_USER_PASSWORD"
+    ```
+  </TabItem>
+  <TabItem label="Success Response">
+    ```json
+    {
+      "id": "fd8e24a5-1f16-4b80-af5f-d748bcc9e64d",
+      "first_name": "Joe",
+      "last_name": "Smith",
+      "email": "joe@gmail.com",
+      "phone_number": "123456789"
+    }
+    ```
+  </TabItem>
+  <TabItem label="Error Response">
+    ```json
+    {
+      "message": "Bad Credentials"
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+## Error Responses
+
+When authentication fails, you'll receive one of these responses:
+
+| Status Code | Description | Solution |
+|------------|-------------|-----------|
+| 401 | Bad Credentials | Verify your API username and password are correct |
+| 429 | Too Many Requests | Wait before retrying (rate limit exceeded) |
+
+## Security Best Practices
+
+1. **Protect Your Credentials**
+   - Never expose your API credentials in client-side code
+   - Don't commit credentials to version control
+   - Use environment variables to store credentials
+   - Rotate credentials if they're compromised
+
+2. **Use HTTPS**
+   - Always make API requests over HTTPS
+   - The API will reject non-HTTPS requests
+
+3. **Implement Rate Limiting**
+   - Add retry logic with exponential backoff
+   - Handle 429 responses appropriately
+   - Monitor your API usage
+
+4. **Minimal Scope**
+   - Use accounts with minimal necessary permissions
+   - Create separate credentials for different applications
+   - Regularly audit API access
+
+## Next Steps
+
+- Learn about [Pagination](/api-reference/pagination/)
+- Explore the [API Reference](/api-reference/overview/)
+- Try the [Quick Start Guide](/getting-started/quick-start/)
