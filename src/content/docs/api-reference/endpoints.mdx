@@ -1,0 +1,2798 @@
+---
+title: API Endpoints
+description: Complete reference for all WP Engine Customer API endpoints
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+# API Endpoints
+
+This page documents all available endpoints in the WP Engine Customer API. For general API information, see the [API Overview](/api-reference/overview/). For authentication details, see [Authentication](/api-reference/authentication/). For information about working with paginated responses, see [Pagination](/api-reference/pagination/).
+
+## Status
+
+### Get API Status
+`GET /status`
+
+Returns the current status of the WP Engine Public API.
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "success": true,
+  "created_on": "2023-05-17T16:20:40+00:00"
+}
+```
+
+##### Error Responses
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Get Swagger Specification
+`GET /swagger`
+
+Returns the current swagger specification.
+
+#### Response
+
+##### 200 Success
+Returns the current swagger specification
+
+##### Error Responses
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+## Accounts
+
+### List Accounts
+`GET /accounts`
+
+Returns a list of WP Engine accounts you have access to.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| limit | integer | query | no | Number of records to return (default: 100, max: 100) |
+| offset | integer | query | no | Number of records to skip (default: 0) |
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X GET "https://api.wpengineapi.com/v1/accounts" \
+      -u "API_USER_ID:API_USER_PASSWORD"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    $response = $client->get('https://api.wpengineapi.com/v1/accounts', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth
+        ]
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    response = requests.get(
+        'https://api.wpengineapi.com/v1/accounts',
+        headers={'Authorization': f'Basic {auth}'}
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    const response = await axios.get('https://api.wpengineapi.com/v1/accounts', {
+        headers: { 'Authorization': `Basic ${auth}` }
+    });
+    ```
+  </TabItem>
+</Tabs>
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "previous": "https://api.wpengineapi.com/v1/accounts?limit=100&offset=0",
+  "next": "https://api.wpengineapi.com/v1/accounts?limit=100&offset=200",
+  "count": 225,
+  "results": [
+    {
+      "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+      "name": "joesaccount"
+    }
+  ]
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Get Account
+`GET /accounts/{account_id}`
+
+Returns details for a single account.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| account_id | string (uuid) | path | yes | ID of account |
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X GET "https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9" \
+      -u "API_USER_ID:API_USER_PASSWORD"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    
+    $response = $client->get('https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth
+        ]
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    
+    response = requests.get(
+        'https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9',
+        headers={'Authorization': f'Basic {auth}'}
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    
+    const response = await axios.get('https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9', {
+        headers: { 'Authorization': `Basic ${auth}` }
+    });
+    ```
+  </TabItem>
+</Tabs>
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+  "name": "joesaccount"
+}
+```
+
+##### Error Responses
+- 401: Authentication Error
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+## Account Users
+
+### List Account Users
+`GET /accounts/{account_id}/account_users`
+
+Returns a list of users associated with an account.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| account_id | string (uuid) | path | yes | ID of account |
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X GET "https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users" \
+      -u "API_USER_ID:API_USER_PASSWORD"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    
+    $response = $client->get('https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth
+        ]
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    
+    response = requests.get(
+        'https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users',
+        headers={'Authorization': f'Basic {auth}'}
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    
+    const response = await axios.get('https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users', {
+        headers: { 'Authorization': `Basic ${auth}` }
+    });
+    ```
+  </TabItem>
+</Tabs>
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "results": [
+    {
+      "user_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+      "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+      "first_name": "Joe",
+      "last_name": "Smith",
+      "email": "joeSmith@test.com",
+      "phone": "1234567890",
+      "invite_accepted": false,
+      "mfa_enabled": true,
+      "roles": "billing, partial"
+    }
+  ]
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Create Account User
+`POST /accounts/{account_id}/account_users`
+
+Creates a new user in an account.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| account_id | string (uuid) | path | yes | ID of account |
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X POST "https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users" \
+      -u "API_USER_ID:API_USER_PASSWORD" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "user": {
+          "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+          "first_name": "Joe",
+          "last_name": "Smith",
+          "email": "joe@gmail.com",
+          "roles": "full,billing",
+          "install_ids": [
+            "ddda3227-9a39-46ae-9e14-20958bb4e6c9",
+            "qada3227-9a39-46ae-9e14-20958bb4e45y"
+          ]
+        }
+      }'
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    
+    $data = [
+        'user' => [
+            'account_id' => 'eeda3227-9a39-46ae-9e14-20958bb4e6c9',
+            'first_name' => 'Joe',
+            'last_name' => 'Smith',
+            'email' => 'joe@gmail.com',
+            'roles' => 'full,billing',
+            'install_ids' => [
+                'ddda3227-9a39-46ae-9e14-20958bb4e6c9',
+                'qada3227-9a39-46ae-9e14-20958bb4e45y'
+            ]
+        ]
+    ];
+
+    $response = $client->post('https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth,
+            'Content-Type' => 'application/json'
+        ],
+        'json' => $data
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    
+    data = {
+        'user': {
+            'account_id': 'eeda3227-9a39-46ae-9e14-20958bb4e6c9',
+            'first_name': 'Joe',
+            'last_name': 'Smith',
+            'email': 'joe@gmail.com',
+            'roles': 'full,billing',
+            'install_ids': [
+                'ddda3227-9a39-46ae-9e14-20958bb4e6c9',
+                'qada3227-9a39-46ae-9e14-20958bb4e45y'
+            ]
+        }
+    }
+
+    response = requests.post(
+        'https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users',
+        headers={
+            'Authorization': f'Basic {auth}',
+            'Content-Type': 'application/json'
+        },
+        json=data
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    
+    const data = {
+        user: {
+            account_id: 'eeda3227-9a39-46ae-9e14-20958bb4e6c9',
+            first_name: 'Joe',
+            last_name: 'Smith',
+            email: 'joe@gmail.com',
+            roles: 'full,billing',
+            install_ids: [
+                'ddda3227-9a39-46ae-9e14-20958bb4e6c9',
+                'qada3227-9a39-46ae-9e14-20958bb4e45y'
+            ]
+        }
+    };
+
+    const response = await axios.post(
+        'https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users',
+        data,
+        {
+            headers: {
+                'Authorization': `Basic ${auth}`,
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+    ```
+  </TabItem>
+</Tabs>
+
+#### Request Body
+
+```json
+{
+  "user": {
+    "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+    "first_name": "Joe",
+    "last_name": "Smith",
+    "email": "joe@gmail.com",
+    "roles": "full,billing",
+    "install_ids": [
+      "ddda3227-9a39-46ae-9e14-20958bb4e6c9",
+      "qada3227-9a39-46ae-9e14-20958bb4e45y"
+    ]
+  }
+}
+```
+
+#### Response
+
+##### 201 Created
+```json
+{
+  "message": "Your change was successful.",
+  "account_user": {
+    "user_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+    "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+    "first_name": "Joe",
+    "last_name": "Smith",
+    "email": "joe@gmail.com",
+    "roles": "full,billing"
+  }
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Get Account User
+`GET /accounts/{account_id}/account_users/{user_id}`
+
+Returns details for a single account user.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| account_id | string (uuid) | path | yes | ID of account |
+| user_id | string (uuid) | path | yes | ID of user |
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "user_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+  "first_name": "Joe",
+  "last_name": "Smith",
+  "email": "joe@gmail.com",
+  "roles": "full,billing"
+}
+```
+
+##### Error Responses
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Update Account User
+`PATCH /accounts/{account_id}/account_users/{user_id}`
+
+Updates an existing account user.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| account_id | string (uuid) | path | yes | ID of account |
+| user_id | string (uuid) | path | yes | ID of user |
+
+#### Request Body
+
+```json
+{
+  "roles": "full,billing",
+  "install_ids": [
+    "ddda3227-9a39-46ae-9e14-20958bb4e6c9",
+    "qada3227-9a39-46ae-9e14-20958bb4e45y"
+  ]
+}
+```
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "message": "Your change was successful.",
+  "account_user": {
+    "user_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+    "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+    "first_name": "Joe",
+    "last_name": "Smith",
+    "email": "joe@gmail.com",
+    "roles": "full,billing"
+  }
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests
+- 500: Internal Server Error
+- 503: Service Unavailable
+
+### Delete Account User
+`DELETE /accounts/{account_id}/account_users/{user_id}`
+
+Removes a user from an account. This action is permanent and cannot be undone.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| account_id | string (uuid) | path | yes | ID of account |
+| user_id | string (uuid) | path | yes | ID of user |
+
+#### Response
+
+##### 204 No Content
+Successfully deleted
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+## Sites
+
+### List Sites
+`GET /sites`
+
+Returns a list of sites you have access to.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| limit | integer | query | no | Number of records to return (default: 100, max: 100) |
+| offset | integer | query | no | Number of records to skip (default: 0) |
+| account_id | string (uuid) | query | no | Filter sites by account ID |
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X GET "https://api.wpengineapi.com/v1/sites?limit=50&offset=0&account_id=eeda3227-9a39-46ae-9e14-20958bb4e6c9" \
+      -u "API_USER_ID:API_USER_PASSWORD"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    
+    $params = [
+        'limit' => 50,
+        'offset' => 0,
+        'account_id' => 'eeda3227-9a39-46ae-9e14-20958bb4e6c9'
+    ];
+
+    $response = $client->get('https://api.wpengineapi.com/v1/sites', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth
+        ],
+        'query' => $params
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    
+    params = {
+        'limit': 50,
+        'offset': 0,
+        'account_id': 'eeda3227-9a39-46ae-9e14-20958bb4e6c9'
+    }
+
+    response = requests.get(
+        'https://api.wpengineapi.com/v1/sites',
+        headers={'Authorization': f'Basic {auth}'},
+        params=params
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    
+    const params = {
+        limit: 50,
+        offset: 0,
+        account_id: 'eeda3227-9a39-46ae-9e14-20958bb4e6c9'
+    };
+
+    const response = await axios.get('https://api.wpengineapi.com/v1/sites', {
+        headers: { 'Authorization': `Basic ${auth}` },
+        params: params
+    });
+    ```
+  </TabItem>
+</Tabs>
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "previous": null,
+  "next": "https://api.wpengineapi.com/v1/sites?limit=100&offset=100",
+  "count": 150,
+  "results": [
+    {
+      "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+      "name": "Torque Magazine",
+      "account": {
+        "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+      }
+    }
+  ]
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Create Site
+`POST /sites`
+
+Creates a new site.
+
+#### Request Body
+
+```json
+{
+  "name": "Torque Magazine",
+  "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+}
+```
+
+#### Response
+
+##### 201 Created
+```json
+{
+  "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "name": "Torque Magazine",
+  "account": {
+    "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+  }
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Get Site
+`GET /sites/{site_id}`
+
+Returns details for a single site.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| site_id | string (uuid) | path | yes | The site ID |
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "name": "Torque Magazine",
+  "account": {
+    "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+  }
+}
+```
+
+##### Error Responses
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Update Site
+`PATCH /sites/{site_id}`
+
+Updates a site's name.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| site_id | string (uuid) | path | yes | The site ID |
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X PATCH "https://api.wpengineapi.com/v1/sites/28c78b6d-c2da-4f09-85f5-1ad588089b2d" \
+      -u "API_USER_ID:API_USER_PASSWORD" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "name": "My New Name"
+      }'
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    
+    $data = [
+        'name' => 'My New Name'
+    ];
+
+    $response = $client->patch('https://api.wpengineapi.com/v1/sites/28c78b6d-c2da-4f09-85f5-1ad588089b2d', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth,
+            'Content-Type' => 'application/json'
+        ],
+        'json' => $data
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    
+    data = {
+        'name': 'My New Name'
+    }
+
+    response = requests.patch(
+        'https://api.wpengineapi.com/v1/sites/28c78b6d-c2da-4f09-85f5-1ad588089b2d',
+        headers={
+            'Authorization': f'Basic {auth}',
+            'Content-Type': 'application/json'
+        },
+        json=data
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    
+    const data = {
+        name: 'My New Name'
+    };
+
+    const response = await axios.patch(
+        'https://api.wpengineapi.com/v1/sites/28c78b6d-c2da-4f09-85f5-1ad588089b2d',
+        data,
+        {
+            headers: {
+                'Authorization': `Basic ${auth}`,
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+    ```
+  </TabItem>
+</Tabs>
+
+#### Request Body
+
+```json
+{
+  "name": "My New Name"
+}
+```
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "name": "My New Name",
+  "account": {
+    "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+  }
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Delete Site
+`DELETE /sites/{site_id}`
+
+Deletes a site and all associated installs. This action is permanent and cannot be undone.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| site_id | string (uuid) | path | yes | The site ID |
+
+#### Response
+
+##### 204 No Content
+Successfully deleted
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+## Installs
+
+### List Installs
+`GET /installs`
+
+Returns a list of WordPress installations you have access to.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| limit | integer | query | no | Number of records to return (default: 100, max: 100) |
+| offset | integer | query | no | Number of records to skip (default: 0) |
+| account_id | string (uuid) | query | no | Filter installs by account ID |
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X GET "https://api.wpengineapi.com/v1/installs?limit=50&offset=0&account_id=eeda3227-9a39-46ae-9e14-20958bb4e6c9" \
+      -u "API_USER_ID:API_USER_PASSWORD"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    
+    $params = [
+        'limit' => 50,
+        'offset' => 0,
+        'account_id' => 'eeda3227-9a39-46ae-9e14-20958bb4e6c9'
+    ];
+
+    $response = $client->get('https://api.wpengineapi.com/v1/installs', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth
+        ],
+        'query' => $params
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    
+    params = {
+        'limit': 50,
+        'offset': 0,
+        'account_id': 'eeda3227-9a39-46ae-9e14-20958bb4e6c9'
+    }
+
+    response = requests.get(
+        'https://api.wpengineapi.com/v1/installs',
+        headers={'Authorization': f'Basic {auth}'},
+        params=params
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    
+    const params = {
+        limit: 50,
+        offset: 0,
+        account_id: 'eeda3227-9a39-46ae-9e14-20958bb4e6c9'
+    };
+
+    const response = await axios.get('https://api.wpengineapi.com/v1/installs', {
+        headers: { 'Authorization': `Basic ${auth}` },
+        params: params
+    });
+    ```
+  </TabItem>
+</Tabs>
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "previous": null,
+  "next": "https://api.wpengineapi.com/v1/installs?limit=100&offset=100",
+  "count": 150,
+  "results": [
+    {
+      "id": "294deacc-d8b8-4005-82c4-0727ba8ddde0",
+      "name": "torquemag",
+      "account": {
+        "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+      },
+      "php_version": "7.4",
+      "status": "active",
+      "cname": "torquemag.wpengine.com",
+      "environment": "production"
+    }
+  ]
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Create Install
+`POST /installs`
+
+Creates a new WordPress installation.
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X POST "https://api.wpengineapi.com/v1/installs" \
+      -u "API_USER_ID:API_USER_PASSWORD" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "name": "torquemag",
+        "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+        "site_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+        "environment": "staging"
+      }'
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    
+    $data = [
+        'name' => 'torquemag',
+        'account_id' => 'eeda3227-9a39-46ae-9e14-20958bb4e6c9',
+        'site_id' => '28c78b6d-c2da-4f09-85f5-1ad588089b2d',
+        'environment' => 'staging'
+    ];
+
+    $response = $client->post('https://api.wpengineapi.com/v1/installs', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth,
+            'Content-Type' => 'application/json'
+        ],
+        'json' => $data
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    
+    data = {
+        'name': 'torquemag',
+        'account_id': 'eeda3227-9a39-46ae-9e14-20958bb4e6c9',
+        'site_id': '28c78b6d-c2da-4f09-85f5-1ad588089b2d',
+        'environment': 'staging'
+    }
+
+    response = requests.post(
+        'https://api.wpengineapi.com/v1/installs',
+        headers={
+            'Authorization': f'Basic {auth}',
+            'Content-Type': 'application/json'
+        },
+        json=data
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    
+    const data = {
+        name: 'torquemag',
+        account_id: 'eeda3227-9a39-46ae-9e14-20958bb4e6c9',
+        site_id: '28c78b6d-c2da-4f09-85f5-1ad588089b2d',
+        environment: 'staging'
+    };
+
+    const response = await axios.post('https://api.wpengineapi.com/v1/installs', data, {
+        headers: {
+            'Authorization': `Basic ${auth}`,
+            'Content-Type': 'application/json'
+        }
+    });
+    ```
+  </TabItem>
+</Tabs>
+
+#### Request Body
+
+```json
+{
+  "name": "torquemag",
+  "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+  "site_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "environment": "staging"
+}
+```
+
+#### Response
+
+##### 201 Created
+```json
+{
+  "id": "294deacc-d8b8-4005-82c4-0727ba8ddde0",
+  "name": "torquemag",
+  "account": {
+    "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+  },
+  "php_version": "7.4",
+  "status": "pending",
+  "site": {
+    "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d"
+  },
+  "environment": "staging"
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Get Install
+`GET /installs/{install_id}`
+
+Returns details for a single WordPress installation.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | ID of install |
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X GET "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0" \
+      -u "API_USER_ID:API_USER_PASSWORD"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    
+    $response = $client->get('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth
+        ]
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    
+    response = requests.get(
+        'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0',
+        headers={'Authorization': f'Basic {auth}'}
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    
+    const response = await axios.get('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0', {
+        headers: { 'Authorization': `Basic ${auth}` }
+    });
+    ```
+  </TabItem>
+</Tabs>
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "id": "294deacc-d8b8-4005-82c4-0727ba8ddde0",
+  "name": "torquemag",
+  "account": {
+    "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+  },
+  "php_version": "7.4",
+  "status": "active",
+  "site": {
+    "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d"
+  },
+  "environment": "staging"
+}
+```
+
+##### Error Responses
+- 401: Authentication Error
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Update Install
+`PATCH /installs/{install_id}`
+
+Updates a WordPress installation.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | The install ID |
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X PATCH "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0" \
+      -u "API_USER_ID:API_USER_PASSWORD" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "site_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+        "environment": "development"
+      }'
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    
+    $data = [
+        'site_id' => '28c78b6d-c2da-4f09-85f5-1ad588089b2d',
+        'environment' => 'development'
+    ];
+
+    $response = $client->patch('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth,
+            'Content-Type' => 'application/json'
+        ],
+        'json' => $data
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    
+    data = {
+        'site_id': '28c78b6d-c2da-4f09-85f5-1ad588089b2d',
+        'environment': 'development'
+    }
+
+    response = requests.patch(
+        'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0',
+        headers={
+            'Authorization': f'Basic {auth}',
+            'Content-Type': 'application/json'
+        },
+        json=data
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    
+    const data = {
+        site_id: '28c78b6d-c2da-4f09-85f5-1ad588089b2d',
+        environment: 'development'
+    };
+
+    const response = await axios.patch(
+        'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0',
+        data,
+        {
+            headers: {
+                'Authorization': `Basic ${auth}`,
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+    ```
+  </TabItem>
+</Tabs>
+
+#### Request Body
+
+```json
+{
+  "site_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "environment": "development"
+}
+```
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "id": "294deacc-d8b8-4005-82c4-0727ba8ddde0",
+  "name": "torquemag",
+  "account": {
+    "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+  },
+  "site": {
+    "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d"
+  },
+  "environment": "development"
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Delete Install
+`DELETE /installs/{install_id}`
+
+Deletes a WordPress installation. This action is permanent and cannot be undone.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | ID of install |
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X DELETE "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0" \
+      -u "API_USER_ID:API_USER_PASSWORD"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    
+    $response = $client->delete('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth
+        ]
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    
+    response = requests.delete(
+        'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0',
+        headers={'Authorization': f'Basic {auth}'}
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    
+    const response = await axios.delete('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0', {
+        headers: { 'Authorization': `Basic ${auth}` }
+    });
+    ```
+  </TabItem>
+</Tabs>
+
+#### Response
+
+##### 204 No Content
+Successfully deleted
+
+##### Error Responses
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+## Domains
+
+### List Domains
+`GET /installs/{install_id}/domains`
+
+Returns a list of domains for a specific install.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | ID of install |
+| limit | integer | query | no | Number of records to return (default: 100, max: 100) |
+| offset | integer | query | no | Number of records to skip (default: 0) |
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X GET "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains" \
+      -u "API_USER_ID:API_USER_PASSWORD"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    
+    $response = $client->get('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth
+        ]
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    
+    response = requests.get(
+        'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains',
+        headers={'Authorization': f'Basic {auth}'}
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    
+    const response = await axios.get('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains', {
+        headers: { 'Authorization': `Basic ${auth}` }
+    });
+    ```
+  </TabItem>
+</Tabs>
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "previous": null,
+  "next": null,
+  "count": 2,
+  "results": [
+    {
+      "name": "example.com",
+      "duplicate": false,
+      "primary": true,
+      "id": "e41fa98f-ea80-4654-b229-a9b765d0863a"
+    }
+  ]
+}
+```
+
+##### Error Responses
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Add Domain
+`POST /installs/{install_id}/domains`
+
+Adds a new domain or redirect to an install.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | ID of install |
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X POST "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains" \
+      -u "API_USER_ID:API_USER_PASSWORD" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "name": "example.com",
+        "primary": true
+      }'
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    
+    $data = [
+        'name' => 'example.com',
+        'primary' => true
+    ];
+
+    $response = $client->post('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth,
+            'Content-Type' => 'application/json'
+        ],
+        'json' => $data
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    
+    data = {
+        'name': 'example.com',
+        'primary': True
+    }
+
+    response = requests.post(
+        'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains',
+        headers={
+            'Authorization': f'Basic {auth}',
+            'Content-Type': 'application/json'
+        },
+        json=data
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    
+    const data = {
+        name: 'example.com',
+        primary: true
+    };
+
+    const response = await axios.post(
+        'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains',
+        data,
+        {
+            headers: {
+                'Authorization': `Basic ${auth}`,
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+    ```
+  </TabItem>
+</Tabs>
+
+#### Request Body
+
+```json
+{
+  "name": "example.com",
+  "primary": true
+}
+```
+
+#### Response
+
+##### 201 Created
+```json
+{
+  "name": "example.com",
+  "duplicate": false,
+  "primary": true,
+  "id": "e41fa98f-ea80-4654-b229-a9b765d0863a"
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Add Multiple Domains
+`POST /installs/{install_id}/domains/bulk`
+
+Adds multiple domains and redirects to an install.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | ID of install |
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X POST "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/bulk" \
+      -u "API_USER_ID:API_USER_PASSWORD" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "domains": [
+          {
+            "name": "example.com"
+          },
+          {
+            "name": "www.example.com",
+            "redirect_to": "example.com"
+          }
+        ]
+      }'
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    
+    $data = [
+        'domains' => [
+            [
+                'name' => 'example.com'
+            ],
+            [
+                'name' => 'www.example.com',
+                'redirect_to' => 'example.com'
+            ]
+        ]
+    ];
+
+    $response = $client->post('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/bulk', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth,
+            'Content-Type' => 'application/json'
+        ],
+        'json' => $data
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    
+    data = {
+        'domains': [
+            {
+                'name': 'example.com'
+            },
+            {
+                'name': 'www.example.com',
+                'redirect_to': 'example.com'
+            }
+        ]
+    }
+
+    response = requests.post(
+        'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/bulk',
+        headers={
+            'Authorization': f'Basic {auth}',
+            'Content-Type': 'application/json'
+        },
+        json=data
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    
+    const data = {
+        domains: [
+            {
+                name: 'example.com'
+            },
+            {
+                name: 'www.example.com',
+                redirect_to: 'example.com'
+            }
+        ]
+    };
+
+    const response = await axios.post(
+        'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/bulk',
+        data,
+        {
+            headers: {
+                'Authorization': `Basic ${auth}`,
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+    ```
+  </TabItem>
+</Tabs>
+
+#### Request Body
+
+```json
+{
+  "domains": [
+    {
+      "name": "example.com"
+    },
+    {
+      "name": "www.example.com",
+      "redirect_to": "example.com"
+    }
+  ]
+}
+```
+
+#### Response
+
+##### 201 Created
+```json
+{
+  "domains": [
+    {
+      "name": "example.com",
+      "duplicate": false,
+      "primary": false,
+      "id": "e41fa98f-ea80-4654-b229-a9b765d0863a"
+    },
+    {
+      "name": "www.example.com",
+      "duplicate": false,
+      "primary": false,
+      "id": "f52gb98f-ea80-4654-b229-a9b765d0863b",
+      "redirects_to": {
+        "name": "example.com",
+        "id": "e41fa98f-ea80-4654-b229-a9b765d0863a"
+      }
+    }
+  ]
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Get Domain
+`GET /installs/{install_id}/domains/{domain_id}`
+
+Returns details for a specific domain.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | ID of install |
+| domain_id | string (uuid) | path | yes | ID of domain |
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X GET "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a" \
+      -u "API_USER_ID:API_USER_PASSWORD"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    
+    $response = $client->get('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth
+        ]
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    
+    response = requests.get(
+        'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a',
+        headers={'Authorization': f'Basic {auth}'}
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    
+    const response = await axios.get('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a', {
+        headers: { 'Authorization': `Basic ${auth}` }
+    });
+    ```
+  </TabItem>
+</Tabs>
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "name": "example.com",
+  "duplicate": false,
+  "primary": true,
+  "id": "e41fa98f-ea80-4654-b229-a9b765d0863a"
+}
+```
+
+##### Error Responses
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Update Domain
+`PATCH /installs/{install_id}/domains/{domain_id}`
+
+Updates a domain's settings.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | ID of install |
+| domain_id | string (uuid) | path | yes | ID of domain |
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X PATCH "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a" \
+      -u "API_USER_ID:API_USER_PASSWORD" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "primary": true,
+        "redirect_to": "6977805b-1f65-4a5d-8d36-6fe609a4d9f3"
+      }'
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    
+    $data = [
+        'primary' => true,
+        'redirect_to' => '6977805b-1f65-4a5d-8d36-6fe609a4d9f3'
+    ];
+
+    $response = $client->patch('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth,
+            'Content-Type' => 'application/json'
+        ],
+        'json' => $data
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    
+    data = {
+        'primary': True,
+        'redirect_to': '6977805b-1f65-4a5d-8d36-6fe609a4d9f3'
+    }
+
+    response = requests.patch(
+        'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a',
+        headers={
+            'Authorization': f'Basic {auth}',
+            'Content-Type': 'application/json'
+        },
+        json=data
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    
+    const data = {
+        primary: true,
+        redirect_to: '6977805b-1f65-4a5d-8d36-6fe609a4d9f3'
+    };
+
+    const response = await axios.patch(
+        'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a',
+        data,
+        {
+            headers: {
+                'Authorization': `Basic ${auth}`,
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+    ```
+  </TabItem>
+</Tabs>
+
+#### Request Body
+
+```json
+{
+  "primary": true,
+  "redirect_to": "6977805b-1f65-4a5d-8d36-6fe609a4d9f3"
+}
+```
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "name": "example.com",
+  "duplicate": false,
+  "primary": true,
+  "id": "e41fa98f-ea80-4654-b229-a9b765d0863a"
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Delete Domain
+`DELETE /installs/{install_id}/domains/{domain_id}`
+
+Removes a domain from an install.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | ID of install |
+| domain_id | string (uuid) | path | yes | ID of domain |
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X DELETE "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a" \
+      -u "API_USER_ID:API_USER_PASSWORD"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    
+    $response = $client->delete('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth
+        ]
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    
+    response = requests.delete(
+        'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a',
+        headers={'Authorization': f'Basic {auth}'}
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    
+    const response = await axios.delete('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a', {
+        headers: { 'Authorization': `Basic ${auth}` }
+    });
+    ```
+  </TabItem>
+</Tabs>
+
+#### Response
+
+##### 204 No Content
+Successfully deleted
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Check Domain Status
+`POST /installs/{install_id}/domains/{domain_id}/check_status`
+
+Checks the status of a domain.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | ID of install |
+| domain_id | string (uuid) | path | yes | ID of domain |
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X POST "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a/check_status" \
+      -u "API_USER_ID:API_USER_PASSWORD"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    
+    $response = $client->post('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a/check_status', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth
+        ]
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    
+    response = requests.post(
+        'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a/check_status',
+        headers={'Authorization': f'Basic {auth}'}
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    
+    const response = await axios.post(
+        'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a/check_status',
+        null,
+        {
+            headers: { 'Authorization': `Basic ${auth}` }
+        }
+    );
+    ```
+  </TabItem>
+</Tabs>
+
+#### Response
+
+##### 200 Success
+Returns the domain status
+
+##### 202 Accepted
+Request accepted, check back later
+
+##### Error Responses
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests (Rate limited to one request every 5 seconds per install)
+- 500: Internal Server Error
+- 503: Service Unavailable
+
+## Backups
+
+### Create Backup
+`POST /installs/{install_id}/backups`
+
+Creates a new backup of a WordPress installation.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | ID of install |
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X POST "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups" \
+      -u "API_USER_ID:API_USER_PASSWORD" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "description": "Taking a backup before new feature development",
+        "notification_emails": [
+          "myself@example.com",
+          "team@example.com"
+        ]
+      }'
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    
+    $data = [
+        'description' => 'Taking a backup before new feature development',
+        'notification_emails' => [
+            'myself@example.com',
+            'team@example.com'
+        ]
+    ];
+
+    $response = $client->post('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth,
+            'Content-Type' => 'application/json'
+        ],
+        'json' => $data
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    
+    data = {
+        'description': 'Taking a backup before new feature development',
+        'notification_emails': [
+            'myself@example.com',
+            'team@example.com'
+        ]
+    }
+
+    response = requests.post(
+        'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups',
+        headers={
+            'Authorization': f'Basic {auth}',
+            'Content-Type': 'application/json'
+        },
+        json=data
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    
+    const data = {
+        description: 'Taking a backup before new feature development',
+        notification_emails: [
+            'myself@example.com',
+            'team@example.com'
+        ]
+    };
+
+    const response = await axios.post(
+        'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups',
+        data,
+        {
+            headers: {
+                'Authorization': `Basic ${auth}`,
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+    ```
+  </TabItem>
+</Tabs>
+
+#### Request Body
+
+```json
+{
+  "description": "Taking a backup before new feature development",
+  "notification_emails": [
+    "myself@example.com",
+    "team@example.com"
+  ]
+}
+```
+
+#### Response
+
+##### 202 Accepted
+```json
+{
+  "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "status": "requested"
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Get Backup Status
+`GET /installs/{install_id}/backups/{backup_id}`
+
+Returns the status of a backup.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | ID of install |
+| backup_id | string (uuid) | path | yes | ID of backup |
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X GET "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups/28c78b6d-c2da-4f09-85f5-1ad588089b2d" \
+      -u "API_USER_ID:API_USER_PASSWORD"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    
+    $response = $client->get('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups/28c78b6d-c2da-4f09-85f5-1ad588089b2d', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth
+        ]
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    
+    response = requests.get(
+        'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups/28c78b6d-c2da-4f09-85f5-1ad588089b2d',
+        headers={'Authorization': f'Basic {auth}'}
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    
+    const response = await axios.get('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups/28c78b6d-c2da-4f09-85f5-1ad588089b2d', {
+        headers: { 'Authorization': `Basic ${auth}` }
+    });
+    ```
+  </TabItem>
+</Tabs>
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "status": "completed"
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+## Cache
+
+### Purge Cache
+`POST /installs/{install_id}/purge_cache`
+
+Purges the specified cache for an install.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | ID of install |
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X POST "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/purge_cache" \
+      -u "API_USER_ID:API_USER_PASSWORD" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "type": "object"
+      }'
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    
+    $data = [
+        'type' => 'object'
+    ];
+
+    $response = $client->post('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/purge_cache', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth,
+            'Content-Type' => 'application/json'
+        ],
+        'json' => $data
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    
+    data = {
+        'type': 'object'
+    }
+
+    response = requests.post(
+        'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/purge_cache',
+        headers={
+            'Authorization': f'Basic {auth}',
+            'Content-Type': 'application/json'
+        },
+        json=data
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    
+    const data = {
+        type: 'object'
+    };
+
+    const response = await axios.post(
+        'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/purge_cache',
+        data,
+        {
+            headers: {
+                'Authorization': `Basic ${auth}`,
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+    ```
+  </TabItem>
+</Tabs>
+
+#### Request Body
+
+```json
+{
+  "type": "object"
+}
+```
+
+The `type` field must be one of:
+- `object`: Purge object cache
+- `page`: Purge page cache
+- `cdn`: Purge CDN cache
+
+#### Response
+
+##### 202 Accepted
+Request accepted
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests (Rate limited to one request every 60 seconds per install)
+- 503: Service Unavailable
+
+## User
+
+### Get Current User
+`GET /user`
+
+Returns information about the currently authenticated user.
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X GET "https://api.wpengineapi.com/v1/user" \
+      -u "API_USER_ID:API_USER_PASSWORD"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    
+    $response = $client->get('https://api.wpengineapi.com/v1/user', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth
+        ]
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    
+    response = requests.get(
+        'https://api.wpengineapi.com/v1/user',
+        headers={'Authorization': f'Basic {auth}'}
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    
+    const response = await axios.get('https://api.wpengineapi.com/v1/user', {
+        headers: { 'Authorization': `Basic ${auth}` }
+    });
+    ```
+  </TabItem>
+</Tabs>
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "id": "fd8e24a5-1f16-4b80-af5f-d748bcc9e64d",
+  "first_name": "Joe",
+  "last_name": "Smith",
+  "email": "joe@gmail.com",
+  "phone_number": "123456789"
+}
+```
+
+##### Error Responses
+- 401: Authentication Error
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+## SSH Keys
+
+### List SSH Keys
+`GET /ssh_keys`
+
+Returns a list of SSH keys associated with your account.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| limit | integer | query | no | Number of records to return (default: 100, max: 100) |
+| offset | integer | query | no | Number of records to skip (default: 0) |
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X GET "https://api.wpengineapi.com/v1/ssh_keys?limit=50&offset=0" \
+      -u "API_USER_ID:API_USER_PASSWORD"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    
+    $params = [
+        'limit' => 50,
+        'offset' => 0
+    ];
+
+    $response = $client->get('https://api.wpengineapi.com/v1/ssh_keys', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth
+        ],
+        'query' => $params
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    
+    params = {
+        'limit': 50,
+        'offset': 0
+    }
+
+    response = requests.get(
+        'https://api.wpengineapi.com/v1/ssh_keys',
+        headers={'Authorization': f'Basic {auth}'},
+        params=params
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    
+    const params = {
+        limit: 50,
+        offset: 0
+    };
+
+    const response = await axios.get('https://api.wpengineapi.com/v1/ssh_keys', {
+        headers: { 'Authorization': `Basic ${auth}` },
+        params: params
+    });
+    ```
+  </TabItem>
+</Tabs>
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "previous": null,
+  "next": null,
+  "count": 1,
+  "results": [
+    {
+      "comment": "joe@gmail.com",
+      "created_at": "2019-09-01T15:59:24.277Z",
+      "fingerprint": "a1:b2:c3:d4:e5:46:a7:88:c9:40:d2:d7:9b:cd:42:05",
+      "uuid": "e41fa98f-ea80-1f16-a7b7-d748bcc9e64d"
+    }
+  ]
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Add SSH Key
+`POST /ssh_keys`
+
+Adds a new SSH key to your account.
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X POST "https://api.wpengineapi.com/v1/ssh_keys" \
+      -u "API_USER_ID:API_USER_PASSWORD" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "public_key": "ssh-rsa AAAAbcdefg+567te/4i9ASKGHtw9euaskl+Iksldfjw== joe@gmail.com"
+      }'
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    
+    $data = [
+        'public_key' => 'ssh-rsa AAAAbcdefg+567te/4i9ASKGHtw9euaskl+Iksldfjw== joe@gmail.com'
+    ];
+
+    $response = $client->post('https://api.wpengineapi.com/v1/ssh_keys', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth,
+            'Content-Type' => 'application/json'
+        ],
+        'json' => $data
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    
+    data = {
+        'public_key': 'ssh-rsa AAAAbcdefg+567te/4i9ASKGHtw9euaskl+Iksldfjw== joe@gmail.com'
+    }
+
+    response = requests.post(
+        'https://api.wpengineapi.com/v1/ssh_keys',
+        headers={
+            'Authorization': f'Basic {auth}',
+            'Content-Type': 'application/json'
+        },
+        json=data
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    
+    const data = {
+        public_key: 'ssh-rsa AAAAbcdefg+567te/4i9ASKGHtw9euaskl+Iksldfjw== joe@gmail.com'
+    };
+
+    const response = await axios.post(
+        'https://api.wpengineapi.com/v1/ssh_keys',
+        data,
+        {
+            headers: {
+                'Authorization': `Basic ${auth}`,
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+    ```
+  </TabItem>
+</Tabs>
+
+#### Request Body
+
+```json
+{
+  "public_key": "ssh-rsa AAAAbcdefg+567te/4i9ASKGHtw9euaskl+Iksldfjw== joe@gmail.com"
+}
+```
+
+#### Response
+
+##### 201 Created
+```json
+{
+  "comment": "joe@gmail.com",
+  "created_at": "2019-09-01T15:59:24.277Z",
+  "fingerprint": "a1:b2:c3:d4:e5:46:a7:88:c9:40:d2:d7:9b:cd:42:05",
+  "uuid": "e41fa98f-ea80-1f16-a7b7-d748bcc9e64d"
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Delete SSH Key
+`DELETE /ssh_keys/{ssh_key_id}`
+
+Removes an SSH key from your account.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| ssh_key_id | string (uuid) | path | yes | ID of SSH key |
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X DELETE "https://api.wpengineapi.com/v1/ssh_keys/e41fa98f-ea80-1f16-a7b7-d748bcc9e64d" \
+      -u "API_USER_ID:API_USER_PASSWORD"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    $client = new GuzzleHttp\Client();
+    $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+    
+    $response = $client->delete('https://api.wpengineapi.com/v1/ssh_keys/e41fa98f-ea80-1f16-a7b7-d748bcc9e64d', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth
+        ]
+    ]);
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import base64
+    import requests
+
+    auth = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+    
+    response = requests.delete(
+        'https://api.wpengineapi.com/v1/ssh_keys/e41fa98f-ea80-1f16-a7b7-d748bcc9e64d',
+        headers={'Authorization': f'Basic {auth}'}
+    )
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+    const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
+    
+    const response = await axios.delete('https://api.wpengineapi.com/v1/ssh_keys/e41fa98f-ea80-1f16-a7b7-d748bcc9e64d', {
+        headers: { 'Authorization': `Basic ${auth}` }
+    });
+    ```
+  </TabItem>
+</Tabs>
+
+#### Response
+
+##### 204 No Content
+Successfully deleted
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 429: Too
