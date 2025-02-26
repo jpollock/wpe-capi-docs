@@ -20,9 +20,9 @@
 
 /* Dark mode adjustments */
 :root[data-theme='dark'] {
-  --sl-color-accent-low: rgba(14, 202, 212, 0.2);
+  --sl-color-accent-low: var(--wp-engine-dark-blue);
   --sl-color-accent: var(--wp-engine-blue);
-  --sl-color-accent-high: #33d6df;
+  --sl-color-accent-high: #ffffff;
 }
 
 /* Code blocks styling */
@@ -68,12 +68,22 @@
   flex: 1;
 }
 
+/* Card grid layout */
+.card-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
 /* Custom card styling */
 .custom-card {
   border: 1px solid var(--sl-color-gray-5);
   border-radius: 0.5rem;
   padding: 1.5rem;
-  margin-bottom: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 

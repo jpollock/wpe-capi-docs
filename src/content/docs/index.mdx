@@ -14,17 +14,13 @@ hero:
     - text: API Reference
       link: /api-reference/overview/
       icon: open-book
-    - text: View on GitHub
-      link: https://github.com/wpengine/customer-api
-      icon: github
-      variant: minimal
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
 ## Explore the API
 
-<CardGrid stagger>
+<CardGrid>
 	<Card title="Authentication" icon="lock">
 		Learn how to authenticate with the WP Engine Customer API.
 		[Get started with authentication →](/getting-started/authentication/)
@@ -32,10 +28,6 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 	<Card title="API Reference" icon="document">
 		Explore the complete API reference documentation.
 		[View API reference →](/api-reference/overview/)
-	</Card>
-	<Card title="Pagination" icon="list">
-		Learn how to work with paginated responses.
-		[Pagination guide →](/api-reference/pagination/)
 	</Card>
 	<Card title="Examples" icon="rocket">
 		See practical examples of using the API.
