@@ -1,730 +1,1162 @@
 ---
 title: API Endpoints
-description: Reference documentation for the WP Engine Customer API endpoints
+description: Complete reference for all WP Engine Customer API endpoints
 ---
 
 # API Endpoints
 
-This page provides an overview of the available endpoints in the WP Engine Customer API. Each endpoint is documented with its HTTP method, URL, description, and example requests and responses.
+This page documents all available endpoints in the WP Engine Customer API. For general API information, see the [API Overview](/api-reference/overview/). For authentication details, see [Authentication](/api-reference/authentication/). For information about working with paginated responses, see [Pagination](/api-reference/pagination/).
 
-## Base URL
+## Status
 
-All API requests should be made to the following base URL:
+### Get API Status
+`GET /status`
 
-```
-https://wpengineapi.com/v1
-```
+Returns the current status of the WP Engine Public API.
 
-## Authentication
+#### Response
 
-All API requests require authentication. See the [Authentication guide](/api-reference/authentication/) for details on how to authenticate your requests.
-
-## Sites
-
-### List Sites
-
-Retrieves a list of sites that the authenticated user has access to.
-
-```
-GET /sites
-```
-
-**Query Parameters:**
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `page` | integer | Page number (default: 1) |
-| `per_page` | integer | Number of items per page (default: 10, max: 100) |
-| `sort` | string | Field to sort by (e.g., `name`, `created_at`) |
-| `order` | string | Sort order (`asc` or `desc`, default: `asc`) |
-| `status` | string | Filter by status (e.g., `active`, `inactive`) |
-
-**Example Request:**
-
-```bash
-curl -X GET "https://wpengineapi.com/v1/sites?per_page=2" \
-  -H "Authorization: ApiKey YOUR_API_KEY" \
-  -H "Content-Type: application/json"
-```
-
-**Example Response:**
-
+##### 200 Success
 ```json
 {
-  "results": [
-    {
-      "id": "site_12345",
-      "name": "My WordPress Site",
-      "environment": "production",
-      "created_at": "2023-01-15T12:00:00Z",
-      "url": "https://mysite.wpengine.com",
-      "status": "active"
-    },
-    {
-      "id": "site_67890",
-      "name": "Another WordPress Site",
-      "environment": "production",
-      "created_at": "2023-02-20T14:30:00Z",
-      "url": "https://anothersite.wpengine.com",
-      "status": "active"
-    }
-  ],
-  "pagination": {
-    "total": 15,
-    "count": 2,
-    "per_page": 2,
-    "current_page": 1,
-    "total_pages": 8
-  }
+  "success": true,
+  "created_on": "2023-05-17T16:20:40+00:00"
 }
 ```
 
-### Get Site
+##### Error Responses
+- 429: Too Many Requests
+- 503: Service Unavailable
 
-Retrieves detailed information about a specific site.
+### Get Swagger Specification
+`GET /swagger`
 
-```
-GET /sites/{site_id}
-```
+Returns the current swagger specification.
 
-**Path Parameters:**
+#### Response
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `site_id` | string | The ID of the site |
+##### 200 Success
+Returns the current swagger specification
 
-**Example Request:**
+##### Error Responses
+- 429: Too Many Requests
+- 503: Service Unavailable
 
-```bash
-curl -X GET "https://wpengineapi.com/v1/sites/site_12345" \
-  -H "Authorization: ApiKey YOUR_API_KEY" \
-  -H "Content-Type: application/json"
-```
+## Accounts
 
-**Example Response:**
+### List Accounts
+`GET /accounts`
 
+Returns a list of WP Engine accounts you have access to.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| limit | integer | query | no | Number of records to return (default: 100, max: 100) |
+| offset | integer | query | no | Number of records to skip (default: 0) |
+
+#### Response
+
+##### 200 Success
 ```json
 {
-  "id": "site_12345",
-  "name": "My WordPress Site",
-  "environment": "production",
-  "created_at": "2023-01-15T12:00:00Z",
-  "updated_at": "2023-03-10T09:45:00Z",
-  "url": "https://mysite.wpengine.com",
-  "status": "active",
-  "php_version": "8.1",
-  "wordpress_version": "6.2",
-  "disk_usage": {
-    "used": 2.5,
-    "total": 10,
-    "unit": "GB"
-  },
-  "bandwidth": {
-    "current_month": 15.7,
-    "unit": "GB"
-  },
-  "environments": [
+  "previous": "https://api.wpengineapi.com/v1/accounts?limit=100&offset=0",
+  "next": "https://api.wpengineapi.com/v1/accounts?limit=100&offset=200",
+  "count": 225,
+  "results": [
     {
-      "name": "production",
-      "url": "https://mysite.wpengine.com"
-    },
-    {
-      "name": "staging",
-      "url": "https://stagingmysite.wpengine.com"
-    },
-    {
-      "name": "development",
-      "url": "https://devmysite.wpengine.com"
+      "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+      "name": "joesaccount"
     }
   ]
 }
 ```
 
-### Create Site
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 429: Too Many Requests
+- 503: Service Unavailable
 
-Creates a new WordPress site.
+### Get Account
+`GET /accounts/{account_id}`
 
-```
-POST /sites
-```
+Returns details for a single account.
 
-**Request Body:**
+#### Parameters
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | Yes | The name of the site |
-| `environment` | string | No | The environment to create (default: `production`) |
-| `php_version` | string | No | The PHP version to use (default: latest stable) |
-| `wordpress_version` | string | No | The WordPress version to use (default: latest stable) |
-| `template` | string | No | Template to use for the site (e.g., `blank`, `woocommerce`) |
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| account_id | string (uuid) | path | yes | ID of account |
 
-**Example Request:**
+#### Response
 
-```bash
-curl -X POST "https://wpengineapi.com/v1/sites" \
-  -H "Authorization: ApiKey YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "New WordPress Site",
-    "php_version": "8.1",
-    "wordpress_version": "6.2",
-    "template": "blank"
-  }'
+##### 200 Success
+```json
+{
+  "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+  "name": "joesaccount"
+}
 ```
 
-**Example Response:**
+##### Error Responses
+- 401: Authentication Error
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+## Account Users
+
+### List Account Users
+`GET /accounts/{account_id}/account_users`
+
+Returns a list of users associated with an account.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| account_id | string (uuid) | path | yes | ID of account |
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "results": [
+    {
+      "user_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+      "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+      "first_name": "Joe",
+      "last_name": "Smith",
+      "email": "joeSmith@test.com",
+      "phone": "1234567890",
+      "invite_accepted": false,
+      "mfa_enabled": true,
+      "roles": "billing, partial"
+    }
+  ]
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Create Account User
+`POST /accounts/{account_id}/account_users`
+
+Creates a new user in an account.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| account_id | string (uuid) | path | yes | ID of account |
+
+#### Request Body
 
 ```json
 {
-  "id": "site_54321",
-  "name": "New WordPress Site",
-  "environment": "production",
-  "created_at": "2023-04-01T10:30:00Z",
-  "url": "https://newsite.wpengine.com",
-  "status": "provisioning",
-  "php_version": "8.1",
-  "wordpress_version": "6.2",
-  "estimated_completion_time": "2023-04-01T10:45:00Z"
+  "user": {
+    "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+    "first_name": "Joe",
+    "last_name": "Smith",
+    "email": "joe@gmail.com",
+    "roles": "full,billing",
+    "install_ids": [
+      "ddda3227-9a39-46ae-9e14-20958bb4e6c9",
+      "qada3227-9a39-46ae-9e14-20958bb4e45y"
+    ]
+  }
 }
 ```
+
+#### Response
+
+##### 201 Created
+```json
+{
+  "message": "Your change was successful.",
+  "account_user": {
+    "user_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+    "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+    "first_name": "Joe",
+    "last_name": "Smith",
+    "email": "joe@gmail.com",
+    "roles": "full,billing"
+  }
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Get Account User
+`GET /accounts/{account_id}/account_users/{user_id}`
+
+Returns details for a single account user.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| account_id | string (uuid) | path | yes | ID of account |
+| user_id | string (uuid) | path | yes | ID of user |
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "user_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+  "first_name": "Joe",
+  "last_name": "Smith",
+  "email": "joe@gmail.com",
+  "roles": "full,billing"
+}
+```
+
+##### Error Responses
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Update Account User
+`PATCH /accounts/{account_id}/account_users/{user_id}`
+
+Updates an existing account user.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| account_id | string (uuid) | path | yes | ID of account |
+| user_id | string (uuid) | path | yes | ID of user |
+
+#### Request Body
+
+```json
+{
+  "roles": "full,billing",
+  "install_ids": [
+    "ddda3227-9a39-46ae-9e14-20958bb4e6c9",
+    "qada3227-9a39-46ae-9e14-20958bb4e45y"
+  ]
+}
+```
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "message": "Your change was successful.",
+  "account_user": {
+    "user_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+    "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+    "first_name": "Joe",
+    "last_name": "Smith",
+    "email": "joe@gmail.com",
+    "roles": "full,billing"
+  }
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests
+- 500: Internal Server Error
+- 503: Service Unavailable
+
+### Delete Account User
+`DELETE /accounts/{account_id}/account_users/{user_id}`
+
+Removes a user from an account. This action is permanent and cannot be undone.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| account_id | string (uuid) | path | yes | ID of account |
+| user_id | string (uuid) | path | yes | ID of user |
+
+#### Response
+
+##### 204 No Content
+Successfully deleted
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+## Sites
+
+### List Sites
+`GET /sites`
+
+Returns a list of sites you have access to.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| limit | integer | query | no | Number of records to return (default: 100, max: 100) |
+| offset | integer | query | no | Number of records to skip (default: 0) |
+| account_id | string (uuid) | query | no | Filter sites by account ID |
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "previous": null,
+  "next": "https://api.wpengineapi.com/v1/sites?limit=100&offset=100",
+  "count": 150,
+  "results": [
+    {
+      "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+      "name": "Torque Magazine",
+      "account": {
+        "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+      }
+    }
+  ]
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Create Site
+`POST /sites`
+
+Creates a new site.
+
+#### Request Body
+
+```json
+{
+  "name": "Torque Magazine",
+  "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+}
+```
+
+#### Response
+
+##### 201 Created
+```json
+{
+  "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "name": "Torque Magazine",
+  "account": {
+    "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+  }
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Get Site
+`GET /sites/{site_id}`
+
+Returns details for a single site.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| site_id | string (uuid) | path | yes | The site ID |
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "name": "Torque Magazine",
+  "account": {
+    "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+  }
+}
+```
+
+##### Error Responses
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
 
 ### Update Site
+`PATCH /sites/{site_id}`
 
-Updates an existing WordPress site.
+Updates a site's name.
 
-```
-PUT /sites/{site_id}
-```
+#### Parameters
 
-**Path Parameters:**
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| site_id | string (uuid) | path | yes | The site ID |
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `site_id` | string | The ID of the site |
-
-**Request Body:**
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `name` | string | No | The new name of the site |
-| `php_version` | string | No | The PHP version to use |
-| `wordpress_version` | string | No | The WordPress version to use |
-| `status` | string | No | The status of the site (e.g., `active`, `inactive`) |
-
-**Example Request:**
-
-```bash
-curl -X PUT "https://wpengineapi.com/v1/sites/site_12345" \
-  -H "Authorization: ApiKey YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Updated WordPress Site",
-    "php_version": "8.2"
-  }'
-```
-
-**Example Response:**
+#### Request Body
 
 ```json
 {
-  "id": "site_12345",
-  "name": "Updated WordPress Site",
-  "environment": "production",
-  "created_at": "2023-01-15T12:00:00Z",
-  "updated_at": "2023-04-01T11:30:00Z",
-  "url": "https://mysite.wpengine.com",
-  "status": "active",
-  "php_version": "8.2",
-  "wordpress_version": "6.2"
+  "name": "My New Name"
 }
 ```
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "name": "My New Name",
+  "account": {
+    "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+  }
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
 
 ### Delete Site
+`DELETE /sites/{site_id}`
 
-Deletes a WordPress site.
+Deletes a site and all associated installs. This action is permanent and cannot be undone.
 
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| site_id | string (uuid) | path | yes | The site ID |
+
+#### Response
+
+##### 204 No Content
+Successfully deleted
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+## Installs
+
+### List Installs
+`GET /installs`
+
+Returns a list of WordPress installations you have access to.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| limit | integer | query | no | Number of records to return (default: 100, max: 100) |
+| offset | integer | query | no | Number of records to skip (default: 0) |
+| account_id | string (uuid) | query | no | Filter installs by account ID |
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "previous": null,
+  "next": "https://api.wpengineapi.com/v1/installs?limit=100&offset=100",
+  "count": 150,
+  "results": [
+    {
+      "id": "294deacc-d8b8-4005-82c4-0727ba8ddde0",
+      "name": "torquemag",
+      "account": {
+        "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+      },
+      "php_version": "7.4",
+      "status": "active",
+      "cname": "torquemag.wpengine.com",
+      "environment": "production"
+    }
+  ]
+}
 ```
-DELETE /sites/{site_id}
-```
 
-**Path Parameters:**
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 429: Too Many Requests
+- 503: Service Unavailable
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `site_id` | string | The ID of the site |
+### Create Install
+`POST /installs`
 
-**Example Request:**
+Creates a new WordPress installation.
 
-```bash
-curl -X DELETE "https://wpengineapi.com/v1/sites/site_12345" \
-  -H "Authorization: ApiKey YOUR_API_KEY" \
-  -H "Content-Type: application/json"
-```
-
-**Example Response:**
+#### Request Body
 
 ```json
 {
-  "id": "site_12345",
-  "status": "deleting",
-  "estimated_completion_time": "2023-04-01T12:15:00Z"
+  "name": "torquemag",
+  "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+  "site_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "environment": "staging"
 }
 ```
+
+#### Response
+
+##### 201 Created
+```json
+{
+  "id": "294deacc-d8b8-4005-82c4-0727ba8ddde0",
+  "name": "torquemag",
+  "account": {
+    "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+  },
+  "php_version": "7.4",
+  "status": "pending",
+  "site": {
+    "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d"
+  },
+  "environment": "staging"
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Get Install
+`GET /installs/{install_id}`
+
+Returns details for a single WordPress installation.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | ID of install |
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "id": "294deacc-d8b8-4005-82c4-0727ba8ddde0",
+  "name": "torquemag",
+  "account": {
+    "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+  },
+  "php_version": "7.4",
+  "status": "active",
+  "site": {
+    "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d"
+  },
+  "environment": "staging"
+}
+```
+
+##### Error Responses
+- 401: Authentication Error
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Update Install
+`PATCH /installs/{install_id}`
+
+Updates a WordPress installation.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | The install ID |
+
+#### Request Body
+
+```json
+{
+  "site_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "environment": "development"
+}
+```
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "id": "294deacc-d8b8-4005-82c4-0727ba8ddde0",
+  "name": "torquemag",
+  "account": {
+    "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+  },
+  "site": {
+    "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d"
+  },
+  "environment": "development"
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Delete Install
+`DELETE /installs/{install_id}`
+
+Deletes a WordPress installation. This action is permanent and cannot be undone.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | ID of install |
+
+#### Response
+
+##### 204 No Content
+Successfully deleted
+
+##### Error Responses
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+## Domains
+
+### List Domains
+`GET /installs/{install_id}/domains`
+
+Returns a list of domains for a specific install.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | ID of install |
+| limit | integer | query | no | Number of records to return (default: 100, max: 100) |
+| offset | integer | query | no | Number of records to skip (default: 0) |
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "previous": null,
+  "next": null,
+  "count": 2,
+  "results": [
+    {
+      "name": "example.com",
+      "duplicate": false,
+      "primary": true,
+      "id": "e41fa98f-ea80-4654-b229-a9b765d0863a"
+    }
+  ]
+}
+```
+
+##### Error Responses
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Add Domain
+`POST /installs/{install_id}/domains`
+
+Adds a new domain or redirect to an install.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | ID of install |
+
+#### Request Body
+
+```json
+{
+  "name": "example.com",
+  "primary": true
+}
+```
+
+#### Response
+
+##### 201 Created
+```json
+{
+  "name": "example.com",
+  "duplicate": false,
+  "primary": true,
+  "id": "e41fa98f-ea80-4654-b229-a9b765d0863a"
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Add Multiple Domains
+`POST /installs/{install_id}/domains/bulk`
+
+Adds multiple domains and redirects to an install.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | ID of install |
+
+#### Request Body
+
+```json
+{
+  "domains": [
+    {
+      "name": "example.com"
+    },
+    {
+      "name": "www.example.com",
+      "redirect_to": "example.com"
+    }
+  ]
+}
+```
+
+#### Response
+
+##### 201 Created
+```json
+{
+  "domains": [
+    {
+      "name": "example.com",
+      "duplicate": false,
+      "primary": false,
+      "id": "e41fa98f-ea80-4654-b229-a9b765d0863a"
+    },
+    {
+      "name": "www.example.com",
+      "duplicate": false,
+      "primary": false,
+      "id": "f52gb98f-ea80-4654-b229-a9b765d0863b",
+      "redirects_to": {
+        "name": "example.com",
+        "id": "e41fa98f-ea80-4654-b229-a9b765d0863a"
+      }
+    }
+  ]
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Get Domain
+`GET /installs/{install_id}/domains/{domain_id}`
+
+Returns details for a specific domain.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | ID of install |
+| domain_id | string (uuid) | path | yes | ID of domain |
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "name": "example.com",
+  "duplicate": false,
+  "primary": true,
+  "id": "e41fa98f-ea80-4654-b229-a9b765d0863a"
+}
+```
+
+##### Error Responses
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Update Domain
+`PATCH /installs/{install_id}/domains/{domain_id}`
+
+Updates a domain's settings.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | ID of install |
+| domain_id | string (uuid) | path | yes | ID of domain |
+
+#### Request Body
+
+```json
+{
+  "primary": true,
+  "redirect_to": "6977805b-1f65-4a5d-8d36-6fe609a4d9f3"
+}
+```
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "name": "example.com",
+  "duplicate": false,
+  "primary": true,
+  "id": "e41fa98f-ea80-4654-b229-a9b765d0863a"
+}
+```
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Delete Domain
+`DELETE /installs/{install_id}/domains/{domain_id}`
+
+Removes a domain from an install.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | ID of install |
+| domain_id | string (uuid) | path | yes | ID of domain |
+
+#### Response
+
+##### 204 No Content
+Successfully deleted
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+### Check Domain Status
+`POST /installs/{install_id}/domains/{domain_id}/check_status`
+
+Checks the status of a domain.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | ID of install |
+| domain_id | string (uuid) | path | yes | ID of domain |
+
+#### Response
+
+##### 200 Success
+Returns the domain status
+
+##### 202 Accepted
+Request accepted, check back later
+
+##### Error Responses
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests (Rate limited to one request every 5 seconds per install)
+- 500: Internal Server Error
+- 503: Service Unavailable
 
 ## Backups
 
-### List Backups
-
-Retrieves a list of backups for a specific site.
-
-```
-GET /sites/{site_id}/backups
-```
-
-**Path Parameters:**
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `site_id` | string | The ID of the site |
-
-**Query Parameters:**
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `page` | integer | Page number (default: 1) |
-| `per_page` | integer | Number of items per page (default: 10, max: 100) |
-| `sort` | string | Field to sort by (e.g., `created_at`) |
-| `order` | string | Sort order (`asc` or `desc`, default: `desc`) |
-| `status` | string | Filter by status (e.g., `completed`, `in_progress`) |
-
-**Example Request:**
-
-```bash
-curl -X GET "https://wpengineapi.com/v1/sites/site_12345/backups" \
-  -H "Authorization: ApiKey YOUR_API_KEY" \
-  -H "Content-Type: application/json"
-```
-
-**Example Response:**
-
-```json
-{
-  "results": [
-    {
-      "id": "backup_54321",
-      "site_id": "site_12345",
-      "description": "Pre-update backup",
-      "type": "full",
-      "status": "completed",
-      "created_at": "2023-03-15T10:30:00Z",
-      "completed_at": "2023-03-15T10:45:00Z",
-      "size": "1.2GB"
-    },
-    {
-      "id": "backup_54322",
-      "site_id": "site_12345",
-      "description": "Weekly automatic backup",
-      "type": "full",
-      "status": "completed",
-      "created_at": "2023-03-08T10:30:00Z",
-      "completed_at": "2023-03-08T10:48:00Z",
-      "size": "1.1GB"
-    }
-  ],
-  "pagination": {
-    "total": 10,
-    "count": 2,
-    "per_page": 2,
-    "current_page": 1,
-    "total_pages": 5
-  }
-}
-```
-
-### Get Backup
-
-Retrieves detailed information about a specific backup.
-
-```
-GET /sites/{site_id}/backups/{backup_id}
-```
-
-**Path Parameters:**
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `site_id` | string | The ID of the site |
-| `backup_id` | string | The ID of the backup |
-
-**Example Request:**
-
-```bash
-curl -X GET "https://wpengineapi.com/v1/sites/site_12345/backups/backup_54321" \
-  -H "Authorization: ApiKey YOUR_API_KEY" \
-  -H "Content-Type: application/json"
-```
-
-**Example Response:**
-
-```json
-{
-  "id": "backup_54321",
-  "site_id": "site_12345",
-  "description": "Pre-update backup",
-  "type": "full",
-  "status": "completed",
-  "created_at": "2023-03-15T10:30:00Z",
-  "completed_at": "2023-03-15T10:45:00Z",
-  "size": "1.2GB",
-  "download_url": "https://wpengineapi.com/v1/sites/site_12345/backups/backup_54321/download",
-  "contents": {
-    "database": true,
-    "files": true,
-    "plugins": true,
-    "themes": true
-  }
-}
-```
-
 ### Create Backup
+`POST /installs/{install_id}/backups`
 
-Creates a new backup for a specific site.
+Creates a new backup of a WordPress installation.
 
-```
-POST /sites/{site_id}/backups
-```
+#### Parameters
 
-**Path Parameters:**
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | ID of install |
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `site_id` | string | The ID of the site |
-
-**Request Body:**
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `description` | string | No | A description of the backup |
-| `type` | string | No | The type of backup (`full` or `database`, default: `full`) |
-
-**Example Request:**
-
-```bash
-curl -X POST "https://wpengineapi.com/v1/sites/site_12345/backups" \
-  -H "Authorization: ApiKey YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "description": "Pre-update backup",
-    "type": "full"
-  }'
-```
-
-**Example Response:**
+#### Request Body
 
 ```json
 {
-  "id": "backup_54323",
-  "site_id": "site_12345",
-  "description": "Pre-update backup",
-  "type": "full",
-  "status": "in_progress",
-  "created_at": "2023-04-01T12:30:00Z",
-  "estimated_completion_time": "2023-04-01T12:45:00Z"
+  "description": "Taking a backup before new feature development",
+  "notification_emails": [
+    "myself@example.com",
+    "team@example.com"
+  ]
 }
 ```
 
-### Restore Backup
+#### Response
 
-Restores a backup to a site.
-
-```
-POST /sites/{site_id}/backups/{backup_id}/restore
-```
-
-**Path Parameters:**
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `site_id` | string | The ID of the site |
-| `backup_id` | string | The ID of the backup |
-
-**Request Body:**
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `environment` | string | No | The environment to restore to (default: the environment the backup was taken from) |
-| `contents` | object | No | Specific contents to restore (default: all contents) |
-
-**Example Request:**
-
-```bash
-curl -X POST "https://wpengineapi.com/v1/sites/site_12345/backups/backup_54321/restore" \
-  -H "Authorization: ApiKey YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "environment": "staging",
-    "contents": {
-      "database": true,
-      "files": true,
-      "plugins": false,
-      "themes": false
-    }
-  }'
-```
-
-**Example Response:**
-
+##### 202 Accepted
 ```json
 {
-  "id": "restore_98765",
-  "backup_id": "backup_54321",
-  "site_id": "site_12345",
-  "environment": "staging",
-  "status": "in_progress",
-  "created_at": "2023-04-01T13:30:00Z",
-  "estimated_completion_time": "2023-04-01T13:45:00Z",
-  "contents": {
-    "database": true,
-    "files": true,
-    "plugins": false,
-    "themes": false
-  }
+  "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "status": "requested"
 }
 ```
 
-### Delete Backup
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
 
-Deletes a backup.
+### Get Backup Status
+`GET /installs/{install_id}/backups/{backup_id}`
 
-```
-DELETE /sites/{site_id}/backups/{backup_id}
-```
+Returns the status of a backup.
 
-**Path Parameters:**
+#### Parameters
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `site_id` | string | The ID of the site |
-| `backup_id` | string | The ID of the backup |
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | ID of install |
+| backup_id | string (uuid) | path | yes | ID of backup |
 
-**Example Request:**
+#### Response
 
-```bash
-curl -X DELETE "https://wpengineapi.com/v1/sites/site_12345/backups/backup_54321" \
-  -H "Authorization: ApiKey YOUR_API_KEY" \
-  -H "Content-Type: application/json"
-```
-
-**Example Response:**
-
+##### 200 Success
 ```json
 {
-  "id": "backup_54321",
-  "status": "deleting",
-  "estimated_completion_time": "2023-04-01T14:00:00Z"
+  "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "status": "completed"
 }
 ```
 
-## Deployments
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 404: Not Found
+- 429: Too Many Requests
+- 503: Service Unavailable
 
-### List Deployments
+## Cache
 
-Retrieves a list of deployments for a specific site.
+### Purge Cache
+`POST /installs/{install_id}/purge_cache`
 
-```
-GET /sites/{site_id}/deployments
-```
+Purges the specified cache for an install.
 
-**Path Parameters:**
+#### Parameters
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `site_id` | string | The ID of the site |
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| install_id | string (uuid) | path | yes | ID of install |
 
-**Query Parameters:**
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `page` | integer | Page number (default: 1) |
-| `per_page` | integer | Number of items per page (default: 10, max: 100) |
-| `sort` | string | Field to sort by (e.g., `created_at`) |
-| `order` | string | Sort order (`asc` or `desc`, default: `desc`) |
-| `status` | string | Filter by status (e.g., `completed`, `in_progress`) |
-
-**Example Request:**
-
-```bash
-curl -X GET "https://wpengineapi.com/v1/sites/site_12345/deployments" \
-  -H "Authorization: ApiKey YOUR_API_KEY" \
-  -H "Content-Type: application/json"
-```
-
-**Example Response:**
+#### Request Body
 
 ```json
 {
+  "type": "object"
+}
+```
+
+The `type` field must be one of:
+- `object`: Purge object cache
+- `page`: Purge page cache
+- `cdn`: Purge CDN cache
+
+#### Response
+
+##### 202 Accepted
+Request accepted
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 404: Not Found
+- 429: Too Many Requests (Rate limited to one request every 60 seconds per install)
+- 503: Service Unavailable
+
+## User
+
+### Get Current User
+`GET /user`
+
+Returns information about the currently authenticated user.
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "id": "fd8e24a5-1f16-4b80-af5f-d748bcc9e64d",
+  "first_name": "Joe",
+  "last_name": "Smith",
+  "email": "joe@gmail.com",
+  "phone_number": "123456789"
+}
+```
+
+##### Error Responses
+- 401: Authentication Error
+- 429: Too Many Requests
+- 503: Service Unavailable
+
+## SSH Keys
+
+### List SSH Keys
+`GET /ssh_keys`
+
+Returns a list of SSH keys associated with your account.
+
+#### Parameters
+
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| limit | integer | query | no | Number of records to return (default: 100, max: 100) |
+| offset | integer | query | no | Number of records to skip (default: 0) |
+
+#### Response
+
+##### 200 Success
+```json
+{
+  "previous": null,
+  "next": null,
+  "count": 1,
   "results": [
     {
-      "id": "deploy_12345",
-      "site_id": "site_12345",
-      "environment": "production",
-      "source": {
-        "type": "git",
-        "repository": "github.com/username/repo",
-        "branch": "main",
-        "commit": "a1b2c3d4e5f6"
-      },
-      "status": "completed",
-      "created_at": "2023-03-20T15:30:00Z",
-      "completed_at": "2023-03-20T15:35:00Z"
-    },
-    {
-      "id": "deploy_12346",
-      "site_id": "site_12345",
-      "environment": "staging",
-      "source": {
-        "type": "git",
-        "repository": "github.com/username/repo",
-        "branch": "develop",
-        "commit": "f6e5d4c3b2a1"
-      },
-      "status": "completed",
-      "created_at": "2023-03-18T10:30:00Z",
-      "completed_at": "2023-03-18T10:34:00Z"
+      "comment": "joe@gmail.com",
+      "created_at": "2019-09-01T15:59:24.277Z",
+      "fingerprint": "a1:b2:c3:d4:e5:46:a7:88:c9:40:d2:d7:9b:cd:42:05",
+      "uuid": "e41fa98f-ea80-1f16-a7b7-d748bcc9e64d"
     }
-  ],
-  "pagination": {
-    "total": 8,
-    "count": 2,
-    "per_page": 2,
-    "current_page": 1,
-    "total_pages": 4
-  }
+  ]
 }
 ```
 
-### Get Deployment
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 429: Too Many Requests
+- 503: Service Unavailable
 
-Retrieves detailed information about a specific deployment.
+### Add SSH Key
+`POST /ssh_keys`
 
-```
-GET /sites/{site_id}/deployments/{deployment_id}
-```
+Adds a new SSH key to your account.
 
-**Path Parameters:**
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `site_id` | string | The ID of the site |
-| `deployment_id` | string | The ID of the deployment |
-
-**Example Request:**
-
-```bash
-curl -X GET "https://wpengineapi.com/v1/sites/site_12345/deployments/deploy_12345" \
-  -H "Authorization: ApiKey YOUR_API_KEY" \
-  -H "Content-Type: application/json"
-```
-
-**Example Response:**
+#### Request Body
 
 ```json
 {
-  "id": "deploy_12345",
-  "site_id": "site_12345",
-  "environment": "production",
-  "source": {
-    "type": "git",
-    "repository": "github.com/username/repo",
-    "branch": "main",
-    "commit": "a1b2c3d4e5f6"
-  },
-  "status": "completed",
-  "created_at": "2023-03-20T15:30:00Z",
-  "completed_at": "2023-03-20T15:35:00Z",
-  "logs": "Deployment started at 2023-03-20T15:30:00Z\nCloning repository...\nChecking out branch main...\nInstalling dependencies...\nBuilding...\nDeploying...\nDeployment completed at 2023-03-20T15:35:00Z",
-  "changes": {
-    "added": 5,
-    "modified": 10,
-    "deleted": 2
-  }
+  "public_key": "ssh-rsa AAAAbcdefg+567te/4i9ASKGHtw9euaskl+Iksldfjw== joe@gmail.com"
 }
 ```
 
-### Create Deployment
+#### Response
 
-Creates a new deployment for a specific site.
-
-```
-POST /sites/{site_id}/deployments
-```
-
-**Path Parameters:**
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `site_id` | string | The ID of the site |
-
-**Request Body:**
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `environment` | string | Yes | The environment to deploy to |
-| `source` | object | Yes | The source of the deployment |
-| `source.type` | string | Yes | The type of source (`git` or `zip`) |
-| `source.repository` | string | Conditional | The Git repository URL (required if `source.type` is `git`) |
-| `source.branch` | string | Conditional | The Git branch (required if `source.type` is `git`) |
-| `source.commit` | string | No | The Git commit (default: latest commit on the branch) |
-| `source.zip_url` | string | Conditional | The URL of the ZIP file (required if `source.type` is `zip`) |
-
-**Example Request:**
-
-```bash
-curl -X POST "https://wpengineapi.com/v1/sites/site_12345/deployments" \
-  -H "Authorization: ApiKey YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "environment": "staging",
-    "source": {
-      "type": "git",
-      "repository": "github.com/username/repo",
-      "branch": "develop"
-    }
-  }'
-```
-
-**Example Response:**
-
+##### 201 Created
 ```json
 {
-  "id": "deploy_12347",
-  "site_id": "site_12345",
-  "environment": "staging",
-  "source": {
-    "type": "git",
-    "repository": "github.com/username/repo",
-    "branch": "develop"
-  },
-  "status": "in_progress",
-  "created_at": "2023-04-01T15:30:00Z",
-  "estimated_completion_time": "2023-04-01T15:35:00Z"
+  "comment": "joe@gmail.com",
+  "created_at": "2019-09-01T15:59:24.277Z",
+  "fingerprint": "a1:b2:c3:d4:e5:46:a7:88:c9:40:d2:d7:9b:cd:42:05",
+  "uuid": "e41fa98f-ea80-1f16-a7b7-d748bcc9e64d"
 }
 ```
 
-## Additional Endpoints
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 429: Too Many Requests
+- 503: Service Unavailable
 
-The WP Engine Customer API provides many more endpoints for managing various aspects of your WordPress sites. For detailed documentation on all available endpoints, please refer to the specific sections:
+### Delete SSH Key
+`DELETE /ssh_keys/{ssh_key_id}`
 
-- [Domains](/api-reference/endpoints/domains/)
-- [SSL Certificates](/api-reference/endpoints/ssl/)
-- [Users](/api-reference/endpoints/users/)
-- [Environments](/api-reference/endpoints/environments/)
-- [Logs](/api-reference/endpoints/logs/)
-- [Metrics](/api-reference/endpoints/metrics/)
+Removes an SSH key from your account.
 
-## Next Steps
+#### Parameters
 
-- Learn about [Authentication](/api-reference/authentication/)
-- Understand [Pagination](/api-reference/pagination/)
-- Try the [Quick Start Guide](/getting-started/quick-start/)
-- Explore the [API Explorer](/api-reference/explorer/)
+| Name | Type | In | Required | Description |
+|------|------|------|----------|-------------|
+| ssh_key_id | string (uuid) | path | yes | ID of SSH key |
+
+#### Response
+
+##### 204 No Content
+Successfully deleted
+
+##### Error Responses
+- 400: Bad Request
+- 401: Authentication Error
+- 403: Not Authorized
+- 429: Too
