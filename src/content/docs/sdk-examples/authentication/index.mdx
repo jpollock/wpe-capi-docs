@@ -1,0 +1,194 @@
+---
+title: SDK Authentication Examples
+description: Learn how to authenticate with the WP Engine API using our official SDKs
+---
+
+This guide demonstrates how to authenticate with the WP Engine API using our official SDKs. Each SDK provides convenient methods for handling authentication.
+
+## Authentication Methods
+
+Our SDKs support two primary authentication methods:
+
+1. **Environment Variables** (Recommended)
+   - Most secure method for server-side applications
+   - Keeps credentials out of code
+   - Supports CI/CD workflows
+
+2. **Direct Initialization**
+   - Useful for testing and development
+   - Not recommended for production use
+   - Requires careful credential management
+
+## Python SDK Authentication
+
+```python
+from wp_engine_api import WPEngineAPI
+
+# Method 1: Environment Variables (Recommended)
+# Set these environment variables:
+# - WP_ENGINE_API_USERNAME
+# - WP_ENGINE_API_PASSWORD
+client = WPEngineAPI()
+
+# Method 2: Direct Initialization
+client = WPEngineAPI(
+    username="your-username",
+    password="your-password"
+)
+
+# Verify authentication
+try:
+    user = client.users.get_current()
+    print(f"Successfully authenticated as: {user.email}")
+except Exception as e:
+    print(f"Authentication failed: {e}")
+finally:
+    client.close()
+```
+
+## TypeScript SDK Authentication
+
+```typescript
+import { WPEngineSDK } from '@wpengine/api-typescript-sdk';
+
+async function demonstrateAuth() {
+  try {
+    // Method 1: Environment Variables (Recommended)
+    // Set these environment variables:
+    // - WPENGINE_USERNAME
+    // - WPENGINE_PASSWORD
+    const sdk1 = new WPEngineSDK();
+
+    // Method 2: Direct Initialization
+    const sdk2 = new WPEngineSDK({
+      username: 'your-username',
+      password: 'your-password'
+    });
+
+    // Verify authentication
+    const user = await sdk1.users.getCurrentUser();
+    console.log('Successfully authenticated as:', user.data.email);
+
+  } catch (error) {
+    console.error('Authentication failed:', error);
+  }
+}
+
+demonstrateAuth();
+```
+
+## PHP SDK Authentication
+
+```php
+<?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use WPEngine\WPEngineSDK;
+
+try {
+    // Method 1: Environment Variables (Recommended)
+    // Set these environment variables:
+    // - WP_ENGINE_API_USERNAME
+    // - WP_ENGINE_API_PASSWORD
+    $sdk1 = new WPEngineSDK();
+
+    // Method 2: Direct Initialization
+    $sdk2 = new WPEngineSDK([
+        'username' => 'your-username',
+        'password' => 'your-password'
+    ]);
+
+    // Verify authentication
+    $user = $sdk1->users->getCurrentUser();
+    echo "Successfully authenticated as: " . $user['email'] . "\n";
+
+} catch (Exception $e) {
+    echo "Authentication failed: " . $e->getMessage() . "\n";
+}
+```
+
+## Environment Variable Setup
+
+### Local Development
+
+Create a `.env` file in your project root:
+
+```bash
+# WP Engine API Credentials
+WP_ENGINE_API_USERNAME=your-username
+WP_ENGINE_API_PASSWORD=your-password
+```
+
+Then load it in your application:
+
+Python:
+```python
+from dotenv import load_dotenv
+load_dotenv()
+```
+
+TypeScript:
+```typescript
+import * as dotenv from 'dotenv';
+dotenv.config();
+```
+
+PHP:
+```php
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+```
+
+### Production Environment
+
+Set environment variables according to your hosting platform:
+
+- **Docker**:
+  ```dockerfile
+  ENV WP_ENGINE_API_USERNAME=your-username
+  ENV WP_ENGINE_API_PASSWORD=your-password
+  ```
+
+- **Kubernetes**:
+  ```yaml
+  env:
+    - name: WP_ENGINE_API_USERNAME
+      valueFrom:
+        secretKeyRef:
+          name: wpengine-credentials
+          key: username
+    - name: WP_ENGINE_API_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: wpengine-credentials
+          key: password
+  ```
+
+## Best Practices
+
+1. **Environment Variables**
+   - Always use environment variables in production
+   - Keep `.env` files out of version control
+   - Use different credentials for development and production
+
+2. **Error Handling**
+   - Implement proper error handling for authentication failures
+   - Provide clear error messages
+   - Log authentication issues appropriately
+
+3. **Security**
+   - Never commit credentials to version control
+   - Rotate credentials regularly
+   - Use separate credentials for different environments
+
+4. **Configuration**
+   - Use configuration files to manage environment-specific settings
+   - Document required environment variables
+   - Provide example `.env` files with dummy values
+
+## Next Steps
+
+- Try the [Basic Usage Examples](/sdk-examples/basic-usage/) to start making API calls
+- Learn about [Error Handling](/sdk-examples/error-handling/) for robust applications
+- Explore [Site Management](/sdk-examples/site-management/) operations

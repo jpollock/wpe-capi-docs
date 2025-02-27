@@ -1,0 +1,349 @@
+---
+title: Error Handling Examples
+description: Learn best practices for handling errors with WP Engine API SDKs
+---
+
+This guide demonstrates best practices for handling errors and edge cases when using the WP Engine API SDKs. You'll learn how to implement robust error handling, retry logic, and graceful fallbacks.
+
+## Python SDK Error Handling
+
+```python
+from wp_engine_api import WPEngineAPI
+from wp_engine_api.exceptions import (
+    APIError,
+    AuthenticationError,
+    RateLimitError,
+    ResourceNotFoundError
+)
+import time
+from functools import wraps
+
+def retry_with_backoff(retries=3, backoff_in_seconds=1):
+    """Retry decorator with exponential backoff"""
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            retry_backoff = backoff_in_seconds
+            for i in range(retries):
+                try:
+                    return func(*args, **kwargs)
+                except RateLimitError as e:
+                    if i == retries - 1:
+                        raise
+                    time.sleep(retry_backoff)
+                    retry_backoff *= 2
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
+
+def demonstrate_error_handling():
+    client = WPEngineAPI()
+
+    try:
+        # Basic error handling
+        try:
+            site = client.sites.get("nonexistent-site")
+        except ResourceNotFoundError as e:
+            print(f"Site not found: {e}")
+        except AuthenticationError as e:
+            print(f"Authentication failed: {e}")
+        except APIError as e:
+            print(f"API error: {e}")
+
+        # Handling rate limits with retry logic
+        @retry_with_backoff(retries=3)
+        def list_sites_with_retry():
+            return client.sites.list()
+
+        sites = list_sites_with_retry()
+        print(f"Successfully listed {len(sites)} sites")
+
+        # Handling multiple operations
+        if sites:
+            site_id = sites[0].id
+            try:
+                # Multiple operations that might fail
+                site_details = client.sites.get(site_id)
+                backups = client.backups.list(site_id)
+                domains = client.domains.list(site_id)
+
+                print(f"Site: {site_details.name}")
+                print(f"Backups: {len(backups)}")
+                print(f"Domains: {len(domains)}")
+
+            except ResourceNotFoundError as e:
+                print(f"Resource not found: {e}")
+            except APIError as e:
+                print(f"API error: {e}")
+                if hasattr(e, 'response'):
+                    print(f"Response status: {e.response.status_code}")
+                    print(f"Error details: {e.response.json()}")
+
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+    finally:
+        client.close()
+
+if __name__ == "__main__":
+    demonstrate_error_handling()
+```
+
+## TypeScript SDK Error Handling
+
+```typescript
+import { WPEngineSDK, APIError, RetryConfig } from '@wpengine/api-typescript-sdk';
+
+// Custom retry configuration
+const retryConfig: RetryConfig = {
+  maxRetries: 3,
+  initialDelayMs: 1000,
+  maxDelayMs: 5000,
+  shouldRetry: (error: APIError) => {
+    return error.status === 429 || (error.status >= 500 && error.status < 600);
+  }
+};
+
+async function demonstrateErrorHandling(): Promise<void> {
+  const sdk = new WPEngineSDK({ retryConfig });
+
+  try {
+    // Basic error handling
+    try {
+      await sdk.installs.getInstall('nonexistent-site');
+    } catch (error) {
+      if (error instanceof APIError) {
+        console.error('API Error:', {
+          status: error.status,
+          message: error.message,
+          details: error.details
+        });
+      } else {
+        console.error('Unexpected error:', error);
+      }
+    }
+
+    // Handling multiple operations with Promise.allSettled
+    const sites = await sdk.installs.listInstalls();
+    if (sites.data.results?.length) {
+      const siteId = sites.data.results[0].id;
+      
+      const operations = await Promise.allSettled([
+        sdk.installs.getInstall(siteId),
+        sdk.backups.listBackups(siteId),
+        sdk.domains.listDomains(siteId)
+      ]);
+
+      operations.forEach((result, index) => {
+        if (result.status === 'fulfilled') {
+          console.log(`Operation ${index + 1} succeeded:`, result.value.data);
+        } else {
+          console.error(`Operation ${index + 1} failed:`, result.reason);
+        }
+      });
+    }
+
+    // Implementing custom retry logic
+    async function withRetry<T>(
+      operation: () => Promise<T>,
+      maxRetries: number = 3,
+      delayMs: number = 1000
+    ): Promise<T> {
+      let lastError: Error;
+      
+      for (let attempt = 0; attempt < maxRetries; attempt++) {
+        try {
+          return await operation();
+        } catch (error) {
+          lastError = error as Error;
+          
+          if (error instanceof APIError && error.status === 429) {
+            const delay = delayMs * Math.pow(2, attempt);
+            console.log(`Rate limited. Retrying in ${delay}ms...`);
+            await new Promise(resolve => setTimeout(resolve, delay));
+            continue;
+          }
+          
+          throw error;
+        }
+      }
+      
+      throw lastError;
+    }
+
+    // Using custom retry logic
+    try {
+      const result = await withRetry(
+        () => sdk.installs.listInstalls()
+      );
+      console.log('Operation succeeded after retries:', result.data);
+    } catch (error) {
+      console.error('Operation failed after all retries:', error);
+    }
+
+  } catch (error) {
+    console.error('Unexpected error:', error);
+  }
+}
+
+demonstrateErrorHandling();
+```
+
+## PHP SDK Error Handling
+
+```php
+<?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use WPEngine\WPEngineSDK;
+use WPEngine\Exception\APIException;
+use WPEngine\Exception\AuthenticationException;
+use WPEngine\Exception\RateLimitException;
+use WPEngine\Exception\ResourceNotFoundException;
+
+function retry_with_backoff($callback, $max_retries = 3, $initial_delay = 1) {
+    $delay = $initial_delay;
+    
+    for ($attempt = 1; $attempt <= $max_retries; $attempt++) {
+        try {
+            return $callback();
+        } catch (RateLimitException $e) {
+            if ($attempt === $max_retries) {
+                throw $e;
+            }
+            
+            echo "Rate limited. Retrying in {$delay} seconds...\n";
+            sleep($delay);
+            $delay *= 2;
+        }
+    }
+}
+
+function demonstrate_error_handling() {
+    $sdk = new WPEngineSDK();
+
+    try {
+        // Basic error handling
+        try {
+            $site = $sdk->sites->getSite('nonexistent-site');
+        } catch (ResourceNotFoundException $e) {
+            echo "Site not found: " . $e->getMessage() . "\n";
+        } catch (AuthenticationException $e) {
+            echo "Authentication failed: " . $e->getMessage() . "\n";
+        } catch (APIException $e) {
+            echo "API error: " . $e->getMessage() . "\n";
+            echo "Status code: " . $e->getCode() . "\n";
+            if ($e->hasResponse()) {
+                $response = $e->getResponse();
+                echo "Error details: " . json_encode($response->getData()) . "\n";
+            }
+        }
+
+        // Handling rate limits with retry logic
+        try {
+            $sites = retry_with_backoff(function() use ($sdk) {
+                return $sdk->sites->listSites();
+            });
+            echo "Successfully listed " . count($sites['results']) . " sites\n";
+        } catch (RateLimitException $e) {
+            echo "Rate limit exceeded after all retries\n";
+        }
+
+        // Handling multiple operations
+        if (!empty($sites['results'])) {
+            $site_id = $sites['results'][0]['id'];
+            
+            // Collect errors without stopping execution
+            $errors = [];
+            $results = [];
+
+            try {
+                $results['site'] = $sdk->sites->getSite($site_id);
+            } catch (Exception $e) {
+                $errors['site'] = $e->getMessage();
+            }
+
+            try {
+                $results['backups'] = $sdk->backups->listBackups($site_id);
+            } catch (Exception $e) {
+                $errors['backups'] = $e->getMessage();
+            }
+
+            try {
+                $results['domains'] = $sdk->domains->listDomains($site_id);
+            } catch (Exception $e) {
+                $errors['domains'] = $e->getMessage();
+            }
+
+            // Report results and errors
+            foreach ($results as $key => $value) {
+                echo "Successfully retrieved {$key}\n";
+            }
+
+            if (!empty($errors)) {
+                echo "\nEncountered errors:\n";
+                foreach ($errors as $key => $message) {
+                    echo "{$key}: {$message}\n";
+                }
+            }
+        }
+
+    } catch (Exception $e) {
+        echo "Unexpected error: " . $e->getMessage() . "\n";
+    }
+}
+
+demonstrate_error_handling();
+```
+
+## Error Types
+
+### Common API Errors
+
+1. **Authentication Errors**
+   - Invalid credentials
+   - Expired tokens
+   - Missing permissions
+
+2. **Rate Limit Errors**
+   - Too many requests
+   - Exceeded quota
+   - Time-based restrictions
+
+3. **Resource Errors**
+   - Not found
+   - Already exists
+   - Invalid state
+
+4. **Validation Errors**
+   - Invalid input
+   - Missing required fields
+   - Format errors
+
+## Best Practices
+
+1. **Structured Error Handling**
+   - Use specific error types
+   - Implement proper error hierarchies
+   - Provide meaningful error messages
+
+2. **Retry Logic**
+   - Implement exponential backoff
+   - Set maximum retry attempts
+   - Handle rate limits gracefully
+
+3. **Graceful Degradation**
+   - Provide fallback options
+   - Maintain partial functionality
+   - Log errors appropriately
+
+4. **Error Reporting**
+   - Include relevant context
+   - Log stack traces
+   - Track error frequencies
+
+## Next Steps
+
+- Try the [Basic Usage Examples](/sdk-examples/basic-usage/) to get started
+- Learn about [Site Management](/sdk-examples/site-management/) operations
+- Explore [Backup Management](/sdk-examples/backup-management/) features

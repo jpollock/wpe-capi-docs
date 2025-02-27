@@ -3,8 +3,6 @@ title: Quick Start Guide
 description: Get up and running with the WP Engine Customer API in minutes
 ---
 
-# Quick Start Guide
-
 This guide will help you make your first API request to the WP Engine Customer API. We'll walk through the process of authenticating and retrieving a list of your sites.
 
 ## Prerequisites

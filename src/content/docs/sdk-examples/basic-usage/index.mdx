@@ -1,0 +1,184 @@
+---
+title: Basic SDK Usage
+description: Learn how to use the WP Engine API SDKs with complete examples in Python, TypeScript, and PHP
+---
+
+This guide demonstrates how to use the WP Engine API SDKs to perform common operations. We'll show examples in multiple programming languages.
+
+## Python SDK
+
+```python
+from wp_engine_api import WPEngineAPI
+
+def main():
+    """Demonstrate basic usage of the Python SDK."""
+    # Initialize using environment variables
+    # Required env vars: WP_ENGINE_API_USERNAME, WP_ENGINE_API_PASSWORD
+    client = WPEngineAPI()
+
+    try:
+        # List all sites
+        print("\nListing your sites:")
+        sites = client.sites.list()
+        for site in sites:
+            print(f"- {site.name} (ID: {site.id})")
+            print(f"  Environment: {site.environment}")
+            print(f"  Status: {site.status}")
+            print(f"  Created: {site.created_at}")
+            if site.domain:
+                print(f"  Domain: {site.domain}")
+
+        # Get current user
+        print("\nGetting current user details:")
+        user = client.users.get_current()
+        print(f"Email: {user.email}")
+        print(f"Name: {user.first_name} {user.last_name}")
+
+        # Get a specific site's details
+        if sites:
+            site_id = sites[0].id
+            print(f"\nGetting detailed information for site {site_id}:")
+            site = client.sites.get(site_id)
+            print(f"Name: {site.name}")
+            print(f"PHP Version: {site.php_version}")
+            print(f"WordPress Version: {site.wordpress_version}")
+
+    except Exception as e:
+        print(f"Error: {e}")
+    finally:
+        client.close()
+
+if __name__ == "__main__":
+    main()
+```
+
+## TypeScript SDK
+
+```typescript
+import { WPEngineSDK } from '@wpengine/api-typescript-sdk';
+
+async function main(): Promise<void> {
+  // Initialize the SDK (uses environment variables by default)
+  const sdk = new WPEngineSDK();
+
+  try {
+    // Get Current User Information
+    console.log('\nFetching current user information...');
+    const currentUser = await sdk.users.getCurrentUser();
+    console.log('Current user:', {
+      id: currentUser.data.id,
+      email: currentUser.data.email,
+      name: `${currentUser.data.first_name} ${currentUser.data.last_name}`
+    });
+
+    // List Accounts
+    console.log('\nFetching accounts...');
+    const accounts = await sdk.accounts.listAccounts();
+    console.log('Available accounts:', accounts.data.results?.map(account => ({
+      id: account.id,
+      name: account.name
+    })));
+
+    // List Sites with Pagination
+    console.log('\nDemonstrating pagination...');
+    const firstPage = await sdk.installs.listInstalls(undefined, 5); // Get first 5 items
+    console.log('First page results:', firstPage.data.results?.map(site => ({
+      id: site.id,
+      name: site.name
+    })));
+
+    // Demonstrate parallel operations
+    console.log('\nDemonstrating parallel operations...');
+    const [accountsData, sitesData, userData] = await Promise.all([
+      sdk.accounts.listAccounts(),
+      sdk.installs.listInstalls(),
+      sdk.users.getCurrentUser()
+    ]);
+
+    console.log('Parallel fetch results:', {
+      accountCount: accountsData.data.results?.length || 0,
+      siteCount: sitesData.data.results?.length || 0,
+      user: userData.data.email
+    });
+
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
+}
+
+// Run the examples
+main().catch(console.error);
+```
+
+## PHP SDK
+
+```php
+<?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use WPEngine\WPEngineSDK;
+
+// Initialize the SDK with credentials from environment variables
+$sdk = new WPEngineSDK();
+
+try {
+    // Get current user
+    $user = $sdk->users->getCurrentUser();
+    echo "Current user: " . $user['email'] . "\n";
+    echo "Name: " . $user['first_name'] . " " . $user['last_name'] . "\n\n";
+
+    // List sites
+    $response = $sdk->sites->listSites();
+    echo "Your sites:\n";
+    foreach ($response['results'] as $site) {
+        echo "- " . $site['name'] . " (ID: " . $site['id'] . ")\n";
+        echo "  Environment: " . $site['environment'] . "\n";
+        echo "  Status: " . $site['status'] . "\n";
+        if (isset($site['domain'])) {
+            echo "  Domain: " . $site['domain'] . "\n";
+        }
+        echo "\n";
+    }
+
+    // List accounts
+    $response = $sdk->accounts->listAccounts();
+    echo "Your accounts:\n";
+    foreach ($response['results'] as $account) {
+        echo "- " . $account['name'] . " (ID: " . $account['id'] . ")\n";
+    }
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\n";
+}
+```
+
+## Key Features Demonstrated
+
+1. **SDK Initialization**
+   - All SDKs support environment variable configuration
+   - Credentials can also be passed directly to the constructor
+   - Best practice is to use environment variables for security
+
+2. **Common Operations**
+   - User information retrieval
+   - Site listing and details
+   - Account management
+   - Error handling
+
+3. **Advanced Features**
+   - Pagination handling (TypeScript example)
+   - Parallel operations (TypeScript example)
+   - Resource cleanup (Python example)
+
+4. **Error Handling**
+   - All examples include proper try/catch blocks
+   - Graceful error reporting
+   - Resource cleanup in finally blocks where appropriate
+
+## Next Steps
+
+- Check out the [Authentication Examples](/sdk-examples/authentication/) for detailed authentication scenarios
+- Learn about [Site Management](/sdk-examples/site-management/) for more site-related operations
+- Explore [Error Handling](/sdk-examples/error-handling/) for advanced error handling patterns
+- See [Backup Management](/sdk-examples/backup-management/) for backup-related operations

@@ -3,8 +3,6 @@ title: Introduction to the WP Engine Customer API
 description: Learn about the WP Engine Customer API and how it can help you manage your WordPress sites programmatically.
 ---
 
-# Introduction
-
 The WP Engine Customer API provides a powerful interface for programmatically managing your WordPress sites hosted on WP Engine. This RESTful API allows developers to automate tasks, integrate with other systems, and build custom tools that interact with the WP Engine platform.
 
 ## What You Can Do

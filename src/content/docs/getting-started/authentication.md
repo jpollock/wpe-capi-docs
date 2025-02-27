@@ -3,8 +3,6 @@ title: Authentication
 description: Learn how to authenticate with the WP Engine Customer API
 ---
 
-# Authentication
-
 The WP Engine Customer API uses Basic Authentication, a simple and secure way to authenticate your API requests. This guide will help you get started with authentication quickly.
 
 ## Getting Your Credentials

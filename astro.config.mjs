@@ -37,12 +37,14 @@ export default defineConfig({
                   ],
               },
               {
-                  label: 'Guides',
-                  autogenerate: { directory: 'guides' },
-              },
-              {
-                  label: 'Examples',
-                  autogenerate: { directory: 'examples' },
+                  label: 'SDK Examples',
+                  items: [
+                      { label: 'Basic Usage', slug: 'sdk-examples/basic-usage' },
+                      { label: 'Authentication', slug: 'sdk-examples/authentication' },
+                      { label: 'Site Management', slug: 'sdk-examples/site-management' },
+                      { label: 'Backup Management', slug: 'sdk-examples/backup-management' },
+                      { label: 'Error Handling', slug: 'sdk-examples/error-handling' },
+                  ],
               },
           ],
           components: {
