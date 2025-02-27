@@ -14,9 +14,6 @@ export default defineConfig({
               // Path to your custom CSS file
               './src/styles/custom.css',
           ],
-          social: {
-              github: 'https://github.com/wpengine/customer-api',
-          },
           sidebar: [
               {
                   label: 'Getting Started',
