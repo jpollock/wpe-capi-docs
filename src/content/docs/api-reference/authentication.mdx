@@ -11,12 +11,34 @@ This page provides detailed technical reference for authenticating with the WP E
 
 ## Authentication Method
 
-The WP Engine Customer API uses Basic Authentication. To authenticate your requests, you'll need:
+The WP Engine Customer API uses Basic Authentication, a simple and widely supported authentication scheme. The authentication flow works like this:
+
+1. Client prepares the authentication:
+   - Combines API username and password with a colon (username:password)
+   - Base64 encodes the combined string
+   - Adds "Basic " prefix to create the Authorization header
+
+2. Client makes API request:
+   - Includes the Authorization header
+   - Server validates the credentials
+
+3. Server responds:
+   - Success (200 OK): Returns requested data
+   - Failure (401 Unauthorized): Invalid credentials
+
+To authenticate your requests, you'll need:
 
 - API username
 - API password
 
-These credentials can be found in the [WP Engine User Portal](https://my.wpengine.com/api_access) under API Access.
+### Getting Your Credentials
+
+1. Log in to the [WP Engine User Portal](https://my.wpengine.com)
+2. Navigate to API Access in the left sidebar
+3. Click "Generate Credentials" if you don't have any
+4. Copy your API username and password
+
+Note: Keep these credentials secure. They provide access to your WP Engine resources.
 
 ## Using Basic Auth
 
@@ -58,7 +80,7 @@ Here's how to authenticate your requests in different programming languages:
     
     response = requests.get(
         'https://api.wpengineapi.com/v1/user',
-        headers={'Authorization': f'Basic {auth}'}
+        headers={'Authorization': 'Basic ' + auth}
     )
     ```
   </TabItem>
@@ -69,7 +91,7 @@ Here's how to authenticate your requests in different programming languages:
     const auth = Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64');
     
     const response = await axios.get('https://api.wpengineapi.com/v1/user', {
-        headers: { 'Authorization': `Basic ${auth}` }
+        headers: { 'Authorization': 'Basic ' + auth }
     });
     ```
   </TabItem>
@@ -115,6 +137,58 @@ When authentication fails, you'll receive one of these responses:
 | 401 | Bad Credentials | Verify your API username and password are correct |
 | 429 | Too Many Requests | Wait before retrying (rate limit exceeded) |
 
+## Environment Setup
+
+Here's how to securely store and use your API credentials in different environments:
+
+<Tabs>
+  <TabItem label="Laravel">
+    ```php
+    // .env
+    WPE_API_USER=your_api_username
+    WPE_API_PASSWORD=your_api_password
+
+    // config/services.php
+    'wpengine' => [
+        'username' => env('WPE_API_USER'),
+        'password' => env('WPE_API_PASSWORD'),
+    ]
+    ```
+  </TabItem>
+  <TabItem label="Express">
+    ```javascript
+    // .env
+    WPE_API_USER=your_api_username
+    WPE_API_PASSWORD=your_api_password
+
+    // config.js
+    require('dotenv').config();
+    
+    module.exports = {
+        wpe: {
+            username: process.env.WPE_API_USER,
+            password: process.env.WPE_API_PASSWORD
+        }
+    }
+    ```
+  </TabItem>
+  <TabItem label="Django">
+    ```python
+    # .env
+    WPE_API_USER=your_api_username
+    WPE_API_PASSWORD=your_api_password
+
+    # settings.py
+    from decouple import config
+
+    WPE_API = {
+        'username': config('WPE_API_USER'),
+        'password': config('WPE_API_PASSWORD')
+    }
+    ```
+  </TabItem>
+</Tabs>
+
 ## Security Best Practices
 
 1. **Protect Your Credentials**
@@ -122,20 +196,45 @@ When authentication fails, you'll receive one of these responses:
    - Don't commit credentials to version control
    - Use environment variables to store credentials
    - Rotate credentials if they're compromised
+   - Use secrets management services in production
 
 2. **Use HTTPS**
    - Always make API requests over HTTPS
    - The API will reject non-HTTPS requests
+   - Verify SSL/TLS certificates
 
 3. **Implement Rate Limiting**
    - Add retry logic with exponential backoff
    - Handle 429 responses appropriately
    - Monitor your API usage
+   - Consider using a circuit breaker pattern
 
 4. **Minimal Scope**
    - Use accounts with minimal necessary permissions
    - Create separate credentials for different applications
    - Regularly audit API access
+   - Implement proper logging for API calls
+
+## Troubleshooting Guide
+
+Common authentication issues and their solutions:
+
+| Issue | Possible Cause | Solution |
+|-------|---------------|----------|
+| 401 Unauthorized | Incorrect credentials | Double-check username and password, ensure no whitespace |
+| 401 Unauthorized | Expired credentials | Generate new credentials in User Portal |
+| 429 Too Many Requests | Rate limit exceeded | Implement exponential backoff, reduce request frequency |
+| Connection failed | HTTPS not used | Ensure requests use https:// protocol |
+| Base64 encoding issues | Special characters | Use proper encoding function for your language |
+| "Basic" prefix missing | Incorrect header format | Include "Basic " prefix with space in Authorization header |
+
+### Debugging Tips
+
+1. Test credentials with cURL first
+2. Use API monitoring tools like Postman
+3. Check request headers in browser dev tools
+4. Verify Base64 encoding with online tools
+5. Enable debug logging in your HTTP client
 
 ## Next Steps
 

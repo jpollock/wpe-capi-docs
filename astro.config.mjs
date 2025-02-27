@@ -33,6 +33,7 @@ export default defineConfig({
                       { label: 'Authentication', slug: 'api-reference/authentication' },
                       { label: 'Pagination', slug: 'api-reference/pagination' },
                       { label: 'Endpoints', slug: 'api-reference/endpoints' },
+                      { label: 'Playground', slug: 'api-reference/playground' },
                   ],
               },
               {

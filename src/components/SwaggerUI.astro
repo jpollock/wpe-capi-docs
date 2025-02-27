@@ -1,0 +1,103 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={["swagger-container", className]}>
+  <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui.css" />
+  <div id="swagger-ui"></div>
+
+  <script is:inline src="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui-bundle.js"></script>
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.ui = SwaggerUIBundle({
+        url: '/public/openapi/v1.yaml',
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIBundle.SwaggerUIStandalonePreset
+        ],
+        layout: "BaseLayout",
+        supportedSubmitMethods: ["get", "put", "post", "delete", "patch"],
+        syntaxHighlight: {
+          theme: "monokai"
+        }
+      });
+    });
+  </script>
+
+  <style>
+    .swagger-container {
+      margin: 2rem 0;
+      border: 1px solid var(--sl-color-gray-5);
+      border-radius: 0.5rem;
+      min-height: 800px;
+    }
+
+    /* WP Engine brand colors */
+    :global(.swagger-ui) {
+      /* Primary colors */
+      --primary-color: #0ecad4;
+      --link-color: #0073aa;
+      
+      /* Font */
+      font-family: var(--sl-font);
+    }
+
+    :global(.swagger-ui .opblock-tag) {
+      color: var(--sl-color-text);
+      border-bottom: 1px solid var(--sl-color-gray-5);
+    }
+
+    :global(.swagger-ui .opblock) {
+      border-radius: 4px;
+      border: 1px solid var(--sl-color-gray-5);
+      box-shadow: none;
+    }
+
+    :global(.swagger-ui .opblock .opblock-summary-description) {
+      color: var(--sl-color-text-muted);
+    }
+
+    :global(.swagger-ui .opblock-description-wrapper p) {
+      color: var(--sl-color-text);
+    }
+
+    /* Method colors - keep standard colors for HTTP methods */
+    :global(.swagger-ui .opblock-get) {
+      background: rgba(15, 128, 255, 0.1);
+      border-color: #0f80ff;
+    }
+
+    :global(.swagger-ui .opblock-post) {
+      background: rgba(0, 170, 19, 0.1);
+      border-color: #00aa13;
+    }
+
+    :global(.swagger-ui .opblock-put) {
+      background: rgba(255, 144, 0, 0.1);
+      border-color: #ff9000;
+    }
+
+    :global(.swagger-ui .opblock-delete) {
+      background: rgba(227, 0, 0, 0.1);
+      border-color: #e30000;
+    }
+
+    :global(.swagger-ui .opblock-patch) {
+      background: rgba(179, 0, 227, 0.1);
+      border-color: #b300e3;
+    }
+
+    /* Responsive height adjustment */
+    @media (max-width: 768px) {
+      .swagger-container {
+        min-height: 600px;
+      }
+    }
+  </style>
+</div>
