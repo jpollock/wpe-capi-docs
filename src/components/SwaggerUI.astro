@@ -14,7 +14,7 @@ const { class: className } = Astro.props;
   <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
       window.ui = SwaggerUIBundle({
-        url: '/public/openapi/v1.yaml',
+        url: '/openapi/v1.yaml',
         dom_id: '#swagger-ui',
         deepLinking: true,
         presets: [
