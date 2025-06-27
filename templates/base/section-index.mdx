@@ -1,0 +1,69 @@
+---
+title: {{tag.displayName}} API
+description: {{#if tag.description}}{{tag.description}}{{else}}Manage {{tag.displayName}} resources using the WP Engine Customer API{{/if}}
+---
+
+{/* AUTO-GENERATED: Do not edit directly */}
+{/* Source: public/openapi/v1.yaml */}
+{/* Last updated: {{timestamp}} */}
+{/* Generator: {{generator}} */}
+
+# {{tag.displayName}} API
+
+{{#if tag.description}}
+{{tag.description}}
+{{else}}
+Manage {{tag.displayName}} resources using the WP Engine Customer API.
+{{/if}}
+
+## Available Endpoints
+
+{{#each tag.endpoints}}
+### {{method}} {{escapePath path}}
+
+**{{displayName}}**
+
+{{#if description}}
+{{description}}
+{{else}}
+{{summary}}
+{{/if}}
+
+[View Details →](/api-reference/endpoints/{{kebabCase ../tag.name}}/{{slug}}/)
+
+---
+
+{{/each}}
+
+## Authentication
+
+{{#if tag.endpoints.[0].security.length}}
+All {{tag.displayName}} endpoints require authentication. See the [Authentication guide](/api-reference/authentication/) for details on how to authenticate your requests.
+{{else}}
+These endpoints do not require authentication.
+{{/if}}
+
+## Rate Limiting
+
+Please be aware of rate limiting when making requests to {{tag.displayName}} endpoints. See our [rate limiting documentation](/api-reference/overview/#rate-limiting) for more information.
+
+{/* CUSTOM-START: additional-section-info */}
+{/* Add any custom section-specific information here */}
+{/* CUSTOM-END: additional-section-info */}
+
+## Related Resources
+
+- [API Overview](/api-reference/overview/)
+- [Authentication](/api-reference/authentication/)
+- [Pagination](/api-reference/pagination/)
+- [Try the API](/try/playground/)
+
+{{#if tag.endpoints.length}}
+## Quick Reference
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+{{#each tag.endpoints}}
+| {{method}} | `{{escapePath path}}` | {{summary}} |
+{{/each}}
+{{/if}}

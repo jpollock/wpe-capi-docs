@@ -1,0 +1,194 @@
+---
+title: List your account users
+description: List your account users
+---
+
+{/* AUTO-GENERATED: Do not edit directly */}
+{/* Source: public/openapi/v1.yaml */}
+{/* Last updated: 2025-06-27T15:21:25.489Z */}
+{/* Generator: scripts/generate-docs.js v1.0.0 */}
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+# GET /accounts/\{account_id\}/account_users
+
+List your account users
+
+
+
+## Parameters
+
+### Path Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| account_id | string (uuid) | yes | ID of account |
+
+
+
+
+## Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X GET \
+  -u "API_USER_ID:API_USER_PASSWORD" \
+  "https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    <?php
+require_once 'vendor/autoload.php';
+
+use GuzzleHttp\Client;
+
+$client = new Client();
+$auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+
+try {
+    $response = $client->get('https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth
+        ]
+    ]);
+
+    $data = json_decode($response->getBody(), true);
+    print_r($data);
+} catch (Exception $e) {
+    echo 'Error: ' . $e->getMessage();
+}
+?>
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import requests
+import json
+import base64
+
+url = "https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users"
+auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+headers = {
+    'Authorization': f'Basic {auth_string}'
+}
+
+try:
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
+    result = response.json()
+    print(json.dumps(result, indent=2))
+except requests.exceptions.RequestException as e:
+    print(f"Error: {e}")
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+const config = {
+  method: 'get',
+  url: 'https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users',
+  headers: {
+    'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
+  }
+};
+
+async function makeRequest() {
+  try {
+    const response = await axios(config);
+    console.log(JSON.stringify(response.data, null, 2));
+  } catch (error) {
+    console.error('Error:', error.response?.data || error.message);
+  }
+}
+
+makeRequest();
+    ```
+  </TabItem>
+</Tabs>
+
+## Responses
+
+### 200 List of account users
+
+List of account users
+
+```json
+{
+  "results": [
+    {
+      "user_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+      "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+      "first_name": "Joe",
+      "last_name": "Smith",
+      "email": "joeSmith@test.com",
+      "phone": "1234567890",
+      "invite_accepted": false,
+      "mfa_enabled": true,
+      "roles": "billing, partial"
+    }
+  ]
+}
+```
+
+### 400 Bad Request
+
+Bad Request
+
+```json
+{
+  "message": "Invalid user ID format"
+}
+```
+
+### 401 Authentication Error
+
+Authentication Error
+
+```json
+{
+  "message": "Authentication required"
+}
+```
+
+### 429 
+
+
+```json
+{
+  "message": "Rate limit exceeded - too many requests"
+}
+```
+
+### 503 
+
+
+```json
+{
+  "message": "Service temporarily unavailable"
+}
+```
+
+
+## Error Responses
+
+- **400**: Bad Request
+- **401**: Authentication Error
+- **429**: 
+- **503**: 
+
+## Authentication
+
+This endpoint requires authentication. See the [Authentication guide](/api-reference/authentication/) for details.
+
+{/* CUSTOM-START: additional-notes */}
+{/* Add any custom notes or examples here */}
+{/* CUSTOM-END: additional-notes */}
+
+## Related Resources
+
+- [API Overview](/api-reference/overview/)
+- [Authentication](/api-reference/authentication/)
+- [Account User endpoints](/api-reference/endpoints/account-user/)

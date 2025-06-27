@@ -15,51 +15,41 @@ Before you begin, make sure you have:
 
 ## Step 1: Authenticate
 
-For this quick start, we'll use an API key for simplicity. If you're building a user-facing application, you should use OAuth 2.0 instead.
+For this quick start, we'll use basic authentication with your API credentials. If you're building a user-facing application, you should use OAuth 2.0 instead.
 
-First, [generate an API key](/getting-started/authentication/#creating-an-api-key) if you don't already have one.
+First, [generate API credentials](/getting-started/authentication/#creating-an-api-key) if you don't already have them. You'll need both an API user ID and password.
 
 ## Step 2: Make Your First API Request
 
 Let's retrieve a list of your WP Engine sites. This is a simple GET request to the `/sites` endpoint:
 
 ```bash
-curl -X GET https://wpengineapi.com/v1/sites \
-  -H "Authorization: ApiKey YOUR_API_KEY" \
-  -H "Content-Type: application/json"
+curl -X GET https://api.wpengineapi.com/v1/sites \
+  -u "API_USER_ID:API_USER_PASSWORD"
 ```
 
-Replace `YOUR_API_KEY` with your actual API key.
+Replace `API_USER_ID` and `API_USER_PASSWORD` with your actual API credentials.
 
 ### Example Response
 
 ```json
 {
+  "previous": "https://api.wpengineapi.com/v1/sites?limit=100&offset=0",
+  "next": "https://api.wpengineapi.com/v1/sites?limit=100&offset=200",
+  "count": 225,
   "results": [
     {
-      "id": "site_12345",
-      "name": "My WordPress Site",
-      "environment": "production",
-      "created_at": "2023-01-15T12:00:00Z",
-      "url": "https://mysite.wpengine.com",
-      "status": "active"
-    },
-    {
-      "id": "site_67890",
-      "name": "Another WordPress Site",
-      "environment": "production",
-      "created_at": "2023-02-20T14:30:00Z",
-      "url": "https://anothersite.wpengine.com",
-      "status": "active"
+      "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+      "name": "Torque Magazine",
+      "account": {
+        "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+      },
+      "tags": [
+        "production"
+      ],
+      "installs": []
     }
-  ],
-  "pagination": {
-    "total": 2,
-    "count": 2,
-    "per_page": 10,
-    "current_page": 1,
-    "total_pages": 1
-  }
+  ]
 }
 ```
 
@@ -68,61 +58,68 @@ Replace `YOUR_API_KEY` with your actual API key.
 Now, let's get more details about a specific site. Use the site ID from the previous response:
 
 ```bash
-curl -X GET https://wpengineapi.com/v1/sites/site_12345 \
-  -H "Authorization: ApiKey YOUR_API_KEY" \
-  -H "Content-Type: application/json"
+curl -X GET https://api.wpengineapi.com/v1/sites/28c78b6d-c2da-4f09-85f5-1ad588089b2d \
+  -u "API_USER_ID:API_USER_PASSWORD"
 ```
 
 ### Example Response
 
 ```json
 {
-  "id": "site_12345",
-  "name": "My WordPress Site",
-  "environment": "production",
-  "created_at": "2023-01-15T12:00:00Z",
-  "updated_at": "2023-03-10T09:45:00Z",
-  "url": "https://mysite.wpengine.com",
-  "status": "active",
-  "php_version": "8.1",
-  "wordpress_version": "6.2",
-  "disk_usage": {
-    "used": 2.5,
-    "total": 10,
-    "unit": "GB"
+  "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "name": "Torque Magazine",
+  "account": {
+    "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
   },
-  "bandwidth": {
-    "current_month": 15.7,
-    "unit": "GB"
-  },
-  "environments": [
+  "tags": [
+    "production"
+  ],
+  "installs": []
+}
+```
+
+## Step 4: List Your WordPress Installations
+
+To work with backups and other install-specific operations, you'll need to get your WordPress installations:
+
+```bash
+curl -X GET https://api.wpengineapi.com/v1/installs \
+  -u "API_USER_ID:API_USER_PASSWORD"
+```
+
+### Example Response
+
+```json
+{
+  "previous": "https://api.wpengineapi.com/v1/installs?limit=100&offset=0",
+  "next": "https://api.wpengineapi.com/v1/installs?limit=100&offset=200",
+  "count": 225,
+  "results": [
     {
-      "name": "production",
-      "url": "https://mysite.wpengine.com"
-    },
-    {
-      "name": "staging",
-      "url": "https://stagingmysite.wpengine.com"
-    },
-    {
-      "name": "development",
-      "url": "https://devmysite.wpengine.com"
+      "id": "294deacc-d8b8-4005-82c4-0727ba8ddde0",
+      "name": "torquemag",
+      "account": {
+        "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+      },
+      "php_version": "7.0",
+      "status": "active",
+      "cname": "mywebsite.wpengine.com"
     }
   ]
 }
 ```
 
-## Step 4: Create a Backup
+## Step 5: Create a Backup
 
-Let's create a backup of your site:
+Let's create a backup of your WordPress installation:
 
 ```bash
-curl -X POST https://wpengineapi.com/v1/sites/site_12345/backups \
-  -H "Authorization: ApiKey YOUR_API_KEY" \
+curl -X POST https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups \
+  -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
   -d '{
-    "description": "My first API-created backup",
-    "type": "full"
+    "description": "Quick start backup example",
+    "notification_emails": ["your-email@example.com"]
   }'
 ```
 
@@ -130,39 +127,64 @@ curl -X POST https://wpengineapi.com/v1/sites/site_12345/backups \
 
 ```json
 {
-  "id": "backup_54321",
-  "site_id": "site_12345",
-  "description": "My first API-created backup",
-  "type": "full",
-  "status": "in_progress",
-  "created_at": "2023-04-01T10:30:00Z",
-  "estimated_completion_time": "2023-04-01T10:45:00Z"
+  "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "status": "requested"
 }
 ```
 
-## Step 5: Check Backup Status
+## Step 6: Create an Account User
 
-You can check the status of your backup:
+Let's create a new user for your account. You'll need your account ID from the previous responses:
 
 ```bash
-curl -X GET https://wpengineapi.com/v1/sites/site_12345/backups/backup_54321 \
-  -H "Authorization: ApiKey YOUR_API_KEY" \
-  -H "Content-Type: application/json"
+curl -X POST https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users \
+  -u "API_USER_ID:API_USER_PASSWORD" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "user": {
+      "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+      "first_name": "John",
+      "last_name": "Doe",
+      "email": "john.doe@example.com",
+      "roles": "partial"
+    }
+  }'
 ```
 
 ### Example Response
 
 ```json
 {
-  "id": "backup_54321",
-  "site_id": "site_12345",
-  "description": "My first API-created backup",
-  "type": "full",
-  "status": "completed",
-  "created_at": "2023-04-01T10:30:00Z",
-  "completed_at": "2023-04-01T10:42:00Z",
-  "size": "1.2GB",
-  "download_url": "https://wpengineapi.com/v1/sites/site_12345/backups/backup_54321/download"
+  "message": "Your change was successful.",
+  "account_user": {
+    "user_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+    "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john.doe@example.com",
+    "phone": null,
+    "invite_accepted": false,
+    "mfa_enabled": false,
+    "roles": "partial"
+  }
+}
+```
+
+## Step 7: Check Backup Status
+
+You can check the status of your backup:
+
+```bash
+curl -X GET https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups/28c78b6d-c2da-4f09-85f5-1ad588089b2d \
+  -u "API_USER_ID:API_USER_PASSWORD"
+```
+
+### Example Response
+
+```json
+{
+  "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "status": "requested"
 }
 ```
 
@@ -181,25 +203,31 @@ Congratulations! You've made your first API requests to the WP Engine Customer A
 
 ```python
 import requests
+import base64
 
-API_KEY = "YOUR_API_KEY"
-BASE_URL = "https://wpengineapi.com/v1"
+API_USER_ID = "YOUR_API_USER_ID"
+API_PASSWORD = "YOUR_API_PASSWORD"
+BASE_URL = "https://api.wpengineapi.com/v1"
 
+# Create basic auth header
+auth_string = base64.b64encode(f'{API_USER_ID}:{API_PASSWORD}'.encode()).decode()
 headers = {
-    "Authorization": f"ApiKey {API_KEY}",
-    "Content-Type": "application/json"
+    "Authorization": f"Basic {auth_string}"
 }
 
 # Get all sites
 response = requests.get(f"{BASE_URL}/sites", headers=headers)
+response.raise_for_status()
 sites = response.json()
 print(sites)
 
 # Get specific site
-site_id = sites["results"][0]["id"]
-response = requests.get(f"{BASE_URL}/sites/{site_id}", headers=headers)
-site_details = response.json()
-print(site_details)
+if sites["results"]:
+    site_id = sites["results"][0]["id"]
+    response = requests.get(f"{BASE_URL}/sites/{site_id}", headers=headers)
+    response.raise_for_status()
+    site_details = response.json()
+    print(site_details)
 ```
 
 ### JavaScript (Node.js)
@@ -207,41 +235,45 @@ print(site_details)
 ```javascript
 const axios = require('axios');
 
-const API_KEY = 'YOUR_API_KEY';
-const BASE_URL = 'https://wpengineapi.com/v1';
+const API_USER_ID = 'YOUR_API_USER_ID';
+const API_PASSWORD = 'YOUR_API_PASSWORD';
+const BASE_URL = 'https://api.wpengineapi.com/v1';
 
 const headers = {
-  'Authorization': `ApiKey ${API_KEY}`,
-  'Content-Type': 'application/json'
+  'Authorization': 'Basic ' + Buffer.from(`${API_USER_ID}:${API_PASSWORD}`).toString('base64')
 };
 
-// Get all sites
-axios.get(`${BASE_URL}/sites`, { headers })
-  .then(response => {
-    console.log(response.data);
+async function makeRequests() {
+  try {
+    // Get all sites
+    const sitesResponse = await axios.get(`${BASE_URL}/sites`, { headers });
+    console.log(sitesResponse.data);
     
     // Get specific site
-    const siteId = response.data.results[0].id;
-    return axios.get(`${BASE_URL}/sites/${siteId}`, { headers });
-  })
-  .then(response => {
-    console.log(response.data);
-  })
-  .catch(error => {
+    if (sitesResponse.data.results.length > 0) {
+      const siteId = sitesResponse.data.results[0].id;
+      const siteResponse = await axios.get(`${BASE_URL}/sites/${siteId}`, { headers });
+      console.log(siteResponse.data);
+    }
+  } catch (error) {
     console.error('Error:', error.response ? error.response.data : error.message);
-  });
+  }
+}
+
+makeRequests();
 ```
 
 ### PHP
 
 ```php
 <?php
-$apiKey = 'YOUR_API_KEY';
-$baseUrl = 'https://wpengineapi.com/v1';
+$apiUserId = 'YOUR_API_USER_ID';
+$apiPassword = 'YOUR_API_PASSWORD';
+$baseUrl = 'https://api.wpengineapi.com/v1';
 
+$auth = base64_encode($apiUserId . ':' . $apiPassword);
 $headers = [
-    'Authorization: ApiKey ' . $apiKey,
-    'Content-Type: application/json'
+    'Authorization: Basic ' . $auth
 ];
 
 // Get all sites
@@ -254,14 +286,71 @@ $sites = json_decode($response, true);
 print_r($sites);
 
 // Get specific site
-$siteId = $sites['results'][0]['id'];
-$ch = curl_init($baseUrl . '/sites/' . $siteId);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+if (!empty($sites['results'])) {
+    $siteId = $sites['results'][0]['id'];
+    $ch = curl_init($baseUrl . '/sites/' . $siteId);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-$response = curl_exec($ch);
-$siteDetails = json_decode($response, true);
-print_r($siteDetails);
+    $response = curl_exec($ch);
+    $siteDetails = json_decode($response, true);
+    print_r($siteDetails);
+}
 
 curl_close($ch);
 ?>
+```
+
+## Common Error Responses
+
+When working with the API, you may encounter these common error responses:
+
+### 401 Authentication Required
+
+```json
+{
+  "message": "Authentication required"
+}
+```
+
+This means your API credentials are missing or invalid. Double-check your `API_USER_ID` and `API_PASSWORD`.
+
+### 403 Insufficient Permissions
+
+```json
+{
+  "message": "Insufficient permissions to access this resource"
+}
+```
+
+Your API credentials don't have permission to access the requested resource.
+
+### 404 Resource Not Found
+
+```json
+{
+  "message": "Resource not found"
+}
+```
+
+The requested resource (site, install, backup, etc.) doesn't exist or you don't have access to it.
+
+### 429 Rate Limit Exceeded
+
+```json
+{
+  "message": "Rate limit exceeded - too many requests"
+}
+```
+
+You've made too many requests in a short period. Wait a moment before making additional requests.
+
+## Tips for Success
+
+1. **Use UUIDs**: All resource IDs in the WP Engine API are UUIDs (like `28c78b6d-c2da-4f09-85f5-1ad588089b2d`)
+2. **Handle Pagination**: Most list endpoints return paginated results with `previous`, `next`, and `count` fields
+3. **Check Status Codes**: Always check HTTP status codes and handle errors appropriately
+4. **Store Credentials Securely**: Never hardcode API credentials in your source code
+5. **Use HTTPS**: All API requests must use HTTPS
+
+Ready to dive deeper? Check out the [complete API reference](/api-reference/overview/) for detailed documentation on all available endpoints.

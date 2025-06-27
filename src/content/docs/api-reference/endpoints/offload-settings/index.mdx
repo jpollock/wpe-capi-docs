@@ -1,0 +1,84 @@
+---
+title: Offload Settings API
+description: Manage Offload Settings resources using the WP Engine Customer API
+---
+
+{/* AUTO-GENERATED: Do not edit directly */}
+{/* Source: public/openapi/v1.yaml */}
+{/* Last updated: 2025-06-27T15:21:25.523Z */}
+{/* Generator: scripts/generate-docs.js v1.0.0 */}
+
+# Offload Settings API
+
+Manage Offload Settings resources using the WP Engine Customer API.
+
+## Available Endpoints
+
+### GET /installs/\{install_id\}/offload_settings/largefs_validation_file
+
+**Get the validation file needed to configure LargeFS**
+
+Returns the validation filename and contents necessary to configure an S3 bucket for LargeFS
+
+[View Details →](/api-reference/endpoints/offload-settings/get-large-fsvalidation-file/)
+
+---
+
+### GET /installs/\{install_id\}/offload_settings/files
+
+**Get the offload settings for an install**
+
+Returns the offload settings configuration for a specific install
+
+[View Details →](/api-reference/endpoints/offload-settings/get-offload-settings/)
+
+---
+
+### POST /installs/\{install_id\}/offload_settings/files
+
+**Configure offload settings for an install**
+
+Updates the offload settings configuration for a specific install
+
+[View Details →](/api-reference/endpoints/offload-settings/update-offload-settings/)
+
+---
+
+### PATCH /installs/\{install_id\}/offload_settings/files
+
+**Update specific offload settings for an install**
+
+Partially updates the offload settings configuration for a specific install
+
+[View Details →](/api-reference/endpoints/offload-settings/patch-offload-settings/)
+
+---
+
+
+## Authentication
+
+All Offload Settings endpoints require authentication. See the [Authentication guide](/api-reference/authentication/) for details on how to authenticate your requests.
+
+## Rate Limiting
+
+Please be aware of rate limiting when making requests to Offload Settings endpoints. See our [rate limiting documentation](/api-reference/overview/#rate-limiting) for more information.
+
+{/* CUSTOM-START: additional-section-info */}
+{/* Add any custom section-specific information here */}
+{/* CUSTOM-END: additional-section-info */}
+
+## Related Resources
+
+- [API Overview](/api-reference/overview/)
+- [Authentication](/api-reference/authentication/)
+- [Pagination](/api-reference/pagination/)
+- [Try the API](/try/playground/)
+
+## Quick Reference
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/installs/\{install_id\}/offload_settings/largefs_validation_file` | Get the validation file needed to configure LargeFS |
+| GET | `/installs/\{install_id\}/offload_settings/files` | Get the offload settings for an install |
+| POST | `/installs/\{install_id\}/offload_settings/files` | Configure offload settings for an install |
+| PATCH | `/installs/\{install_id\}/offload_settings/files` | Update specific offload settings for an install |

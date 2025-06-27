@@ -1,0 +1,196 @@
+---
+title: Retrieves the status of a backup of a WordPress installation
+description: Retrieves the status of a backup of a WordPress installation
+---
+
+{/* AUTO-GENERATED: Do not edit directly */}
+{/* Source: public/openapi/v1.yaml */}
+{/* Last updated: 2025-06-27T15:21:25.510Z */}
+{/* Generator: scripts/generate-docs.js v1.0.0 */}
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+# GET /installs/\{install_id\}/backups/\{backup_id\}
+
+Retrieves the status of a backup of a WordPress installation
+
+Retrieves the status of a backup of a WordPress installation.
+
+
+## Parameters
+
+### Path Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| install_id | string (uuid) | yes | ID of install |
+| backup_id | string (uuid) | yes | ID of backup |
+
+
+
+
+## Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X GET \
+  -u "API_USER_ID:API_USER_PASSWORD" \
+  "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups/e41fa98f-ea80-4654-b229-a9b765d0863a"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    <?php
+require_once 'vendor/autoload.php';
+
+use GuzzleHttp\Client;
+
+$client = new Client();
+$auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+
+try {
+    $response = $client->get('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups/e41fa98f-ea80-4654-b229-a9b765d0863a', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth
+        ]
+    ]);
+
+    $data = json_decode($response->getBody(), true);
+    print_r($data);
+} catch (Exception $e) {
+    echo 'Error: ' . $e->getMessage();
+}
+?>
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import requests
+import json
+import base64
+
+url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups/e41fa98f-ea80-4654-b229-a9b765d0863a"
+auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+headers = {
+    'Authorization': f'Basic {auth_string}'
+}
+
+try:
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
+    result = response.json()
+    print(json.dumps(result, indent=2))
+except requests.exceptions.RequestException as e:
+    print(f"Error: {e}")
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+const config = {
+  method: 'get',
+  url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups/e41fa98f-ea80-4654-b229-a9b765d0863a',
+  headers: {
+    'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
+  }
+};
+
+async function makeRequest() {
+  try {
+    const response = await axios(config);
+    console.log(JSON.stringify(response.data, null, 2));
+  } catch (error) {
+    console.error('Error:', error.response?.data || error.message);
+  }
+}
+
+makeRequest();
+    ```
+  </TabItem>
+</Tabs>
+
+## Responses
+
+### 200 A backup
+
+A backup
+
+```json
+{
+  "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "status": "requested"
+}
+```
+
+### 400 Bad Request
+
+Bad Request
+
+```json
+{
+  "message": "Bad request - invalid parameters"
+}
+```
+
+### 401 Authentication Error
+
+Authentication Error
+
+```json
+{
+  "message": "Authentication required"
+}
+```
+
+### 404 Not found
+
+Not found
+
+```json
+{
+  "message": "Resource not found"
+}
+```
+
+### 429 
+
+
+```json
+{
+  "message": "Rate limit exceeded - too many requests"
+}
+```
+
+### 503 
+
+
+```json
+{
+  "message": "Service temporarily unavailable"
+}
+```
+
+
+## Error Responses
+
+- **400**: Bad Request
+- **401**: Authentication Error
+- **404**: Not found
+- **429**: 
+- **503**: 
+
+## Authentication
+
+This endpoint requires authentication. See the [Authentication guide](/api-reference/authentication/) for details.
+
+{/* CUSTOM-START: additional-notes */}
+{/* Add any custom notes or examples here */}
+{/* CUSTOM-END: additional-notes */}
+
+## Related Resources
+
+- [API Overview](/api-reference/overview/)
+- [Authentication](/api-reference/authentication/)
+- [Backup endpoints](/api-reference/endpoints/backup/)

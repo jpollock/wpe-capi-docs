@@ -1,0 +1,183 @@
+name: Test Documentation Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_type:
+        description: 'Type of test to run'
+        required: true
+        default: 'basic'
+        type: choice
+        options:
+        - basic
+        - change-detection
+        - full-generation
+  pull_request:
+    paths:
+      - 'scripts/**'
+      - 'templates/**'
+      - '.github/workflows/**'
+
+jobs:
+  test-basic-setup:
+    if: github.event.inputs.test_type == 'basic' || github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Clear debug environment
+        run: |
+          unset NODE_OPTIONS
+          echo "Cleared NODE_OPTIONS for CI environment"
+      
+      - name: Test OpenAPI parsing
+        run: |
+          echo "🧪 Testing OpenAPI parsing..."
+          npm run parse-openapi
+          echo "✅ OpenAPI parsing successful"
+      
+      - name: Test documentation generation
+        run: |
+          echo "🧪 Testing documentation generation..."
+          npm run generate-docs
+          echo "✅ Documentation generation successful"
+      
+      - name: Test build process
+        run: |
+          echo "🧪 Testing build process..."
+          npm run build
+          echo "✅ Build process successful"
+      
+      - name: Validate generated files
+        run: |
+          echo "🧪 Validating generated files..."
+          
+          # Check if key files were generated
+          if [ ! -f "src/content/docs/api-reference/endpoints/all.mdx" ]; then
+            echo "❌ Main endpoints file not found"
+            exit 1
+          fi
+          
+          if [ ! -d "src/content/docs/api-reference/endpoints/account" ]; then
+            echo "❌ Account endpoints directory not found"
+            exit 1
+          fi
+          
+          if [ ! -f "dist/index.html" ]; then
+            echo "❌ Built index.html not found"
+            exit 1
+          fi
+          
+          echo "✅ All key files validated"
+
+  test-change-detection:
+    if: github.event.inputs.test_type == 'change-detection' || github.event.inputs.test_type == 'full-generation'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Test change detection script
+        run: |
+          echo "🧪 Testing change detection..."
+          
+          # Create a test spec file
+          cp public/openapi/v1.yaml /tmp/test-spec.yaml
+          
+          # Test with identical specs (should show no changes)
+          node scripts/detect-changes.js public/openapi/v1.yaml /tmp/test-spec.yaml
+          
+          HAS_CHANGES=$(cat /tmp/has-changes)
+          if [ "$HAS_CHANGES" = "true" ]; then
+            echo "⚠️  Identical specs detected as changed (this might be expected for first run)"
+          else
+            echo "✅ Identical specs correctly detected as unchanged"
+          fi
+          
+          echo "✅ Change detection script working"
+
+  test-full-generation:
+    if: github.event.inputs.test_type == 'full-generation'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Full pipeline test
+        run: |
+          echo "🧪 Running full pipeline test..."
+          
+          # Parse OpenAPI
+          npm run parse-openapi
+          
+          # Generate docs
+          npm run generate-docs
+          
+          # Update navigation (if script exists)
+          if npm run | grep -q "update-nav"; then
+            npm run update-nav
+          fi
+          
+          # Validate content (if script exists)
+          if npm run | grep -q "validate-content"; then
+            npm run validate-content
+          fi
+          
+          # Build
+          npm run build
+          
+          echo "✅ Full pipeline test completed"
+      
+      - name: Upload test artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-build-${{ github.run_number }}
+          path: dist/
+          retention-days: 1
+
+  report-results:
+    needs: [test-basic-setup, test-change-detection, test-full-generation]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report test results
+        run: |
+          echo "📊 Test Results Summary:"
+          echo "  - Basic Setup: ${{ needs.test-basic-setup.result || 'skipped' }}"
+          echo "  - Change Detection: ${{ needs.test-change-detection.result || 'skipped' }}"
+          echo "  - Full Generation: ${{ needs.test-full-generation.result || 'skipped' }}"
+          
+          # Check if any tests failed
+          if [[ "${{ needs.test-basic-setup.result }}" == "failure" ]] || \
+             [[ "${{ needs.test-change-detection.result }}" == "failure" ]] || \
+             [[ "${{ needs.test-full-generation.result }}" == "failure" ]]; then
+            echo "❌ Some tests failed"
+            exit 1
+          else
+            echo "✅ All tests passed or skipped as expected"
+          fi

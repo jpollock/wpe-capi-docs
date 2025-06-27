@@ -1,0 +1,264 @@
+---
+title: Add a new domain or redirect to an existing install
+description: Add a new domain or redirect to an existing install
+---
+
+{/* AUTO-GENERATED: Do not edit directly */}
+{/* Source: public/openapi/v1.yaml */}
+{/* Last updated: 2025-06-27T15:21:25.504Z */}
+{/* Generator: scripts/generate-docs.js v1.0.0 */}
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+# POST /installs/\{install_id\}/domains
+
+Add a new domain or redirect to an existing install
+
+Adds a domain or redirect to a specific install and optionally sets it as the primary domain
+
+
+## Parameters
+
+### Path Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| install_id | string (uuid) | yes | ID of install |
+
+
+
+### Request Body
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| name | string | yes |  |
+| primary | boolean | no |  |
+| redirect_to | string (uuid) | no |  |
+
+```json
+{
+  "name": "example.com",
+  "primary": true
+}
+```
+
+## Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X POST \
+  -u "API_USER_ID:API_USER_PASSWORD" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "name": "example.com",
+  "primary": true
+}' \
+  "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    <?php
+require_once 'vendor/autoload.php';
+
+use GuzzleHttp\Client;
+
+$client = new Client();
+$auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+
+try {
+    $response = $client->post('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth,
+            'Content-Type' => 'application/json'
+        ],
+        'json' => [
+    'name' => 'example.com',
+    'primary' => true
+]
+    ]);
+
+    $data = json_decode($response->getBody(), true);
+    print_r($data);
+} catch (Exception $e) {
+    echo 'Error: ' . $e->getMessage();
+}
+?>
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import requests
+import json
+import base64
+
+url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains"
+auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+headers = {
+    'Authorization': f'Basic {auth_string}',
+    'Content-Type': 'application/json'
+}
+
+data = {
+    "name": "example.com",
+    "primary": true
+}
+
+try:
+    response = requests.post(url, headers=headers, json=data)
+    response.raise_for_status()
+    result = response.json()
+    print(json.dumps(result, indent=2))
+except requests.exceptions.RequestException as e:
+    print(f"Error: {e}")
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+const config = {
+  method: 'post',
+  url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains',
+  headers: {
+    'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64'),
+    'Content-Type': 'application/json'
+  },
+  data: {
+  "name": "example.com",
+  "primary": true
+}
+};
+
+async function makeRequest() {
+  try {
+    const response = await axios(config);
+    console.log(JSON.stringify(response.data, null, 2));
+  } catch (error) {
+    console.error('Error:', error.response?.data || error.message);
+  }
+}
+
+makeRequest();
+    ```
+  </TabItem>
+</Tabs>
+
+## Responses
+
+### 201 Created
+
+Created
+
+```json
+{
+  "name": "torquemag.io",
+  "duplicate": true,
+  "primary": true,
+  "id": "e41fa98f-ea80-4654-b229-a9b765d0863a",
+  "network_type": "AN",
+  "network_details": {
+    "dns_config_info": {
+      "cname": "wp.wpenginepowered.com",
+      "a_records": [
+        "example-value"
+      ]
+    },
+    "network_info": {
+      "status": "ACTIVE",
+      "ssl": {
+        "status": "active"
+      }
+    }
+  },
+  "redirects_to": [
+    {
+      "id": "e41fa98f-ea80-4006-b229-a9b765d0863a",
+      "name": "redirect.com"
+    }
+  ],
+  "secure_all_urls": false
+}
+```
+
+### 400 Bad Request
+
+Bad Request
+
+```json
+{
+  "message": "Domain name is required",
+  "errors": [
+    {
+      "resource": "Domain",
+      "field": "name",
+      "type": "missing_field",
+      "code": "required",
+      "message": "Domain name cannot be empty"
+    }
+  ]
+}
+```
+
+### 401 Authentication Error
+
+Authentication Error
+
+```json
+{
+  "message": "Authentication required"
+}
+```
+
+### 403 Not authorized
+
+Not authorized
+
+```json
+{
+  "message": "Insufficient permissions to access this resource"
+}
+```
+
+### 429 Too many requests
+
+Too many requests
+
+```json
+{
+  "message": "Rate limit exceeded - too many requests"
+}
+```
+
+### 503 
+
+
+```json
+{
+  "message": "Service temporarily unavailable"
+}
+```
+
+
+## Error Responses
+
+- **400**: Bad Request
+- **401**: Authentication Error
+- **403**: Not authorized
+- **429**: Too many requests
+- **503**: 
+
+## Authentication
+
+This endpoint requires authentication. See the [Authentication guide](/api-reference/authentication/) for details.
+
+{/* CUSTOM-START: additional-notes */}
+{/* Add any custom notes or examples here */}
+{/* CUSTOM-END: additional-notes */}
+
+## Related Resources
+
+- [API Overview](/api-reference/overview/)
+- [Authentication](/api-reference/authentication/)
+- [Domain endpoints](/api-reference/endpoints/domain/)

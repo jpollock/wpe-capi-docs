@@ -26,10 +26,10 @@ export default defineConfig({
               {
                   label: 'API Reference',
                   items: [
-                      { label: 'Overview', slug: 'api-reference/overview' },
-                      { label: 'Authentication', slug: 'api-reference/authentication' },
-                      { label: 'Pagination', slug: 'api-reference/pagination' },
-                      { label: 'Endpoints', slug: 'api-reference/endpoints' },
+                      { label: 'Overview', link: '/api-reference/overview/' },
+                      { label: 'Authentication', link: '/api-reference/authentication/' },
+                      { label: 'Pagination', link: '/api-reference/pagination/' },
+                      { label: 'Endpoints', link: '/api-reference/endpoints/' },
                   ],
               },
               {

@@ -1,0 +1,135 @@
+---
+title: The current swagger specification
+description: The current swagger specification
+---
+
+{/* AUTO-GENERATED: Do not edit directly */}
+{/* Source: public/openapi/v1.yaml */}
+{/* Last updated: 2025-06-27T15:21:25.486Z */}
+{/* Generator: scripts/generate-docs.js v1.0.0 */}
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+# GET /swagger
+
+The current swagger specification
+
+# Description
+This will output the current swagger specification
+
+
+
+## Parameters
+
+
+
+
+
+## Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X GET \
+  "https://api.wpengineapi.com/v1/swagger"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    <?php
+require_once 'vendor/autoload.php';
+
+use GuzzleHttp\Client;
+
+$client = new Client();
+try {
+    $response = $client->get('https://api.wpengineapi.com/v1/swagger');
+
+    $data = json_decode($response->getBody(), true);
+    print_r($data);
+} catch (Exception $e) {
+    echo 'Error: ' . $e->getMessage();
+}
+?>
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import requests
+import json
+
+url = "https://api.wpengineapi.com/v1/swagger"
+
+try:
+    response = requests.get(url)
+    response.raise_for_status()
+    result = response.json()
+    print(json.dumps(result, indent=2))
+except requests.exceptions.RequestException as e:
+    print(f"Error: {e}")
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+const config = {
+  method: 'get',
+  url: 'https://api.wpengineapi.com/v1/swagger'
+};
+
+async function makeRequest() {
+  try {
+    const response = await axios(config);
+    console.log(JSON.stringify(response.data, null, 2));
+  } catch (error) {
+    console.error('Error:', error.response?.data || error.message);
+  }
+}
+
+makeRequest();
+    ```
+  </TabItem>
+</Tabs>
+
+## Responses
+
+### 200 Current swagger specification
+
+Current swagger specification
+
+
+### 429 
+
+
+```json
+{
+  "message": "Rate limit exceeded - too many requests"
+}
+```
+
+### 503 
+
+
+```json
+{
+  "message": "Service temporarily unavailable"
+}
+```
+
+
+## Error Responses
+
+- **429**: 
+- **503**: 
+
+
+{/* CUSTOM-START: additional-notes */}
+{/* Add any custom notes or examples here */}
+{/* CUSTOM-END: additional-notes */}
+
+## Related Resources
+
+- [API Overview](/api-reference/overview/)
+- [Authentication](/api-reference/authentication/)
+- [Swagger endpoints](/api-reference/endpoints/swagger/)

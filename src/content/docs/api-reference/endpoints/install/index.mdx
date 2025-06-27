@@ -1,0 +1,95 @@
+---
+title: Install API
+description: Manage Install resources using the WP Engine Customer API
+---
+
+{/* AUTO-GENERATED: Do not edit directly */}
+{/* Source: public/openapi/v1.yaml */}
+{/* Last updated: 2025-06-27T15:21:25.523Z */}
+{/* Generator: scripts/generate-docs.js v1.0.0 */}
+
+# Install API
+
+Manage Install resources using the WP Engine Customer API.
+
+## Available Endpoints
+
+### GET /installs
+
+**List your WordPress installations**
+
+List your WordPress installations
+
+[View Details →](/api-reference/endpoints/install/list-installs/)
+
+---
+
+### POST /installs
+
+**Create a new WordPress installation**
+
+Create a new WordPress installation
+
+[View Details →](/api-reference/endpoints/install/create-install/)
+
+---
+
+### GET /installs/\{install_id\}
+
+**Get an install by ID**
+
+Returns a single Install
+
+[View Details →](/api-reference/endpoints/install/get-install/)
+
+---
+
+### DELETE /installs/\{install_id\}
+
+**Delete an install by ID**
+
+This will delete the install, The delete is permanent and there is no confirmation prompt.
+
+[View Details →](/api-reference/endpoints/install/delete-install/)
+
+---
+
+### PATCH /installs/\{install_id\}
+
+**Update a WordPress installation**
+
+Update a WordPress installation
+
+[View Details →](/api-reference/endpoints/install/update-install/)
+
+---
+
+
+## Authentication
+
+All Install endpoints require authentication. See the [Authentication guide](/api-reference/authentication/) for details on how to authenticate your requests.
+
+## Rate Limiting
+
+Please be aware of rate limiting when making requests to Install endpoints. See our [rate limiting documentation](/api-reference/overview/#rate-limiting) for more information.
+
+{/* CUSTOM-START: additional-section-info */}
+{/* Add any custom section-specific information here */}
+{/* CUSTOM-END: additional-section-info */}
+
+## Related Resources
+
+- [API Overview](/api-reference/overview/)
+- [Authentication](/api-reference/authentication/)
+- [Pagination](/api-reference/pagination/)
+- [Try the API](/try/playground/)
+
+## Quick Reference
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/installs` | List your WordPress installations |
+| POST | `/installs` | Create a new WordPress installation |
+| GET | `/installs/\{install_id\}` | Get an install by ID |
+| DELETE | `/installs/\{install_id\}` | Delete an install by ID |
+| PATCH | `/installs/\{install_id\}` | Update a WordPress installation |
