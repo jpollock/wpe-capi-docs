@@ -23,7 +23,7 @@ export default defineConfig({
                       { label: 'Quick Start', slug: 'getting-started/quick-start' },
                   ],
               },
-              {
+                            {
                   label: 'API Reference',
                   items: [
                   { label: 'Overview', link: '/api-reference/overview/' },
