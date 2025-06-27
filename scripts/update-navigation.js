@@ -169,9 +169,9 @@ class NavigationUpdater {
         if (item.items) {
           const subItems = formatItems(item.items, currentIndent + '    ');
           const subItemsString = subItems.join(',\n');
-          return `${currentIndent}{\n${currentIndent}    label: '${item.label}',\n${currentIndent}    collapsed: ${item.collapsed || false},\n${currentIndent}    items: [\n${subItemsString}\n${currentIndent}    ]\n${currentIndent}}`;
+          return `${currentIndent}{\n${currentIndent}    label: '${this.escapeJavaScriptString(item.label)}',\n${currentIndent}    collapsed: ${item.collapsed || false},\n${currentIndent}    items: [\n${subItemsString}\n${currentIndent}    ]\n${currentIndent}}`;
         } else {
-          return `${currentIndent}{ label: '${item.label}', link: '${item.link}' }`;
+          return `${currentIndent}{ label: '${this.escapeJavaScriptString(item.label)}', link: '${item.link}' }`;
         }
       });
     };
@@ -179,7 +179,7 @@ class NavigationUpdater {
     const itemsArray = formatItems(section.items, indent + '    ');
     const itemsString = itemsArray.join(',\n');
     
-    return `${indent}{\n${indent}    label: '${section.label}',\n${indent}    items: [\n${itemsString}\n${indent}    ]\n${indent}}`;
+    return `${indent}{\n${indent}    label: '${this.escapeJavaScriptString(section.label)}',\n${indent}    items: [\n${itemsString}\n${indent}    ]\n${indent}}`;
   }
 
   /**
@@ -211,6 +211,19 @@ class NavigationUpdater {
       .replace(/([a-z])([A-Z])/g, '$1-$2')
       .replace(/[\s_]+/g, '-')
       .toLowerCase();
+  }
+
+  /**
+   * Escape string for safe use in JavaScript string literals
+   */
+  escapeJavaScriptString(str) {
+    return str
+      .replace(/\\/g, '\\\\')  // Escape backslashes first
+      .replace(/'/g, "\\'")    // Escape single quotes
+      .replace(/"/g, '\\"')    // Escape double quotes
+      .replace(/\n/g, '\\n')   // Escape newlines
+      .replace(/\r/g, '\\r')   // Escape carriage returns
+      .replace(/\t/g, '\\t');  // Escape tabs
   }
 
   /**
