@@ -1,0 +1,79 @@
+---
+title: API Endpoints
+description: Complete reference for all WP Engine Customer API endpoints
+---
+
+{/* AUTO-GENERATED: Do not edit directly */}
+{/* Source: public/openapi/v1.yaml */}
+{/* Last updated: {{timestamp}} */}
+{/* Generator: {{generator}} */}
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+# API Endpoints
+
+Welcome to the complete WP Engine Customer API endpoint reference. This documentation covers all {{stats.totalEndpoints}} available endpoints organized into {{stats.totalTags}} functional areas.
+
+## API Overview
+
+The WP Engine Customer API provides programmatic access to manage your WordPress sites, accounts, domains, backups, and more. All endpoints use RESTful conventions with JSON request and response bodies.
+
+- **Base URL**: `{{spec.schemes.[0]}}://{{spec.host}}{{spec.basePath}}`
+- **Version**: {{spec.version}}
+- **Authentication**: HTTP Basic Authentication
+- **Format**: JSON
+
+## Endpoint Categories
+
+<CardGrid>
+{{#each tags}}
+  <Card title="{{displayName}}" icon="{{#eq name 'account'}}user{{else}}{{#eq name 'site'}}document{{else}}{{#eq name 'install'}}setting{{else}}{{#eq name 'domain'}}external{{else}}{{#eq name 'backup'}}backup{{else}}{{#eq name 'cache'}}refresh{{else}}{{#eq name 'user'}}user{{else}}{{#eq name 'ssh_key'}}key{{else}}list{{/eq}}{{/eq}}{{/eq}}{{/eq}}{{/eq}}{{/eq}}{{/eq}}{{/eq}}">
+    {{#if description}}
+    {{description}}
+    {{else}}
+    Manage {{displayName}} resources and operations.
+    {{/if}}
+    
+    **{{endpoints.length}} endpoint{{#if (ne endpoints.length 1)}}s{{/if}}**
+    
+    [View {{displayName}} API →](/api-reference/endpoints/{{kebabCase name}}/)
+  </Card>
+{{/each}}
+</CardGrid>
+
+## Quick Start
+
+1. **Get API Credentials**: Obtain your API credentials from the WP Engine Portal
+2. **Choose an Endpoint**: Browse the categories above to find the endpoint you need
+3. **Make a Request**: Use the provided code examples to make your first API call
+4. **Try it Live**: Use our [API Playground](/try/playground/) to test endpoints interactively
+
+## All Endpoints
+
+{{#each tags}}
+### {{displayName}}
+
+{{#each endpoints}}
+- **{{method}}** `{{escapePath path}}` - {{summary}} [→](/api-reference/endpoints/{{kebabCase ../name}}/{{slug}}/)
+{{/each}}
+
+{{/each}}
+
+{/* CUSTOM-START: additional-overview */}
+{/* Add any custom overview content here */}
+{/* CUSTOM-END: additional-overview */}
+
+## Need Help?
+
+- **Getting Started**: Check out our [Getting Started guide](/getting-started/introduction/)
+- **Authentication**: Learn about [API authentication](/api-reference/authentication/)
+- **Interactive Testing**: Try the [API Playground](/try/playground/)
+- **Support**: Contact WP Engine support for additional assistance
+
+## API Statistics
+
+- **Total Endpoints**: {{stats.totalEndpoints}}
+- **Endpoint Categories**: {{stats.totalTags}}
+- **Schema Definitions**: {{stats.totalSchemas}}
+- **API Version**: {{spec.version}}
+- **Last Updated**: {{timestamp}}

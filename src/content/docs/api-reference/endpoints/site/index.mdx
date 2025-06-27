@@ -1,0 +1,95 @@
+---
+title: Site API
+description: Manage Site resources using the WP Engine Customer API
+---
+
+{/* AUTO-GENERATED: Do not edit directly */}
+{/* Source: public/openapi/v1.yaml */}
+{/* Last updated: 2025-06-27T08:58:09.590Z */}
+{/* Generator: scripts/generate-docs.js v1.0.0 */}
+
+# Site API
+
+Manage Site resources using the WP Engine Customer API.
+
+## Available Endpoints
+
+### GET /sites
+
+**List your sites**
+
+List your sites
+
+[View Details →](/api-reference/endpoints/site/list-sites/)
+
+---
+
+### POST /sites
+
+**Create a new site**
+
+Create a new site
+
+[View Details →](/api-reference/endpoints/site/create-site/)
+
+---
+
+### GET /sites/\{site_id\}
+
+**Get a site by ID**
+
+Returns a single site
+
+[View Details →](/api-reference/endpoints/site/get-site/)
+
+---
+
+### PATCH /sites/\{site_id\}
+
+**Change a site name**
+
+Change a site name
+
+[View Details →](/api-reference/endpoints/site/update-site/)
+
+---
+
+### DELETE /sites/\{site_id\}
+
+**Delete a site**
+
+This will delete the site and any installs associated with this site. This delete is permanent and there is no confirmation prompt.
+
+[View Details →](/api-reference/endpoints/site/delete-site/)
+
+---
+
+
+## Authentication
+
+All Site endpoints require authentication. See the [Authentication guide](/api-reference/authentication/) for details on how to authenticate your requests.
+
+## Rate Limiting
+
+Please be aware of rate limiting when making requests to Site endpoints. See our [rate limiting documentation](/api-reference/overview/#rate-limiting) for more information.
+
+{/* CUSTOM-START: additional-section-info */}
+{/* Add any custom section-specific information here */}
+{/* CUSTOM-END: additional-section-info */}
+
+## Related Resources
+
+- [API Overview](/api-reference/overview/)
+- [Authentication](/api-reference/authentication/)
+- [Pagination](/api-reference/pagination/)
+- [Try the API](/try/playground/)
+
+## Quick Reference
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/sites` | List your sites |
+| POST | `/sites` | Create a new site |
+| GET | `/sites/\{site_id\}` | Get a site by ID |
+| PATCH | `/sites/\{site_id\}` | Change a site name |
+| DELETE | `/sites/\{site_id\}` | Delete a site |

@@ -1,0 +1,197 @@
+---
+title: Check the status of a domain
+description: Check the status of a domain
+---
+
+{/* AUTO-GENERATED: Do not edit directly */}
+{/* Source: public/openapi/v1.yaml */}
+{/* Last updated: 2025-06-27T08:58:09.573Z */}
+{/* Generator: scripts/generate-docs.js v1.0.0 */}
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+# POST /installs/\{install_id\}/domains/\{domain_id\}/check_status
+
+Check the status of a domain
+
+Submits a request to check the status of the domain
+
+
+## Parameters
+
+### Path Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| install_id | string (uuid) | yes | ID of install |
+| domain_id | string (uuid) | yes | ID of domain |
+
+
+
+## Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    # Example cURL request
+curl -X POST \
+  -u "API_USER_ID:API_USER_PASSWORD" \
+  "https://api.wpengineapi.com/v1/installs/\{install_id\}/domains/\{domain_id\}/check_status"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    <?php
+// Example PHP request using GuzzleHttp
+require_once 'vendor/autoload.php';
+
+use GuzzleHttp\Client;
+
+$client = new Client();
+$auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+
+try {
+    $response = $client->POST('https://api.wpengineapi.com/v1/installs/\{install_id\}/domains/\{domain_id\}/check_status', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth
+        ]
+    ]);
+    
+    $data = json_decode($response->getBody(), true);
+    print_r($data);
+} catch (Exception $e) {
+    echo 'Error: ' . $e->getMessage();
+}
+?>
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import requests
+import base64
+
+url = "https://api.wpengineapi.com/v1/installs/\{install_id\}/domains/\{domain_id\}/check_status"
+auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+headers = {
+    'Authorization': f'Basic {auth_string}'
+}
+
+try:
+    response = requests.POST(url, headers=headers)
+    response.raise_for_status()
+    result = response.json()
+    print(result)
+except requests.exceptions.RequestException as e:
+    print(f"Error: {e}")
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+const config = {
+  method: 'POST',
+  url: 'https://api.wpengineapi.com/v1/installs/\{install_id\}/domains/\{domain_id\}/check_status',
+  headers: {
+    'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
+  }
+};
+
+async function makeRequest() {
+  try {
+    const response = await axios(config);
+    console.log(response.data);
+  } catch (error) {
+    console.error('Error:', error.response?.data || error.message);
+  }
+}
+
+makeRequest();
+    ```
+  </TabItem>
+</Tabs>
+
+
+## Responses
+
+### 200 Success
+
+Success
+
+```json
+
+```
+
+### 202 Accepted
+
+Accepted
+
+
+### 401 Authentication Error
+
+Authentication Error
+
+```json
+
+```
+
+### 403 Not authorized
+
+Not authorized
+
+```json
+
+```
+
+### 404 Not found
+
+Not found
+
+```json
+
+```
+
+### 429 Too many requests
+
+Too many requests
+
+```json
+
+```
+
+### 500 Internal server error
+
+Internal server error
+
+```json
+
+```
+
+### 503 
+
+
+
+
+## Error Responses
+
+- **401**: Authentication Error
+- **403**: Not authorized
+- **404**: Not found
+- **429**: Too many requests
+- **500**: Internal server error
+- **503**: 
+
+## Authentication
+
+This endpoint requires authentication. See the [Authentication guide](/api-reference/authentication/) for details.
+
+{/* CUSTOM-START: additional-notes */}
+{/* Add any custom notes or examples here */}
+{/* CUSTOM-END: additional-notes */}
+
+## Related Resources
+
+- [API Overview](/api-reference/overview/)
+- [Authentication](/api-reference/authentication/)
+- [ endpoints](/api-reference/endpoints//)
+- [ endpoints](/api-reference/endpoints//)

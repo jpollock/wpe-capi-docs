@@ -1,0 +1,117 @@
+---
+title: Domain API
+description: Manage Domain resources using the WP Engine Customer API
+---
+
+{/* AUTO-GENERATED: Do not edit directly */}
+{/* Source: public/openapi/v1.yaml */}
+{/* Last updated: 2025-06-27T08:58:09.592Z */}
+{/* Generator: scripts/generate-docs.js v1.0.0 */}
+
+# Domain API
+
+Manage Domain resources using the WP Engine Customer API.
+
+## Available Endpoints
+
+### GET /installs/\{install_id\}/domains
+
+**Get the domains for an install by install id**
+
+Returns domains for a specific install
+
+[View Details →](/api-reference/endpoints/domain/list-domains/)
+
+---
+
+### POST /installs/\{install_id\}/domains
+
+**Add a new domain or redirect to an existing install**
+
+Adds a domain or redirect to a specific install and optionally sets it as the primary domain
+
+[View Details →](/api-reference/endpoints/domain/create-domain/)
+
+---
+
+### POST /installs/\{install_id\}/domains/bulk
+
+**Add multiple domains and redirects to an existing install**
+
+Adds multiple domains and redirects to a specific install
+
+[View Details →](/api-reference/endpoints/domain/create-bulk-domains/)
+
+---
+
+### GET /installs/\{install_id\}/domains/\{domain_id\}
+
+**Get a specific domain for an install**
+
+Returns specific domain for an install
+
+[View Details →](/api-reference/endpoints/domain/get-domain/)
+
+---
+
+### PATCH /installs/\{install_id\}/domains/\{domain_id\}
+
+**Set an existing domain as primary**
+
+Sets a domain as the primary. Cannot set a duplicate, wildcard, or redirected domain as the primary.
+
+[View Details →](/api-reference/endpoints/domain/update-domain/)
+
+---
+
+### DELETE /installs/\{install_id\}/domains/\{domain_id\}
+
+**Delete a specific domain for an install**
+
+Delete specific domain for an install
+
+[View Details →](/api-reference/endpoints/domain/delete-domain/)
+
+---
+
+### POST /installs/\{install_id\}/domains/\{domain_id\}/check_status
+
+**Check the status of a domain**
+
+Submits a request to check the status of the domain
+
+[View Details →](/api-reference/endpoints/domain/check-status/)
+
+---
+
+
+## Authentication
+
+All Domain endpoints require authentication. See the [Authentication guide](/api-reference/authentication/) for details on how to authenticate your requests.
+
+## Rate Limiting
+
+Please be aware of rate limiting when making requests to Domain endpoints. See our [rate limiting documentation](/api-reference/overview/#rate-limiting) for more information.
+
+{/* CUSTOM-START: additional-section-info */}
+{/* Add any custom section-specific information here */}
+{/* CUSTOM-END: additional-section-info */}
+
+## Related Resources
+
+- [API Overview](/api-reference/overview/)
+- [Authentication](/api-reference/authentication/)
+- [Pagination](/api-reference/pagination/)
+- [Try the API](/try/playground/)
+
+## Quick Reference
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/installs/\{install_id\}/domains` | Get the domains for an install by install id |
+| POST | `/installs/\{install_id\}/domains` | Add a new domain or redirect to an existing install |
+| POST | `/installs/\{install_id\}/domains/bulk` | Add multiple domains and redirects to an existing install |
+| GET | `/installs/\{install_id\}/domains/\{domain_id\}` | Get a specific domain for an install |
+| PATCH | `/installs/\{install_id\}/domains/\{domain_id\}` | Set an existing domain as primary |
+| DELETE | `/installs/\{install_id\}/domains/\{domain_id\}` | Delete a specific domain for an install |
+| POST | `/installs/\{install_id\}/domains/\{domain_id\}/check_status` | Check the status of a domain |

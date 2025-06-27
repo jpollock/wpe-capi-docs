@@ -3,14 +3,14 @@ title: {{endpoint.displayName}}
 description: {{endpoint.summary}}
 ---
 
-<!-- AUTO-GENERATED: Do not edit directly -->
-<!-- Source: public/openapi/v1.yaml -->
-<!-- Last updated: {{timestamp}} -->
-<!-- Generator: scripts/generate-docs.js v1.0.0 -->
+{/* AUTO-GENERATED: Do not edit directly */}
+{/* Source: public/openapi/v1.yaml */}
+{/* Last updated: {{timestamp}} */}
+{/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# {{endpoint.method}} {{endpoint.path}}
+# {{endpoint.method}} {{escapePath endpoint.path}}
 
 {{endpoint.summary}}
 
@@ -61,22 +61,80 @@ This endpoint is deprecated and may be removed in future versions.
 <Tabs>
   <TabItem label="cURL">
     ```bash
-    {{examples.curl}}
+    {{#if examples.curl}}{{examples.curl}}{{else}}# Example cURL request
+curl -X {{endpoint.method}} \
+  -u "API_USER_ID:API_USER_PASSWORD" \
+  "{{spec.schemes.[0]}}://{{spec.host}}{{spec.basePath}}{{escapePath endpoint.path}}"{{/if}}
     ```
   </TabItem>
   <TabItem label="PHP">
     ```php
-    {{examples.php}}
+    {{#if examples.php}}{{examples.php}}{{else}}<?php
+// Example PHP request using GuzzleHttp
+require_once 'vendor/autoload.php';
+
+use GuzzleHttp\Client;
+
+$client = new Client();
+$auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+
+try {
+    $response = $client->{{endpoint.method}}('{{spec.schemes.[0]}}://{{spec.host}}{{spec.basePath}}{{escapePath endpoint.path}}', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth
+        ]
+    ]);
+    
+    $data = json_decode($response->getBody(), true);
+    print_r($data);
+} catch (Exception $e) {
+    echo 'Error: ' . $e->getMessage();
+}
+?>{{/if}}
     ```
   </TabItem>
   <TabItem label="Python">
     ```python
-    {{examples.python}}
+    {{#if examples.python}}{{examples.python}}{{else}}import requests
+import base64
+
+url = "{{spec.schemes.[0]}}://{{spec.host}}{{spec.basePath}}{{escapePath endpoint.path}}"
+auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+headers = {
+    'Authorization': f'Basic {auth_string}'
+}
+
+try:
+    response = requests.{{endpoint.method}}(url, headers=headers)
+    response.raise_for_status()
+    result = response.json()
+    print(result)
+except requests.exceptions.RequestException as e:
+    print(f"Error: {e}"){{/if}}
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
-    {{examples.nodejs}}
+    {{#if examples.nodejs}}{{examples.nodejs}}{{else}}const axios = require('axios');
+
+const config = {
+  method: '{{endpoint.method}}',
+  url: '{{spec.schemes.[0]}}://{{spec.host}}{{spec.basePath}}{{escapePath endpoint.path}}',
+  headers: {
+    'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
+  }
+};
+
+async function makeRequest() {
+  try {
+    const response = await axios(config);
+    console.log(response.data);
+  } catch (error) {
+    console.error('Error:', error.response?.data || error.message);
+  }
+}
+
+makeRequest();{{/if}}
     ```
   </TabItem>
 </Tabs>
@@ -128,9 +186,9 @@ This endpoint is deprecated and may be removed in future versions.
 This endpoint requires authentication. See the [Authentication guide](/api-reference/authentication/) for details.
 {{/if}}
 
-<!-- CUSTOM-START: additional-notes -->
-<!-- Add any custom notes or examples here -->
-<!-- CUSTOM-END: additional-notes -->
+{/* CUSTOM-START: additional-notes */}
+{/* Add any custom notes or examples here */}
+{/* CUSTOM-END: additional-notes */}
 
 ## Related Resources
 
