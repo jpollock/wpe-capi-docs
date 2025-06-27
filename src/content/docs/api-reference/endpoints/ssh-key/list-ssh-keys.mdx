@@ -5,7 +5,7 @@ description: Get your SSH keys
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T08:58:09.577Z */}
+{/* Last updated: 2025-06-27T10:43:52.045Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -115,7 +115,19 @@ makeRequest();
 List of SSH keys
 
 ```json
-
+{
+  &quot;previous&quot;: &quot;https://api.wpengineapi.com/v1/example-endpoint?limit&#x3D;100&amp;offset&#x3D;0&quot;,
+  &quot;next&quot;: &quot;https://api.wpengineapi.com/v1/example-endpoint?limit&#x3D;100&amp;offset&#x3D;200&quot;,
+  &quot;count&quot;: 225,
+  &quot;results&quot;: [
+    {
+      &quot;comment&quot;: &quot;joe@gmail.com&quot;,
+      &quot;created_at&quot;: &quot;2019-09-01T15:59:24.277Z&quot;,
+      &quot;fingerprint&quot;: &quot;a1:b2:c3:d4:e5:46:a7:88:c9:40:d2:d7:9b:cd:42:05&quot;,
+      &quot;uuid&quot;: &quot;e41fa98f-ea80-1f16-a7b7-d748bcc9e64d&quot;
+    }
+  ]
+}
 ```
 
 ### 400 Bad Request
@@ -123,7 +135,9 @@ List of SSH keys
 Bad Request
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Bad request - invalid parameters&quot;
+}
 ```
 
 ### 401 Authentication Error
@@ -131,7 +145,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Authentication required&quot;
+}
 ```
 
 ### 429 

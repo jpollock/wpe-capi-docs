@@ -5,7 +5,7 @@ description: Delete an account user
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T08:58:09.561Z */}
+{/* Last updated: 2025-06-27T10:43:52.032Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -124,7 +124,9 @@ Deleted
 Bad Request
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Invalid user ID format&quot;
+}
 ```
 
 ### 401 Authentication Error
@@ -132,7 +134,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Authentication required&quot;
+}
 ```
 
 ### 403 Not authorized
@@ -140,7 +144,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Insufficient permissions to access this resource&quot;
+}
 ```
 
 ### 404 Not found
@@ -148,7 +154,9 @@ Not authorized
 Not found
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Resource not found&quot;
+}
 ```
 
 ### 429 

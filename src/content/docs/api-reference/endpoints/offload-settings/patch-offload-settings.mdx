@@ -1,20 +1,20 @@
 ---
-title: Update an existing domain for an install
-description: Update an existing domain for an install
+title: Update specific offload settings for an install
+description: Update specific offload settings for an install
 ---
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T10:43:52.041Z */}
+{/* Last updated: 2025-06-27T10:43:52.039Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# PATCH /installs/\{install_id\}/domains/\{domain_id\}
+# PATCH /installs/\{install_id\}/offload_settings/files
 
-Update an existing domain for an install
+Update specific offload settings for an install
 
-Updates an existing domain for an install. Cannot set a duplicate, wildcard, or redirected domain as the primary.
+Partially updates the offload settings configuration for a specific install
 
 
 ## Parameters
@@ -23,8 +23,7 @@ Updates an existing domain for an install. Cannot set a duplicate, wildcard, or 
 
 | Name | Type | Required | Description |
 |------|------|----------|-------------|
-| install_id | string (uuid) | yes | The install ID |
-| domain_id | string (uuid) | yes | ID of domain |
+| install_id | string (uuid) | yes | ID of install |
 
 
 
@@ -36,7 +35,7 @@ Updates an existing domain for an install. Cannot set a duplicate, wildcard, or 
     # Example cURL request
 curl -X PATCH \
   -u "API_USER_ID:API_USER_PASSWORD" \
-  "https://api.wpengineapi.com/v1/installs/\{install_id\}/domains/\{domain_id\}"
+  "https://api.wpengineapi.com/v1/installs/\{install_id\}/offload_settings/files"
     ```
   </TabItem>
   <TabItem label="PHP">
@@ -51,7 +50,7 @@ $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
 try {
-    $response = $client->PATCH('https://api.wpengineapi.com/v1/installs/\{install_id\}/domains/\{domain_id\}', [
+    $response = $client->PATCH('https://api.wpengineapi.com/v1/installs/\{install_id\}/offload_settings/files', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
         ]
@@ -70,7 +69,7 @@ try {
     import requests
 import base64
 
-url = "https://api.wpengineapi.com/v1/installs/\{install_id\}/domains/\{domain_id\}"
+url = "https://api.wpengineapi.com/v1/installs/\{install_id\}/offload_settings/files"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
 headers = {
     'Authorization': f'Basic {auth_string}'
@@ -91,7 +90,7 @@ except requests.exceptions.RequestException as e:
 
 const config = {
   method: 'PATCH',
-  url: 'https://api.wpengineapi.com/v1/installs/\{install_id\}/domains/\{domain_id\}',
+  url: 'https://api.wpengineapi.com/v1/installs/\{install_id\}/offload_settings/files',
   headers: {
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
   }
@@ -114,40 +113,10 @@ makeRequest();
 
 ## Responses
 
-### 200 Updated
+### 202 Accepted
 
-Updated
+Accepted
 
-```json
-{
-  &quot;name&quot;: &quot;torquemag.io&quot;,
-  &quot;duplicate&quot;: true,
-  &quot;primary&quot;: true,
-  &quot;id&quot;: &quot;e41fa98f-ea80-4654-b229-a9b765d0863a&quot;,
-  &quot;network_type&quot;: &quot;AN&quot;,
-  &quot;network_details&quot;: {
-    &quot;dns_config_info&quot;: {
-      &quot;cname&quot;: &quot;wp.wpenginepowered.com&quot;,
-      &quot;a_records&quot;: [
-        &quot;example-value&quot;
-      ]
-    },
-    &quot;network_info&quot;: {
-      &quot;status&quot;: &quot;ACTIVE&quot;,
-      &quot;ssl&quot;: {
-        &quot;status&quot;: &quot;active&quot;
-      }
-    }
-  },
-  &quot;redirects_to&quot;: [
-    {
-      &quot;id&quot;: &quot;e41fa98f-ea80-4006-b229-a9b765d0863a&quot;,
-      &quot;name&quot;: &quot;redirect.com&quot;
-    }
-  ],
-  &quot;secure_all_urls&quot;: false
-}
-```
 
 ### 400 Bad Request
 
@@ -155,7 +124,7 @@ Bad Request
 
 ```json
 {
-  &quot;message&quot;: &quot;Invalid domain ID format&quot;
+  &quot;message&quot;: &quot;Invalid install ID format&quot;
 }
 ```
 

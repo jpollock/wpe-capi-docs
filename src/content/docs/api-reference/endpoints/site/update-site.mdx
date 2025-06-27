@@ -5,7 +5,7 @@ description: Change a site name
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T08:58:09.563Z */}
+{/* Last updated: 2025-06-27T10:43:52.035Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -117,7 +117,17 @@ makeRequest();
 Updated
 
 ```json
-
+{
+  &quot;id&quot;: &quot;28c78b6d-c2da-4f09-85f5-1ad588089b2d&quot;,
+  &quot;name&quot;: &quot;Torque Magazine&quot;,
+  &quot;account&quot;: {
+    &quot;id&quot;: &quot;eeda3227-9a39-46ae-9e14-20958bb4e6c9&quot;
+  },
+  &quot;tags&quot;: [
+    &quot;example-value&quot;
+  ],
+  &quot;installs&quot;: []
+}
 ```
 
 ### 400 Bad Request
@@ -125,7 +135,18 @@ Updated
 Bad Request
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Invalid site name&quot;,
+  &quot;errors&quot;: [
+    {
+      &quot;resource&quot;: &quot;Site&quot;,
+      &quot;field&quot;: &quot;name&quot;,
+      &quot;type&quot;: &quot;invalid_value&quot;,
+      &quot;code&quot;: &quot;too_long&quot;,
+      &quot;message&quot;: &quot;Site name is too long (maximum is 40 characters)&quot;
+    }
+  ]
+}
 ```
 
 ### 401 Authentication Error
@@ -133,7 +154,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Authentication required&quot;
+}
 ```
 
 ### 403 Not authorized
@@ -141,7 +164,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Insufficient permissions to access this resource&quot;
+}
 ```
 
 ### 404 Not found
@@ -149,7 +174,9 @@ Not authorized
 Not found
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Resource not found&quot;
+}
 ```
 
 ### 429 

@@ -5,7 +5,7 @@ description: List your WordPress installations
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T08:58:09.564Z */}
+{/* Last updated: 2025-06-27T10:43:52.036Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -112,7 +112,23 @@ makeRequest();
 List of WordPress installations
 
 ```json
-
+{
+  &quot;previous&quot;: &quot;https://api.wpengineapi.com/v1/example-endpoint?limit&#x3D;100&amp;offset&#x3D;0&quot;,
+  &quot;next&quot;: &quot;https://api.wpengineapi.com/v1/example-endpoint?limit&#x3D;100&amp;offset&#x3D;200&quot;,
+  &quot;count&quot;: 225,
+  &quot;results&quot;: [
+    {
+      &quot;id&quot;: &quot;294deacc-d8b8-4005-82c4-0727ba8ddde0&quot;,
+      &quot;name&quot;: &quot;torquemag&quot;,
+      &quot;account&quot;: {
+        &quot;id&quot;: &quot;eeda3227-9a39-46ae-9e14-20958bb4e6c9&quot;
+      },
+      &quot;php_version&quot;: &quot;7.0&quot;,
+      &quot;status&quot;: &quot;active&quot;,
+      &quot;cname&quot;: &quot;mywebsite.wpengine.com&quot;
+    }
+  ]
+}
 ```
 
 ### 400 Bad Request
@@ -120,7 +136,9 @@ List of WordPress installations
 Bad Request
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Invalid install ID format&quot;
+}
 ```
 
 ### 401 Authentication Error
@@ -128,7 +146,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Authentication required&quot;
+}
 ```
 
 ### 429 

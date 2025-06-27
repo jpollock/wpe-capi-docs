@@ -15,21 +15,21 @@ Before you begin, make sure you have:
 
 ## Step 1: Authenticate
 
-For this quick start, we'll use an API key for simplicity. If you're building a user-facing application, you should use OAuth 2.0 instead.
+For this quick start, we'll use basic authentication with your API credentials. If you're building a user-facing application, you should use OAuth 2.0 instead.
 
-First, [generate an API key](/getting-started/authentication/#creating-an-api-key) if you don't already have one.
+First, [generate API credentials](/getting-started/authentication/#creating-an-api-key) if you don't already have them. You'll need both an API username and password.
 
 ## Step 2: Make Your First API Request
 
 Let's retrieve a list of your WP Engine sites. This is a simple GET request to the `/sites` endpoint:
 
 ```bash
-curl -X GET https://wpengineapi.com/v1/sites \
-  -H "Authorization: ApiKey YOUR_API_KEY" \
+curl -X GET https://api.wpengineapi.com/v1/sites \
+  -u "YOUR_API_USERNAME:YOUR_API_PASSWORD" \
   -H "Content-Type: application/json"
 ```
 
-Replace `YOUR_API_KEY` with your actual API key.
+Replace `YOUR_API_USERNAME` and `YOUR_API_PASSWORD` with your actual API credentials.
 
 ### Example Response
 
@@ -68,8 +68,8 @@ Replace `YOUR_API_KEY` with your actual API key.
 Now, let's get more details about a specific site. Use the site ID from the previous response:
 
 ```bash
-curl -X GET https://wpengineapi.com/v1/sites/site_12345 \
-  -H "Authorization: ApiKey YOUR_API_KEY" \
+curl -X GET https://api.wpengineapi.com/v1/sites/site_12345 \
+  -u "YOUR_API_USERNAME:YOUR_API_PASSWORD" \
   -H "Content-Type: application/json"
 ```
 
@@ -114,15 +114,15 @@ curl -X GET https://wpengineapi.com/v1/sites/site_12345 \
 
 ## Step 4: Create a Backup
 
-Let's create a backup of your site:
+Let's create a backup of your install:
 
 ```bash
-curl -X POST https://wpengineapi.com/v1/sites/site_12345/backups \
-  -H "Authorization: ApiKey YOUR_API_KEY" \
+curl -X POST https://api.wpengineapi.com/v1/installs/install_12345/backups \
+  -u "YOUR_API_USERNAME:YOUR_API_PASSWORD" \
   -H "Content-Type: application/json" \
   -d '{
     "description": "My first API-created backup",
-    "type": "full"
+    "notification_emails": ["your-email@example.com"]
   }'
 ```
 
@@ -145,8 +145,8 @@ curl -X POST https://wpengineapi.com/v1/sites/site_12345/backups \
 You can check the status of your backup:
 
 ```bash
-curl -X GET https://wpengineapi.com/v1/sites/site_12345/backups/backup_54321 \
-  -H "Authorization: ApiKey YOUR_API_KEY" \
+curl -X GET https://api.wpengineapi.com/v1/installs/install_12345/backups/backup_54321 \
+  -u "YOUR_API_USERNAME:YOUR_API_PASSWORD" \
   -H "Content-Type: application/json"
 ```
 
@@ -162,7 +162,7 @@ curl -X GET https://wpengineapi.com/v1/sites/site_12345/backups/backup_54321 \
   "created_at": "2023-04-01T10:30:00Z",
   "completed_at": "2023-04-01T10:42:00Z",
   "size": "1.2GB",
-  "download_url": "https://wpengineapi.com/v1/sites/site_12345/backups/backup_54321/download"
+  "download_url": "https://api.wpengineapi.com/v1/sites/site_12345/backups/backup_54321/download"
 }
 ```
 
@@ -181,12 +181,16 @@ Congratulations! You've made your first API requests to the WP Engine Customer A
 
 ```python
 import requests
+import base64
 
-API_KEY = "YOUR_API_KEY"
-BASE_URL = "https://wpengineapi.com/v1"
+API_USERNAME = "YOUR_API_USERNAME"
+API_PASSWORD = "YOUR_API_PASSWORD"
+BASE_URL = "https://api.wpengineapi.com/v1"
 
+# Create basic auth header
+auth_string = base64.b64encode(f'{API_USERNAME}:{API_PASSWORD}'.encode()).decode()
 headers = {
-    "Authorization": f"ApiKey {API_KEY}",
+    "Authorization": f"Basic {auth_string}",
     "Content-Type": "application/json"
 }
 
@@ -207,11 +211,12 @@ print(site_details)
 ```javascript
 const axios = require('axios');
 
-const API_KEY = 'YOUR_API_KEY';
-const BASE_URL = 'https://wpengineapi.com/v1';
+const API_USERNAME = 'YOUR_API_USERNAME';
+const API_PASSWORD = 'YOUR_API_PASSWORD';
+const BASE_URL = 'https://api.wpengineapi.com/v1';
 
 const headers = {
-  'Authorization': `ApiKey ${API_KEY}`,
+  'Authorization': 'Basic ' + Buffer.from(`${API_USERNAME}:${API_PASSWORD}`).toString('base64'),
   'Content-Type': 'application/json'
 };
 
@@ -236,11 +241,13 @@ axios.get(`${BASE_URL}/sites`, { headers })
 
 ```php
 <?php
-$apiKey = 'YOUR_API_KEY';
-$baseUrl = 'https://wpengineapi.com/v1';
+$apiUsername = 'YOUR_API_USERNAME';
+$apiPassword = 'YOUR_API_PASSWORD';
+$baseUrl = 'https://api.wpengineapi.com/v1';
 
+$auth = base64_encode($apiUsername . ':' . $apiPassword);
 $headers = [
-    'Authorization: ApiKey ' . $apiKey,
+    'Authorization: Basic ' . $auth,
     'Content-Type: application/json'
 ];
 

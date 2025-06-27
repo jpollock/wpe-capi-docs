@@ -1,18 +1,18 @@
 ---
-title: Retreives the status of a backup of a WordPress installation
-description: Retreives the status of a backup of a WordPress installation
+title: Retrieves the status of a backup of a WordPress installation
+description: Retrieves the status of a backup of a WordPress installation
 ---
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T08:58:09.575Z */}
+{/* Last updated: 2025-06-27T10:43:52.044Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 # GET /installs/\{install_id\}/backups/\{backup_id\}
 
-Retreives the status of a backup of a WordPress installation
+Retrieves the status of a backup of a WordPress installation
 
 Retrieves the status of a backup of a WordPress installation.
 
@@ -119,7 +119,10 @@ makeRequest();
 A backup
 
 ```json
-
+{
+  &quot;id&quot;: &quot;28c78b6d-c2da-4f09-85f5-1ad588089b2d&quot;,
+  &quot;status&quot;: &quot;requested&quot;
+}
 ```
 
 ### 400 Bad Request
@@ -127,7 +130,9 @@ A backup
 Bad Request
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Bad request - invalid parameters&quot;
+}
 ```
 
 ### 401 Authentication Error
@@ -135,7 +140,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Authentication required&quot;
+}
 ```
 
 ### 404 Not found
@@ -143,7 +150,9 @@ Authentication Error
 Not found
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Resource not found&quot;
+}
 ```
 
 ### 429 

@@ -5,7 +5,7 @@ description: Add a new domain or redirect to an existing install
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T08:58:09.570Z */}
+{/* Last updated: 2025-06-27T10:43:52.040Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -118,7 +118,34 @@ makeRequest();
 Created
 
 ```json
-
+{
+  &quot;name&quot;: &quot;torquemag.io&quot;,
+  &quot;duplicate&quot;: true,
+  &quot;primary&quot;: true,
+  &quot;id&quot;: &quot;e41fa98f-ea80-4654-b229-a9b765d0863a&quot;,
+  &quot;network_type&quot;: &quot;AN&quot;,
+  &quot;network_details&quot;: {
+    &quot;dns_config_info&quot;: {
+      &quot;cname&quot;: &quot;wp.wpenginepowered.com&quot;,
+      &quot;a_records&quot;: [
+        &quot;example-value&quot;
+      ]
+    },
+    &quot;network_info&quot;: {
+      &quot;status&quot;: &quot;ACTIVE&quot;,
+      &quot;ssl&quot;: {
+        &quot;status&quot;: &quot;active&quot;
+      }
+    }
+  },
+  &quot;redirects_to&quot;: [
+    {
+      &quot;id&quot;: &quot;e41fa98f-ea80-4006-b229-a9b765d0863a&quot;,
+      &quot;name&quot;: &quot;redirect.com&quot;
+    }
+  ],
+  &quot;secure_all_urls&quot;: false
+}
 ```
 
 ### 400 Bad Request
@@ -126,7 +153,18 @@ Created
 Bad Request
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Domain name is required&quot;,
+  &quot;errors&quot;: [
+    {
+      &quot;resource&quot;: &quot;Domain&quot;,
+      &quot;field&quot;: &quot;name&quot;,
+      &quot;type&quot;: &quot;missing_field&quot;,
+      &quot;code&quot;: &quot;required&quot;,
+      &quot;message&quot;: &quot;Domain name cannot be empty&quot;
+    }
+  ]
+}
 ```
 
 ### 401 Authentication Error
@@ -134,7 +172,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Authentication required&quot;
+}
 ```
 
 ### 403 Not authorized
@@ -142,7 +182,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Insufficient permissions to access this resource&quot;
+}
 ```
 
 ### 429 Too many requests

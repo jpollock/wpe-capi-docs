@@ -5,7 +5,7 @@ description: Get the current user
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T08:58:09.576Z */}
+{/* Last updated: 2025-06-27T10:43:52.045Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -113,7 +113,12 @@ makeRequest();
 The currently authenticated user
 
 ```json
-
+{
+  &quot;id&quot;: &quot;fd8e24a5-1f16-4b80-af5f-d748bcc9e64d&quot;,
+  &quot;first_name&quot;: &quot;Joe&quot;,
+  &quot;last_name&quot;: &quot;Smith&quot;,
+  &quot;email&quot;: &quot;joe@gmail.com&quot;
+}
 ```
 
 ### 401 Authentication Error
@@ -121,7 +126,9 @@ The currently authenticated user
 Authentication Error
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Authentication required&quot;
+}
 ```
 
 ### 429 Too many requests

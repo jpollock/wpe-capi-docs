@@ -5,7 +5,7 @@ description: Update an account user
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T08:58:09.560Z */}
+{/* Last updated: 2025-06-27T10:43:52.032Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -118,7 +118,20 @@ makeRequest();
 Updated
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Your change was successful.&quot;,
+  &quot;account_user&quot;: {
+    &quot;user_id&quot;: &quot;28c78b6d-c2da-4f09-85f5-1ad588089b2d&quot;,
+    &quot;account_id&quot;: &quot;eeda3227-9a39-46ae-9e14-20958bb4e6c9&quot;,
+    &quot;first_name&quot;: &quot;Joe&quot;,
+    &quot;last_name&quot;: &quot;Smith&quot;,
+    &quot;email&quot;: &quot;joeSmith@test.com&quot;,
+    &quot;phone&quot;: &quot;1234567890&quot;,
+    &quot;invite_accepted&quot;: false,
+    &quot;mfa_enabled&quot;: true,
+    &quot;roles&quot;: &quot;billing, partial&quot;
+  }
+}
 ```
 
 ### 400 Bad Request
@@ -126,7 +139,18 @@ Updated
 Bad Request
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Invalid role specified&quot;,
+  &quot;errors&quot;: [
+    {
+      &quot;resource&quot;: &quot;AccountUser&quot;,
+      &quot;field&quot;: &quot;roles&quot;,
+      &quot;type&quot;: &quot;invalid_value&quot;,
+      &quot;code&quot;: &quot;invalid_role&quot;,
+      &quot;message&quot;: &quot;Role must be one of: owner, full, full,billing, partial, partial,billing&quot;
+    }
+  ]
+}
 ```
 
 ### 401 Authentication Error
@@ -134,7 +158,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Authentication required&quot;
+}
 ```
 
 ### 403 Not authorized
@@ -142,7 +168,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Insufficient permissions to access this resource&quot;
+}
 ```
 
 ### 404 Not found
@@ -150,7 +178,9 @@ Not authorized
 Not found
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Resource not found&quot;
+}
 ```
 
 ### 429 
@@ -162,7 +192,9 @@ Not found
 Internal server error
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Internal server error - please try again later&quot;
+}
 ```
 
 ### 503 

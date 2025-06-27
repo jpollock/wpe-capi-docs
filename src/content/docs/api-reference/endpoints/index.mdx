@@ -5,7 +5,7 @@ description: Complete reference for all WP Engine Customer API endpoints
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T08:58:09.598Z */}
+{/* Last updated: 2025-06-27T10:43:52.055Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -107,7 +107,10 @@ makeRequest();
 Status of API
 
 ```json
-
+{
+  "success": true,
+  "created_on": "2018-05-17T16:20:40+00:00"
+}
 ```
 
 ##### 429 
@@ -115,7 +118,7 @@ Status of API
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -124,7 +127,7 @@ Status of API
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -236,7 +239,7 @@ Current swagger specification
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -245,7 +248,7 @@ Current swagger specification
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -362,7 +365,17 @@ makeRequest();
 List of WP Engine accounts
 
 ```json
-
+{
+  "previous": "https://api.wpengineapi.com/v1/example-endpoint?limit=100&offset=0",
+  "next": "https://api.wpengineapi.com/v1/example-endpoint?limit=100&offset=200",
+  "count": 225,
+  "results": [
+    {
+      "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+      "name": "joesaccount"
+    }
+  ]
+}
 ```
 
 ##### 400 Bad Request
@@ -370,7 +383,9 @@ List of WP Engine accounts
 Bad Request
 
 ```json
-
+{
+  "message": "Invalid account ID format"
+}
 ```
 
 ##### 401 Authentication Error
@@ -378,7 +393,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 429 
@@ -386,7 +403,7 @@ Authentication Error
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -395,7 +412,7 @@ Authentication Error
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -513,7 +530,10 @@ makeRequest();
 Success
 
 ```json
-
+{
+  "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+  "name": "joesaccount"
+}
 ```
 
 ##### 401 Authentication Error
@@ -521,7 +541,9 @@ Success
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 404 Not found
@@ -529,7 +551,9 @@ Authentication Error
 Not found
 
 ```json
-
+{
+  "message": "Resource not found"
+}
 ```
 
 ##### 429 
@@ -537,7 +561,7 @@ Not found
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -546,7 +570,7 @@ Not found
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -668,7 +692,21 @@ makeRequest();
 List of account users
 
 ```json
-
+{
+  "results": [
+    {
+      "user_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+      "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+      "first_name": "Joe",
+      "last_name": "Smith",
+      "email": "joeSmith@test.com",
+      "phone": "1234567890",
+      "invite_accepted": false,
+      "mfa_enabled": true,
+      "roles": "billing, partial"
+    }
+  ]
+}
 ```
 
 ##### 400 Bad Request
@@ -676,7 +714,9 @@ List of account users
 Bad Request
 
 ```json
-
+{
+  "message": "Invalid user ID format"
+}
 ```
 
 ##### 401 Authentication Error
@@ -684,7 +724,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 429 
@@ -692,7 +734,7 @@ Authentication Error
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -701,7 +743,7 @@ Authentication Error
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -847,7 +889,20 @@ makeRequest();
 Created
 
 ```json
-
+{
+  "message": "Your change was successful.",
+  "account_user": {
+    "user_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+    "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+    "first_name": "Joe",
+    "last_name": "Smith",
+    "email": "joeSmith@test.com",
+    "phone": "1234567890",
+    "invite_accepted": false,
+    "mfa_enabled": true,
+    "roles": "billing, partial"
+  }
+}
 ```
 
 ##### 400 Bad Request
@@ -855,7 +910,18 @@ Created
 Bad Request
 
 ```json
-
+{
+  "message": "User email is required",
+  "errors": [
+    {
+      "resource": "AccountUser",
+      "field": "email",
+      "type": "missing_field",
+      "code": "required",
+      "message": "Email address is required"
+    }
+  ]
+}
 ```
 
 ##### 401 Authentication Error
@@ -863,7 +929,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 403 Not authorized
@@ -871,7 +939,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  "message": "Insufficient permissions to access this resource"
+}
 ```
 
 ##### 429 
@@ -879,7 +949,7 @@ Not authorized
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -888,7 +958,7 @@ Not authorized
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -1007,7 +1077,17 @@ makeRequest();
 Success
 
 ```json
-
+{
+  "user_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+  "first_name": "Joe",
+  "last_name": "Smith",
+  "email": "joeSmith@test.com",
+  "phone": "1234567890",
+  "invite_accepted": false,
+  "mfa_enabled": true,
+  "roles": "billing, partial"
+}
 ```
 
 ##### 401 Authentication Error
@@ -1015,7 +1095,9 @@ Success
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 403 Not authorized
@@ -1023,7 +1105,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  "message": "Insufficient permissions to access this resource"
+}
 ```
 
 ##### 404 Not found
@@ -1031,7 +1115,9 @@ Not authorized
 Not found
 
 ```json
-
+{
+  "message": "Resource not found"
+}
 ```
 
 ##### 429 
@@ -1039,7 +1125,7 @@ Not found
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -1048,7 +1134,7 @@ Not found
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -1183,7 +1269,20 @@ makeRequest();
 Updated
 
 ```json
-
+{
+  "message": "Your change was successful.",
+  "account_user": {
+    "user_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+    "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+    "first_name": "Joe",
+    "last_name": "Smith",
+    "email": "joeSmith@test.com",
+    "phone": "1234567890",
+    "invite_accepted": false,
+    "mfa_enabled": true,
+    "roles": "billing, partial"
+  }
+}
 ```
 
 ##### 400 Bad Request
@@ -1191,7 +1290,18 @@ Updated
 Bad Request
 
 ```json
-
+{
+  "message": "Invalid role specified",
+  "errors": [
+    {
+      "resource": "AccountUser",
+      "field": "roles",
+      "type": "invalid_value",
+      "code": "invalid_role",
+      "message": "Role must be one of: owner, full, full,billing, partial, partial,billing"
+    }
+  ]
+}
 ```
 
 ##### 401 Authentication Error
@@ -1199,7 +1309,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 403 Not authorized
@@ -1207,7 +1319,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  "message": "Insufficient permissions to access this resource"
+}
 ```
 
 ##### 404 Not found
@@ -1215,7 +1329,9 @@ Not authorized
 Not found
 
 ```json
-
+{
+  "message": "Resource not found"
+}
 ```
 
 ##### 429 
@@ -1223,7 +1339,7 @@ Not found
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -1232,7 +1348,9 @@ Not found
 Internal server error
 
 ```json
-
+{
+  "message": "Internal server error - please try again later"
+}
 ```
 
 ##### 503 
@@ -1240,7 +1358,7 @@ Internal server error
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -1369,7 +1487,9 @@ Deleted
 Bad Request
 
 ```json
-
+{
+  "message": "Invalid user ID format"
+}
 ```
 
 ##### 401 Authentication Error
@@ -1377,7 +1497,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 403 Not authorized
@@ -1385,7 +1507,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  "message": "Insufficient permissions to access this resource"
+}
 ```
 
 ##### 404 Not found
@@ -1393,7 +1517,9 @@ Not authorized
 Not found
 
 ```json
-
+{
+  "message": "Resource not found"
+}
 ```
 
 ##### 429 
@@ -1401,7 +1527,7 @@ Not found
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -1410,7 +1536,7 @@ Not found
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -1527,7 +1653,24 @@ makeRequest();
 List of sites
 
 ```json
-
+{
+  "previous": "https://api.wpengineapi.com/v1/example-endpoint?limit=100&offset=0",
+  "next": "https://api.wpengineapi.com/v1/example-endpoint?limit=100&offset=200",
+  "count": 225,
+  "results": [
+    {
+      "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+      "name": "Torque Magazine",
+      "account": {
+        "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+      },
+      "tags": [
+        "example-value"
+      ],
+      "installs": []
+    }
+  ]
+}
 ```
 
 ##### 400 Bad Request
@@ -1535,7 +1678,9 @@ List of sites
 Bad Request
 
 ```json
-
+{
+  "message": "Invalid site ID format"
+}
 ```
 
 ##### 401 Authentication Error
@@ -1543,7 +1688,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 429 
@@ -1551,7 +1698,7 @@ Authentication Error
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -1560,7 +1707,7 @@ Authentication Error
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -1689,7 +1836,17 @@ makeRequest();
 Created
 
 ```json
-
+{
+  "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "name": "Torque Magazine",
+  "account": {
+    "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+  },
+  "tags": [
+    "example-value"
+  ],
+  "installs": []
+}
 ```
 
 ##### 400 Bad Request
@@ -1697,7 +1854,18 @@ Created
 Bad Request
 
 ```json
-
+{
+  "message": "Site name is required",
+  "errors": [
+    {
+      "resource": "Site",
+      "field": "name",
+      "type": "missing_field",
+      "code": "required",
+      "message": "Site name cannot be empty"
+    }
+  ]
+}
 ```
 
 ##### 401 Authentication Error
@@ -1705,7 +1873,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 403 Not authorized
@@ -1713,7 +1883,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  "message": "Insufficient permissions to access this resource"
+}
 ```
 
 ##### 429 
@@ -1721,7 +1893,7 @@ Not authorized
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -1730,7 +1902,7 @@ Not authorized
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -1848,7 +2020,17 @@ makeRequest();
 Success
 
 ```json
-
+{
+  "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "name": "Torque Magazine",
+  "account": {
+    "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+  },
+  "tags": [
+    "example-value"
+  ],
+  "installs": []
+}
 ```
 
 ##### 401 Authentication Error
@@ -1856,7 +2038,9 @@ Success
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 403 Not authorized
@@ -1864,7 +2048,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  "message": "Insufficient permissions to access this resource"
+}
 ```
 
 ##### 404 Not found
@@ -1872,7 +2058,9 @@ Not authorized
 Not found
 
 ```json
-
+{
+  "message": "Resource not found"
+}
 ```
 
 ##### 429 
@@ -1880,7 +2068,7 @@ Not found
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -1889,7 +2077,7 @@ Not found
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -2023,7 +2211,17 @@ makeRequest();
 Updated
 
 ```json
-
+{
+  "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "name": "Torque Magazine",
+  "account": {
+    "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+  },
+  "tags": [
+    "example-value"
+  ],
+  "installs": []
+}
 ```
 
 ##### 400 Bad Request
@@ -2031,7 +2229,18 @@ Updated
 Bad Request
 
 ```json
-
+{
+  "message": "Invalid site name",
+  "errors": [
+    {
+      "resource": "Site",
+      "field": "name",
+      "type": "invalid_value",
+      "code": "too_long",
+      "message": "Site name is too long (maximum is 40 characters)"
+    }
+  ]
+}
 ```
 
 ##### 401 Authentication Error
@@ -2039,7 +2248,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 403 Not authorized
@@ -2047,7 +2258,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  "message": "Insufficient permissions to access this resource"
+}
 ```
 
 ##### 404 Not found
@@ -2055,7 +2268,9 @@ Not authorized
 Not found
 
 ```json
-
+{
+  "message": "Resource not found"
+}
 ```
 
 ##### 429 
@@ -2063,7 +2278,7 @@ Not found
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -2072,7 +2287,7 @@ Not found
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -2200,7 +2415,9 @@ Deleted
 Bad Request
 
 ```json
-
+{
+  "message": "Invalid site ID format"
+}
 ```
 
 ##### 401 Authentication Error
@@ -2208,7 +2425,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 403 Not authorized
@@ -2216,7 +2435,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  "message": "Insufficient permissions to access this resource"
+}
 ```
 
 ##### 404 Not found
@@ -2224,7 +2445,9 @@ Not authorized
 Not found
 
 ```json
-
+{
+  "message": "Resource not found"
+}
 ```
 
 ##### 429 
@@ -2232,7 +2455,7 @@ Not found
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -2241,7 +2464,7 @@ Not found
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -2358,7 +2581,23 @@ makeRequest();
 List of WordPress installations
 
 ```json
-
+{
+  "previous": "https://api.wpengineapi.com/v1/example-endpoint?limit=100&offset=0",
+  "next": "https://api.wpengineapi.com/v1/example-endpoint?limit=100&offset=200",
+  "count": 225,
+  "results": [
+    {
+      "id": "294deacc-d8b8-4005-82c4-0727ba8ddde0",
+      "name": "torquemag",
+      "account": {
+        "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+      },
+      "php_version": "7.0",
+      "status": "active",
+      "cname": "mywebsite.wpengine.com"
+    }
+  ]
+}
 ```
 
 ##### 400 Bad Request
@@ -2366,7 +2605,9 @@ List of WordPress installations
 Bad Request
 
 ```json
-
+{
+  "message": "Invalid install ID format"
+}
 ```
 
 ##### 401 Authentication Error
@@ -2374,7 +2615,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 429 
@@ -2382,7 +2625,7 @@ Authentication Error
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -2391,7 +2634,7 @@ Authentication Error
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -2520,7 +2763,16 @@ makeRequest();
 Created
 
 ```json
-
+{
+  "id": "294deacc-d8b8-4005-82c4-0727ba8ddde0",
+  "name": "torquemag",
+  "account": {
+    "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+  },
+  "php_version": "7.0",
+  "status": "active",
+  "cname": "mywebsite.wpengine.com"
+}
 ```
 
 ##### 400 Bad Request
@@ -2528,7 +2780,18 @@ Created
 Bad Request
 
 ```json
-
+{
+  "message": "Install name is required",
+  "errors": [
+    {
+      "resource": "Installation",
+      "field": "name",
+      "type": "missing_field",
+      "code": "required",
+      "message": "Installation name cannot be empty"
+    }
+  ]
+}
 ```
 
 ##### 401 Authentication Error
@@ -2536,7 +2799,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 403 Not authorized
@@ -2544,7 +2809,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  "message": "Insufficient permissions to access this resource"
+}
 ```
 
 ##### 429 Too many requests
@@ -2553,7 +2820,7 @@ Too many requests
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -2562,7 +2829,7 @@ Too many requests
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -2680,7 +2947,16 @@ makeRequest();
 Success
 
 ```json
-
+{
+  "id": "294deacc-d8b8-4005-82c4-0727ba8ddde0",
+  "name": "torquemag",
+  "account": {
+    "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+  },
+  "php_version": "7.0",
+  "status": "active",
+  "cname": "mywebsite.wpengine.com"
+}
 ```
 
 ##### 401 Authentication Error
@@ -2688,7 +2964,9 @@ Success
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 404 Not found
@@ -2696,7 +2974,9 @@ Authentication Error
 Not found
 
 ```json
-
+{
+  "message": "Resource not found"
+}
 ```
 
 ##### 429 
@@ -2704,7 +2984,7 @@ Not found
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -2713,7 +2993,7 @@ Not found
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -2841,7 +3121,9 @@ Deleted
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 403 Not authorized
@@ -2849,7 +3131,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  "message": "Insufficient permissions to access this resource"
+}
 ```
 
 ##### 404 Not found
@@ -2857,7 +3141,9 @@ Not authorized
 Not found
 
 ```json
-
+{
+  "message": "Resource not found"
+}
 ```
 
 ##### 429 
@@ -2865,7 +3151,7 @@ Not found
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -2874,7 +3160,7 @@ Not found
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -3002,7 +3288,16 @@ makeRequest();
 Updated
 
 ```json
-
+{
+  "id": "294deacc-d8b8-4005-82c4-0727ba8ddde0",
+  "name": "torquemag",
+  "account": {
+    "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+  },
+  "php_version": "7.0",
+  "status": "active",
+  "cname": "mywebsite.wpengine.com"
+}
 ```
 
 ##### 400 Bad Request
@@ -3010,7 +3305,9 @@ Updated
 Bad Request
 
 ```json
-
+{
+  "message": "Invalid install ID format"
+}
 ```
 
 ##### 401 Authentication Error
@@ -3018,7 +3315,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 403 Not authorized
@@ -3026,7 +3325,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  "message": "Insufficient permissions to access this resource"
+}
 ```
 
 ##### 429 
@@ -3034,7 +3335,7 @@ Not authorized
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -3043,7 +3344,747 @@ Not authorized
 
 ```json
 {
+  "message": "Service temporarily unavailable"
+}
+```
+
+
+#### Authentication
+
+This endpoint requires authentication. See the [Authentication guide](/api-reference/authentication/) for details.
+
+---
+
+
+## Offload Settings
+
+Manage Offload Settings resources using the WP Engine Customer API.
+
+### Get the validation file needed to configure LargeFS
+
+Get the validation file needed to configure LargeFS
+
+Returns the validation filename and contents necessary to configure an S3 bucket for LargeFS
+
+
+#### Parameters
+
+##### Path Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| install_id | string (uuid) | yes | ID of install |
+
+
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X GET \
+  -u "API_USER_ID:API_USER_PASSWORD" \
+  "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/largefs_validation_file"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    <?php
+require_once 'vendor/autoload.php';
+
+use GuzzleHttp\Client;
+
+$client = new Client();
+$auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+
+try {
+    $response = $client->get('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/largefs_validation_file', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth
+        ]
+    ]);
+
+    $data = json_decode($response->getBody(), true);
+    print_r($data);
+} catch (Exception $e) {
+    echo 'Error: ' . $e->getMessage();
+}
+?>
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import requests
+import json
+import base64
+
+url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/largefs_validation_file"
+auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+headers = {
+    'Authorization': f'Basic {auth_string}'
+}
+
+try:
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
+    result = response.json()
+    print(json.dumps(result, indent=2))
+except requests.exceptions.RequestException as e:
+    print(f"Error: {e}")
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+const config = {
+  method: 'get',
+  url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/largefs_validation_file',
+  headers: {
+    'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
+  }
+};
+
+async function makeRequest() {
+  try {
+    const response = await axios(config);
+    console.log(JSON.stringify(response.data, null, 2));
+  } catch (error) {
+    console.error('Error:', error.response?.data || error.message);
+  }
+}
+
+makeRequest();
+    ```
+  </TabItem>
+</Tabs>
+
+
+#### Responses
+
+##### 200 LargeFS validation filename and contents
+
+LargeFS validation filename and contents
+
+```json
+{
+  "name": "64f1250c.largefs",
+  "content": "e4ccd0696cff6f94"
+}
+```
+
+##### 401 Authentication Error
+
+Authentication Error
+
+```json
+{
+  "message": "Authentication required"
+}
+```
+
+##### 403 Not authorized
+
+Not authorized
+
+```json
+{
+  "message": "Insufficient permissions to access this resource"
+}
+```
+
+##### 404 Not found
+
+Not found
+
+```json
+{
+  "message": "Resource not found"
+}
+```
+
+##### 429 
+
+
+```json
+{
+  "message": "Rate limit exceeded - too many requests"
+}
+```
+
+##### 503 
+
+
+```json
+{
+  "message": "Service temporarily unavailable"
+}
+```
+
+
+#### Authentication
+
+This endpoint requires authentication. See the [Authentication guide](/api-reference/authentication/) for details.
+
+---
+
+### Get the offload settings for an install
+
+Get the offload settings for an install
+
+Returns the offload settings configuration for a specific install
+
+
+#### Parameters
+
+##### Path Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| install_id | string (uuid) | yes | ID of install |
+
+
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X GET \
+  -u "API_USER_ID:API_USER_PASSWORD" \
+  "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/files"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    <?php
+require_once 'vendor/autoload.php';
+
+use GuzzleHttp\Client;
+
+$client = new Client();
+$auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+
+try {
+    $response = $client->get('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/files', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth
+        ]
+    ]);
+
+    $data = json_decode($response->getBody(), true);
+    print_r($data);
+} catch (Exception $e) {
+    echo 'Error: ' . $e->getMessage();
+}
+?>
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import requests
+import json
+import base64
+
+url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/files"
+auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+headers = {
+    'Authorization': f'Basic {auth_string}'
+}
+
+try:
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
+    result = response.json()
+    print(json.dumps(result, indent=2))
+except requests.exceptions.RequestException as e:
+    print(f"Error: {e}")
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+const config = {
+  method: 'get',
+  url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/files',
+  headers: {
+    'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
+  }
+};
+
+async function makeRequest() {
+  try {
+    const response = await axios(config);
+    console.log(JSON.stringify(response.data, null, 2));
+  } catch (error) {
+    console.error('Error:', error.response?.data || error.message);
+  }
+}
+
+makeRequest();
+    ```
+  </TabItem>
+</Tabs>
+
+
+#### Responses
+
+##### 200 LargeFS offload settings configuration
+
+LargeFS offload settings configuration
+
+```json
+{
+  "largefs_settings": {
+    "cloud": "s3",
+    "bucket": "example-value",
+    "bucket_region": "example-value",
+    "path_settings": [
+      {
+        "path": "example-value",
+        "excluded_paths": [
+          "example-value"
+        ],
+        "redirect_type": "break"
+      }
+    ]
+  }
+}
+```
+
+##### 401 Authentication Error
+
+Authentication Error
+
+```json
+{
+  "message": "Authentication required"
+}
+```
+
+##### 403 Not authorized
+
+Not authorized
+
+```json
+{
+  "message": "Insufficient permissions to access this resource"
+}
+```
+
+##### 404 Not found
+
+Not found
+
+```json
+{
+  "message": "Resource not found"
+}
+```
+
+##### 429 
+
+
+```json
+{
+  "message": "Rate limit exceeded - too many requests"
+}
+```
+
+##### 503 
+
+
+```json
+{
+  "message": "Service temporarily unavailable"
+}
+```
+
+
+#### Authentication
+
+This endpoint requires authentication. See the [Authentication guide](/api-reference/authentication/) for details.
+
+---
+
+### Configure offload settings for an install
+
+Configure offload settings for an install
+
+Updates the offload settings configuration for a specific install
+
+
+#### Parameters
+
+##### Path Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| install_id | string (uuid) | yes | ID of install |
+
+
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X POST \
+  -u "API_USER_ID:API_USER_PASSWORD" \
+  -H "Content-Type: application/json" \
+  -d '{}' \
+  "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/files"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    <?php
+require_once 'vendor/autoload.php';
+
+use GuzzleHttp\Client;
+
+$client = new Client();
+$auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+
+try {
+    $response = $client->post('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/files', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth,
+            'Content-Type' => 'application/json'
+        ],
+        'json' => [
+
+]
+    ]);
+
+    $data = json_decode($response->getBody(), true);
+    print_r($data);
+} catch (Exception $e) {
+    echo 'Error: ' . $e->getMessage();
+}
+?>
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import requests
+import json
+import base64
+
+url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/files"
+auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+headers = {
+    'Authorization': f'Basic {auth_string}',
+    'Content-Type': 'application/json'
+}
+
+data = {}
+
+try:
+    response = requests.post(url, headers=headers, json=data)
+    response.raise_for_status()
+    result = response.json()
+    print(json.dumps(result, indent=2))
+except requests.exceptions.RequestException as e:
+    print(f"Error: {e}")
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+const config = {
+  method: 'post',
+  url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/files',
+  headers: {
+    'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64'),
+    'Content-Type': 'application/json'
+  },
+  data: {}
+};
+
+async function makeRequest() {
+  try {
+    const response = await axios(config);
+    console.log(JSON.stringify(response.data, null, 2));
+  } catch (error) {
+    console.error('Error:', error.response?.data || error.message);
+  }
+}
+
+makeRequest();
+    ```
+  </TabItem>
+</Tabs>
+
+
+#### Responses
+
+##### 202 Accepted
+
+Accepted
+
+```json
+{
   "message": "Response format not documented"
+}
+```
+
+##### 400 Bad Request
+
+Bad Request
+
+```json
+{
+  "message": "Install name is required",
+  "errors": [
+    {
+      "resource": "Installation",
+      "field": "name",
+      "type": "missing_field",
+      "code": "required",
+      "message": "Installation name cannot be empty"
+    }
+  ]
+}
+```
+
+##### 401 Authentication Error
+
+Authentication Error
+
+```json
+{
+  "message": "Authentication required"
+}
+```
+
+##### 403 Not authorized
+
+Not authorized
+
+```json
+{
+  "message": "Insufficient permissions to access this resource"
+}
+```
+
+##### 404 Not found
+
+Not found
+
+```json
+{
+  "message": "Resource not found"
+}
+```
+
+##### 429 Too many requests
+
+Too many requests
+
+```json
+{
+  "message": "Rate limit exceeded - too many requests"
+}
+```
+
+##### 503 
+
+
+```json
+{
+  "message": "Service temporarily unavailable"
+}
+```
+
+
+#### Authentication
+
+This endpoint requires authentication. See the [Authentication guide](/api-reference/authentication/) for details.
+
+---
+
+### Update specific offload settings for an install
+
+Update specific offload settings for an install
+
+Partially updates the offload settings configuration for a specific install
+
+
+#### Parameters
+
+##### Path Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| install_id | string (uuid) | yes | ID of install |
+
+
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X PATCH \
+  -u "API_USER_ID:API_USER_PASSWORD" \
+  -H "Content-Type: application/json" \
+  -d '{}' \
+  "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/files"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    <?php
+require_once 'vendor/autoload.php';
+
+use GuzzleHttp\Client;
+
+$client = new Client();
+$auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+
+try {
+    $response = $client->patch('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/files', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth,
+            'Content-Type' => 'application/json'
+        ],
+        'json' => [
+
+]
+    ]);
+
+    $data = json_decode($response->getBody(), true);
+    print_r($data);
+} catch (Exception $e) {
+    echo 'Error: ' . $e->getMessage();
+}
+?>
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import requests
+import json
+import base64
+
+url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/files"
+auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+headers = {
+    'Authorization': f'Basic {auth_string}',
+    'Content-Type': 'application/json'
+}
+
+data = {}
+
+try:
+    response = requests.patch(url, headers=headers, json=data)
+    response.raise_for_status()
+    result = response.json()
+    print(json.dumps(result, indent=2))
+except requests.exceptions.RequestException as e:
+    print(f"Error: {e}")
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+const config = {
+  method: 'patch',
+  url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/files',
+  headers: {
+    'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64'),
+    'Content-Type': 'application/json'
+  },
+  data: {}
+};
+
+async function makeRequest() {
+  try {
+    const response = await axios(config);
+    console.log(JSON.stringify(response.data, null, 2));
+  } catch (error) {
+    console.error('Error:', error.response?.data || error.message);
+  }
+}
+
+makeRequest();
+    ```
+  </TabItem>
+</Tabs>
+
+
+#### Responses
+
+##### 202 Accepted
+
+Accepted
+
+```json
+{
+  "message": "Response format not documented"
+}
+```
+
+##### 400 Bad Request
+
+Bad Request
+
+```json
+{
+  "message": "Invalid install ID format"
+}
+```
+
+##### 401 Authentication Error
+
+Authentication Error
+
+```json
+{
+  "message": "Authentication required"
+}
+```
+
+##### 403 Not authorized
+
+Not authorized
+
+```json
+{
+  "message": "Insufficient permissions to access this resource"
+}
+```
+
+##### 404 Not found
+
+Not found
+
+```json
+{
+  "message": "Resource not found"
+}
+```
+
+##### 429 Too many requests
+
+Too many requests
+
+```json
+{
+  "message": "Rate limit exceeded - too many requests"
+}
+```
+
+##### 503 
+
+
+```json
+{
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -3166,7 +4207,41 @@ makeRequest();
 List of domains for install
 
 ```json
-
+{
+  "previous": "https://api.wpengineapi.com/v1/example-endpoint?limit=100&offset=0",
+  "next": "https://api.wpengineapi.com/v1/example-endpoint?limit=100&offset=200",
+  "count": 225,
+  "results": [
+    {
+      "name": "torquemag.io",
+      "duplicate": true,
+      "primary": true,
+      "id": "e41fa98f-ea80-4654-b229-a9b765d0863a",
+      "network_type": "AN",
+      "network_details": {
+        "dns_config_info": {
+          "cname": "wp.wpenginepowered.com",
+          "a_records": [
+            "example-value"
+          ]
+        },
+        "network_info": {
+          "status": "ACTIVE",
+          "ssl": {
+            "status": "active"
+          }
+        }
+      },
+      "redirects_to": [
+        {
+          "id": "e41fa98f-ea80-4006-b229-a9b765d0863a",
+          "name": "redirect.com"
+        }
+      ],
+      "secure_all_urls": false
+    }
+  ]
+}
 ```
 
 ##### 401 Authentication Error
@@ -3174,7 +4249,9 @@ List of domains for install
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 403 Not authorized
@@ -3182,7 +4259,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  "message": "Insufficient permissions to access this resource"
+}
 ```
 
 ##### 404 Not found
@@ -3190,7 +4269,9 @@ Not authorized
 Not found
 
 ```json
-
+{
+  "message": "Resource not found"
+}
 ```
 
 ##### 429 
@@ -3198,7 +4279,7 @@ Not found
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -3207,7 +4288,7 @@ Not found
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -3346,7 +4427,34 @@ makeRequest();
 Created
 
 ```json
-
+{
+  "name": "torquemag.io",
+  "duplicate": true,
+  "primary": true,
+  "id": "e41fa98f-ea80-4654-b229-a9b765d0863a",
+  "network_type": "AN",
+  "network_details": {
+    "dns_config_info": {
+      "cname": "wp.wpenginepowered.com",
+      "a_records": [
+        "example-value"
+      ]
+    },
+    "network_info": {
+      "status": "ACTIVE",
+      "ssl": {
+        "status": "active"
+      }
+    }
+  },
+  "redirects_to": [
+    {
+      "id": "e41fa98f-ea80-4006-b229-a9b765d0863a",
+      "name": "redirect.com"
+    }
+  ],
+  "secure_all_urls": false
+}
 ```
 
 ##### 400 Bad Request
@@ -3354,7 +4462,18 @@ Created
 Bad Request
 
 ```json
-
+{
+  "message": "Domain name is required",
+  "errors": [
+    {
+      "resource": "Domain",
+      "field": "name",
+      "type": "missing_field",
+      "code": "required",
+      "message": "Domain name cannot be empty"
+    }
+  ]
+}
 ```
 
 ##### 401 Authentication Error
@@ -3362,7 +4481,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 403 Not authorized
@@ -3370,7 +4491,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  "message": "Insufficient permissions to access this resource"
+}
 ```
 
 ##### 429 Too many requests
@@ -3379,7 +4502,7 @@ Too many requests
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -3388,7 +4511,7 @@ Too many requests
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -3527,7 +4650,16 @@ makeRequest();
 Created
 
 ```json
-
+{
+  "id": "e41fa98f-ea80-4654-b229-a9b765d0863a",
+  "name": "example.com",
+  "duplicate": false,
+  "primary": true,
+  "redirects_to": {
+    "id": "e41fa98f-ea80-4006-b229-a9b765d0863a",
+    "name": "redirect.com"
+  }
+}
 ```
 
 ##### 400 Bad Request
@@ -3535,7 +4667,18 @@ Created
 Bad Request
 
 ```json
-
+{
+  "message": "Domain name is required",
+  "errors": [
+    {
+      "resource": "Domain",
+      "field": "name",
+      "type": "missing_field",
+      "code": "required",
+      "message": "Domain name cannot be empty"
+    }
+  ]
+}
 ```
 
 ##### 401 Authentication Error
@@ -3543,7 +4686,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 403 Not authorized
@@ -3551,7 +4696,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  "message": "Insufficient permissions to access this resource"
+}
 ```
 
 ##### 429 Too many requests
@@ -3560,7 +4707,7 @@ Too many requests
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -3569,7 +4716,7 @@ Too many requests
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -3688,7 +4835,34 @@ makeRequest();
 Success
 
 ```json
-
+{
+  "name": "torquemag.io",
+  "duplicate": true,
+  "primary": true,
+  "id": "e41fa98f-ea80-4654-b229-a9b765d0863a",
+  "network_type": "AN",
+  "network_details": {
+    "dns_config_info": {
+      "cname": "wp.wpenginepowered.com",
+      "a_records": [
+        "example-value"
+      ]
+    },
+    "network_info": {
+      "status": "ACTIVE",
+      "ssl": {
+        "status": "active"
+      }
+    }
+  },
+  "redirects_to": [
+    {
+      "id": "e41fa98f-ea80-4006-b229-a9b765d0863a",
+      "name": "redirect.com"
+    }
+  ],
+  "secure_all_urls": false
+}
 ```
 
 ##### 401 Authentication Error
@@ -3696,7 +4870,9 @@ Success
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 403 Not authorized
@@ -3704,7 +4880,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  "message": "Insufficient permissions to access this resource"
+}
 ```
 
 ##### 404 Not found
@@ -3712,7 +4890,9 @@ Not authorized
 Not found
 
 ```json
-
+{
+  "message": "Resource not found"
+}
 ```
 
 ##### 429 
@@ -3720,7 +4900,7 @@ Not found
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -3729,7 +4909,7 @@ Not found
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -3740,11 +4920,11 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ---
 
-### Set an existing domain as primary
+### Update an existing domain for an install
 
-Set an existing domain as primary
+Update an existing domain for an install
 
-Sets a domain as the primary. Cannot set a duplicate, wildcard, or redirected domain as the primary.
+Updates an existing domain for an install. Cannot set a duplicate, wildcard, or redirected domain as the primary.
 
 
 #### Parameters
@@ -3865,7 +5045,34 @@ makeRequest();
 Updated
 
 ```json
-
+{
+  "name": "torquemag.io",
+  "duplicate": true,
+  "primary": true,
+  "id": "e41fa98f-ea80-4654-b229-a9b765d0863a",
+  "network_type": "AN",
+  "network_details": {
+    "dns_config_info": {
+      "cname": "wp.wpenginepowered.com",
+      "a_records": [
+        "example-value"
+      ]
+    },
+    "network_info": {
+      "status": "ACTIVE",
+      "ssl": {
+        "status": "active"
+      }
+    }
+  },
+  "redirects_to": [
+    {
+      "id": "e41fa98f-ea80-4006-b229-a9b765d0863a",
+      "name": "redirect.com"
+    }
+  ],
+  "secure_all_urls": false
+}
 ```
 
 ##### 400 Bad Request
@@ -3873,7 +5080,9 @@ Updated
 Bad Request
 
 ```json
-
+{
+  "message": "Invalid domain ID format"
+}
 ```
 
 ##### 401 Authentication Error
@@ -3881,7 +5090,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 403 Not authorized
@@ -3889,7 +5100,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  "message": "Insufficient permissions to access this resource"
+}
 ```
 
 ##### 404 Not found
@@ -3897,7 +5110,9 @@ Not authorized
 Not found
 
 ```json
-
+{
+  "message": "Resource not found"
+}
 ```
 
 ##### 429 Too many requests
@@ -3906,7 +5121,7 @@ Too many requests
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -3915,7 +5130,7 @@ Too many requests
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -4044,7 +5259,9 @@ Deleted
 Bad Request
 
 ```json
-
+{
+  "message": "Invalid domain ID format"
+}
 ```
 
 ##### 401 Authentication Error
@@ -4052,7 +5269,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 403 Not authorized
@@ -4060,7 +5279,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  "message": "Insufficient permissions to access this resource"
+}
 ```
 
 ##### 404 Not found
@@ -4068,7 +5289,9 @@ Not authorized
 Not found
 
 ```json
-
+{
+  "message": "Resource not found"
+}
 ```
 
 ##### 429 
@@ -4076,7 +5299,7 @@ Not found
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -4085,7 +5308,7 @@ Not found
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -4096,11 +5319,11 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ---
 
-### Check the status of a domain
+### Submit a status report for a domain
 
-Check the status of a domain
+Submit a status report for a domain
 
-Submits a request to check the status of the domain
+Submit a status report for a domain. Returns a &#x60;report_id&#x60; that can be used to check the domain&#x27;s status.
 
 
 #### Parameters
@@ -4210,21 +5433,13 @@ makeRequest();
 
 #### Responses
 
-##### 200 Success
-
-Success
-
-```json
-
-```
-
 ##### 202 Accepted
 
 Accepted
 
 ```json
 {
-  "message": "Response format not documented"
+  "report_id": "6a6d5dbd-5cac-41d5-8f3f-14a3e8ae6f76"
 }
 ```
 
@@ -4233,7 +5448,9 @@ Accepted
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 403 Not authorized
@@ -4241,7 +5458,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  "message": "Insufficient permissions to access this resource"
+}
 ```
 
 ##### 404 Not found
@@ -4249,7 +5468,9 @@ Not authorized
 Not found
 
 ```json
-
+{
+  "message": "Resource not found"
+}
 ```
 
 ##### 429 Too many requests
@@ -4257,7 +5478,9 @@ Not found
 Too many requests
 
 ```json
-
+{
+  "message": "Rate limit exceeded - too many requests"
+}
 ```
 
 ##### 500 Internal server error
@@ -4265,7 +5488,9 @@ Too many requests
 Internal server error
 
 ```json
-
+{
+  "message": "Internal server error - please try again later"
+}
 ```
 
 ##### 503 
@@ -4273,7 +5498,7 @@ Internal server error
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -4284,16 +5509,11 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ---
 
+### Retrieve a status report for a domain
 
-## Cdn
+Retrieve a status report for a domain
 
-Manage Cdn resources using the WP Engine Customer API.
-
-### Check the status of a domain
-
-Check the status of a domain
-
-Submits a request to check the status of the domain
+Fetches a status report for a specific domain. Accepts a &#x60;report_id&#x60;.
 
 
 #### Parameters
@@ -4302,8 +5522,8 @@ Submits a request to check the status of the domain
 
 | Name | Type | Required | Description |
 |------|------|----------|-------------|
-| install_id | string (uuid) | yes | ID of install |
-| domain_id | string (uuid) | yes | ID of domain |
+| install_id | string | yes |  |
+| report_id | string | yes |  |
 
 
 
@@ -4312,11 +5532,9 @@ Submits a request to check the status of the domain
 <Tabs>
   <TabItem label="cURL">
     ```bash
-    curl -X POST \
+    curl -X GET \
   -u "API_USER_ID:API_USER_PASSWORD" \
-  -H "Content-Type: application/json" \
-  -d '{}' \
-  "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a/check_status"
+  "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/check_status/6a6d5dbd-5cac-41d5-8f3f-14a3e8ae6f76"
     ```
   </TabItem>
   <TabItem label="PHP">
@@ -4330,14 +5548,10 @@ $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
 try {
-    $response = $client->post('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a/check_status', [
+    $response = $client->get('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/check_status/6a6d5dbd-5cac-41d5-8f3f-14a3e8ae6f76', [
         'headers' => [
-            'Authorization' => 'Basic ' . $auth,
-            'Content-Type' => 'application/json'
-        ],
-        'json' => [
-
-]
+            'Authorization' => 'Basic ' . $auth
+        ]
     ]);
 
     $data = json_decode($response->getBody(), true);
@@ -4354,17 +5568,14 @@ try {
 import json
 import base64
 
-url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a/check_status"
+url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/check_status/6a6d5dbd-5cac-41d5-8f3f-14a3e8ae6f76"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
 headers = {
-    'Authorization': f'Basic {auth_string}',
-    'Content-Type': 'application/json'
+    'Authorization': f'Basic {auth_string}'
 }
 
-data = {}
-
 try:
-    response = requests.post(url, headers=headers, json=data)
+    response = requests.get(url, headers=headers)
     response.raise_for_status()
     result = response.json()
     print(json.dumps(result, indent=2))
@@ -4377,13 +5588,11 @@ except requests.exceptions.RequestException as e:
     const axios = require('axios');
 
 const config = {
-  method: 'post',
-  url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a/check_status',
+  method: 'get',
+  url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/check_status/6a6d5dbd-5cac-41d5-8f3f-14a3e8ae6f76',
   headers: {
-    'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64'),
-    'Content-Type': 'application/json'
-  },
-  data: {}
+    'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
+  }
 };
 
 async function makeRequest() {
@@ -4408,16 +5617,95 @@ makeRequest();
 Success
 
 ```json
-
-```
-
-##### 202 Accepted
-
-Accepted
-
-```json
 {
-  "message": "Response format not documented"
+  "report": {
+    "complete": true,
+    "id": "6a6d5dbd-5cac-41d5-8f3f-14a3e8ae6f76",
+    "install_name": "example-value",
+    "install_ip": "example-value",
+    "admin": false,
+    "domains": [
+      {
+        "name": "example-value",
+        "cname": "example-value",
+        "a_record": "example-value",
+        "aaaa_record": "example-value",
+        "complete": true,
+        "result": "example-value",
+        "dns_provider": "example-value",
+        "dns_error": false,
+        "install_name": "example-value",
+        "cluster_id": "example-value",
+        "http_forwarded": "example-value",
+        "http_forwarded_list": "example-value",
+        "http_error": false,
+        "atlas_env_id": "example-value",
+        "ns": [
+          {
+            "host": "example-value"
+          }
+        ],
+        "mx": [
+          {
+            "Host": "example-value",
+            "Pref": 100
+          }
+        ],
+        "txt": [
+          "example-value"
+        ],
+        "soa": [
+          {
+            "hdr": {},
+            "ns": "ns1.example.com",
+            "mbox": "hostmaster.example.com",
+            "serial": 100,
+            "refresh": 100,
+            "retry": 100,
+            "expire": 100,
+            "minttl": 100
+          }
+        ],
+        "caa": [
+          {
+            "hdr": {},
+            "flag": 100,
+            "tag": "example-value",
+            "value": "example-value"
+          }
+        ],
+        "ip": [
+          "example-value"
+        ],
+        "address": [
+          "example-value"
+        ],
+        "aname": [
+          {
+            "hdr": {},
+            "a": "example-value"
+          }
+        ],
+        "ssl": {
+          "status": "verified",
+          "issuer": "example-value",
+          "not_before": "example-value",
+          "not_after": "example-value",
+          "error": "example-value",
+          "dns_names": [
+            "example-value"
+          ],
+          "serial_number": "example-value",
+          "signature_algorithm": 100,
+          "subject": {},
+          "common_name": "example-value",
+          "sans": [
+            "example-value"
+          ]
+        }
+      }
+    ]
+  }
 }
 ```
 
@@ -4426,7 +5714,9 @@ Accepted
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 403 Not authorized
@@ -4434,7 +5724,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  "message": "Insufficient permissions to access this resource"
+}
 ```
 
 ##### 404 Not found
@@ -4442,15 +5734,18 @@ Not authorized
 Not found
 
 ```json
-
+{
+  "message": "Resource not found"
+}
 ```
 
-##### 429 Too many requests
+##### 429 
 
-Too many requests
 
 ```json
-
+{
+  "message": "Rate limit exceeded - too many requests"
+}
 ```
 
 ##### 500 Internal server error
@@ -4458,7 +5753,9 @@ Too many requests
 Internal server error
 
 ```json
-
+{
+  "message": "Internal server error - please try again later"
+}
 ```
 
 ##### 503 
@@ -4466,7 +5763,206 @@ Internal server error
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
+}
+```
+
+
+#### Authentication
+
+This endpoint requires authentication. See the [Authentication guide](/api-reference/authentication/) for details.
+
+---
+
+
+## Certificates
+
+Manage Certificates resources using the WP Engine Customer API.
+
+### Get SSL certificate information for a domain
+
+Get SSL certificate information for a domain
+
+Returns certificate information for a given domain on an install
+
+
+#### Parameters
+
+##### Path Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| install_id | string (uuid) | yes | ID of install |
+| domain_id | string (uuid) | yes | ID of domain |
+
+
+
+#### Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    curl -X GET \
+  -u "API_USER_ID:API_USER_PASSWORD" \
+  "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a/ssl_certificate"
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    <?php
+require_once 'vendor/autoload.php';
+
+use GuzzleHttp\Client;
+
+$client = new Client();
+$auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
+
+try {
+    $response = $client->get('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a/ssl_certificate', [
+        'headers' => [
+            'Authorization' => 'Basic ' . $auth
+        ]
+    ]);
+
+    $data = json_decode($response->getBody(), true);
+    print_r($data);
+} catch (Exception $e) {
+    echo 'Error: ' . $e->getMessage();
+}
+?>
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    import requests
+import json
+import base64
+
+url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a/ssl_certificate"
+auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
+headers = {
+    'Authorization': f'Basic {auth_string}'
+}
+
+try:
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
+    result = response.json()
+    print(json.dumps(result, indent=2))
+except requests.exceptions.RequestException as e:
+    print(f"Error: {e}")
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    const axios = require('axios');
+
+const config = {
+  method: 'get',
+  url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a/ssl_certificate',
+  headers: {
+    'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
+  }
+};
+
+async function makeRequest() {
+  try {
+    const response = await axios(config);
+    console.log(JSON.stringify(response.data, null, 2));
+  } catch (error) {
+    console.error('Error:', error.response?.data || error.message);
+  }
+}
+
+makeRequest();
+    ```
+  </TabItem>
+</Tabs>
+
+
+#### Responses
+
+##### 200 Domain certificate information
+
+Domain certificate information
+
+```json
+{
+  "cert_name": "customdomain.com",
+  "cert_info": {
+    "key": "example-value",
+    "cert": "example-value"
+  },
+  "certificate": {
+    "id": 100,
+    "account": "myaccountname",
+    "auto_renew": true,
+    "auth_file": "example-value",
+    "approver_email": "example-value",
+    "common_name": "customdomain.com",
+    "cancel_time": "example-value",
+    "cert_source": "CERT_SOURCE_UNSPECIFIED",
+    "ordered_time": "example-value",
+    "wildcard": true,
+    "domains": [
+      "example-value"
+    ],
+    "order_id": "example-value",
+    "status": "SSL_STATE_UNSPECIFIED",
+    "parent_id": "example-value",
+    "wpe_order_id": "example-value",
+    "approved_time": "example-value",
+    "expires_time": "example-value"
+  },
+  "criteria": "example-value"
+}
+```
+
+##### 401 Authentication Error
+
+Authentication Error
+
+```json
+{
+  "message": "Authentication required"
+}
+```
+
+##### 403 Not authorized
+
+Not authorized
+
+```json
+{
+  "message": "Insufficient permissions to access this resource"
+}
+```
+
+##### 404 Not found
+
+Not found
+
+```json
+{
+  "message": "Resource not found"
+}
+```
+
+##### 429 
+
+
+```json
+{
+  "message": "Rate limit exceeded - too many requests"
+}
+```
+
+##### 503 
+
+
+```json
+{
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -4600,7 +6096,10 @@ makeRequest();
 Accepted
 
 ```json
-
+{
+  "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "status": "requested"
+}
 ```
 
 ##### 400 Bad Request
@@ -4608,7 +6107,18 @@ Accepted
 Bad Request
 
 ```json
-
+{
+  "message": "Backup description is required",
+  "errors": [
+    {
+      "resource": "Backup",
+      "field": "description",
+      "type": "missing_field",
+      "code": "required",
+      "message": "Backup description cannot be empty"
+    }
+  ]
+}
 ```
 
 ##### 401 Authentication Error
@@ -4616,7 +6126,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 403 Not authorized
@@ -4624,7 +6136,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  "message": "Insufficient permissions to access this resource"
+}
 ```
 
 ##### 404 Not found
@@ -4632,7 +6146,9 @@ Not authorized
 Not found
 
 ```json
-
+{
+  "message": "Resource not found"
+}
 ```
 
 ##### 429 Too many requests
@@ -4641,7 +6157,7 @@ Too many requests
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -4650,7 +6166,7 @@ Too many requests
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -4661,9 +6177,9 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ---
 
-### Retreives the status of a backup of a WordPress installation
+### Retrieves the status of a backup of a WordPress installation
 
-Retreives the status of a backup of a WordPress installation
+Retrieves the status of a backup of a WordPress installation
 
 Retrieves the status of a backup of a WordPress installation.
 
@@ -4769,7 +6285,10 @@ makeRequest();
 A backup
 
 ```json
-
+{
+  "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "status": "requested"
+}
 ```
 
 ##### 400 Bad Request
@@ -4777,7 +6296,9 @@ A backup
 Bad Request
 
 ```json
-
+{
+  "message": "Bad request - invalid parameters"
+}
 ```
 
 ##### 401 Authentication Error
@@ -4785,7 +6306,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 404 Not found
@@ -4793,7 +6316,9 @@ Authentication Error
 Not found
 
 ```json
-
+{
+  "message": "Resource not found"
+}
 ```
 
 ##### 429 
@@ -4801,7 +6326,7 @@ Not found
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -4810,7 +6335,7 @@ Not found
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -4830,7 +6355,14 @@ Manage Cache resources using the WP Engine Customer API.
 
 Purge an install&#x27;s cache
 
-This will purge the specified cache associated with the install
+This will purge the specified cache associated with the install.
+Allowed types:
+
+          - &quot;object&quot;
+          - &quot;page&quot;
+          - &quot;cdn&quot;
+          - &quot;all&quot;
+
 
 
 #### Parameters
@@ -4960,7 +6492,18 @@ Accepted
 Bad Request
 
 ```json
-
+{
+  "message": "Invalid cache type",
+  "errors": [
+    {
+      "resource": "Cache",
+      "field": "type",
+      "type": "invalid_value",
+      "code": "invalid_type",
+      "message": "Cache type must be one of: object, page, cdn"
+    }
+  ]
+}
 ```
 
 ##### 401 Authentication Error
@@ -4968,7 +6511,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 403 Not authorized
@@ -4976,7 +6521,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  "message": "Insufficient permissions to access this resource"
+}
 ```
 
 ##### 404 Not found
@@ -4984,7 +6531,9 @@ Not authorized
 Not found
 
 ```json
-
+{
+  "message": "Resource not found"
+}
 ```
 
 ##### 429 Too many requests
@@ -4992,7 +6541,9 @@ Not found
 Too many requests
 
 ```json
-
+{
+  "message": "Rate limit exceeded - too many requests"
+}
 ```
 
 ##### 503 
@@ -5000,7 +6551,7 @@ Too many requests
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -5118,7 +6669,12 @@ makeRequest();
 The currently authenticated user
 
 ```json
-
+{
+  "id": "fd8e24a5-1f16-4b80-af5f-d748bcc9e64d",
+  "first_name": "Joe",
+  "last_name": "Smith",
+  "email": "joe@gmail.com"
+}
 ```
 
 ##### 401 Authentication Error
@@ -5126,7 +6682,9 @@ The currently authenticated user
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 429 Too many requests
@@ -5135,7 +6693,7 @@ Too many requests
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -5144,7 +6702,7 @@ Too many requests
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -5264,7 +6822,19 @@ makeRequest();
 List of SSH keys
 
 ```json
-
+{
+  "previous": "https://api.wpengineapi.com/v1/example-endpoint?limit=100&offset=0",
+  "next": "https://api.wpengineapi.com/v1/example-endpoint?limit=100&offset=200",
+  "count": 225,
+  "results": [
+    {
+      "comment": "joe@gmail.com",
+      "created_at": "2019-09-01T15:59:24.277Z",
+      "fingerprint": "a1:b2:c3:d4:e5:46:a7:88:c9:40:d2:d7:9b:cd:42:05",
+      "uuid": "e41fa98f-ea80-1f16-a7b7-d748bcc9e64d"
+    }
+  ]
+}
 ```
 
 ##### 400 Bad Request
@@ -5272,7 +6842,9 @@ List of SSH keys
 Bad Request
 
 ```json
-
+{
+  "message": "Bad request - invalid parameters"
+}
 ```
 
 ##### 401 Authentication Error
@@ -5280,7 +6852,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 429 
@@ -5288,7 +6862,7 @@ Authentication Error
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -5297,7 +6871,7 @@ Authentication Error
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -5433,7 +7007,12 @@ makeRequest();
 Created
 
 ```json
-
+{
+  "comment": "joe@gmail.com",
+  "created_at": "2019-09-01T15:59:24.277Z",
+  "fingerprint": "a1:b2:c3:d4:e5:46:a7:88:c9:40:d2:d7:9b:cd:42:05",
+  "uuid": "e41fa98f-ea80-1f16-a7b7-d748bcc9e64d"
+}
 ```
 
 ##### 400 Bad Request
@@ -5441,7 +7020,18 @@ Created
 Bad Request
 
 ```json
-
+{
+  "message": "Invalid SSH key format",
+  "errors": [
+    {
+      "resource": "SshKey",
+      "field": "public_key",
+      "type": "invalid_value",
+      "code": "invalid_format",
+      "message": "SSH key must be in valid OpenSSH format"
+    }
+  ]
+}
 ```
 
 ##### 401 Authentication Error
@@ -5449,7 +7039,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  "message": "Authentication required"
+}
 ```
 
 ##### 403 Not authorized
@@ -5457,7 +7049,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  "message": "Insufficient permissions to access this resource"
+}
 ```
 
 ##### 429 
@@ -5465,7 +7059,7 @@ Not authorized
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -5474,7 +7068,7 @@ Not authorized
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -5605,7 +7199,7 @@ Bad Request
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Bad request - invalid parameters"
 }
 ```
 
@@ -5615,7 +7209,7 @@ Authentication Error
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Authentication required"
 }
 ```
 
@@ -5625,7 +7219,7 @@ Not authorized
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Insufficient permissions to access this resource"
 }
 ```
 
@@ -5634,7 +7228,7 @@ Not authorized
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -5643,7 +7237,7 @@ Not authorized
 
 ```json
 {
-  "message": "Response format not documented"
+  "message": "Service temporarily unavailable"
 }
 ```
 
@@ -5669,8 +7263,8 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ## API Statistics
 
-- **Total Endpoints**: 33
-- **Endpoint Categories**: 12
-- **Schema Definitions**: 21
-- **API Version**: 1.6.7
-- **Last Updated**: 2025-06-27T08:58:09.598Z
+- **Total Endpoints**: 39
+- **Endpoint Categories**: 13
+- **Schema Definitions**: 27
+- **API Version**: 1.6.15
+- **Last Updated**: 2025-06-27T10:43:52.055Z

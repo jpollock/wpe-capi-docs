@@ -5,6 +5,7 @@ import yaml from 'js-yaml';
 import chalk from 'chalk';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { ResponseExampleGenerator } from './utils/response-examples.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -23,6 +24,7 @@ class OpenAPIParser {
     this.endpoints = [];
     this.tags = new Map();
     this.schemas = new Map();
+    this.responseGenerator = null;
   }
 
   /**
@@ -38,8 +40,9 @@ class OpenAPIParser {
       console.log(chalk.green(`✅ Loaded OpenAPI spec: ${this.spec.info.title} v${this.spec.info.version}`));
       
       this.validateSpec();
-      this.extractEndpoints();
       this.extractSchemas();
+      this.responseGenerator = new ResponseExampleGenerator(this.spec);
+      this.extractEndpoints();
       this.organizeByTags();
       
       return this.getStructuredData();
@@ -95,7 +98,6 @@ class OpenAPIParser {
       tags: operation.tags || ['untagged'],
       parameters: this.processParameters(operation.parameters || []),
       requestBody: this.processRequestBody(operation.requestBody),
-      responses: this.processResponses(operation.responses || {}),
       security: operation.security || this.spec.security || [],
       deprecated: operation.deprecated || false,
       examples: this.extractExamples(operation)
@@ -106,6 +108,9 @@ class OpenAPIParser {
     
     // Generate display name
     endpoint.displayName = this.generateDisplayName(endpoint);
+    
+    // Process responses after endpoint is constructed
+    endpoint.responses = this.processResponses(operation.responses || {}, endpoint);
     
     return endpoint;
   }
@@ -163,16 +168,44 @@ class OpenAPIParser {
   /**
    * Process response definitions
    */
-  processResponses(responses) {
+  processResponses(responses, endpoint) {
     const processed = {};
 
     for (const [statusCode, response] of Object.entries(responses)) {
-      processed[statusCode] = {
+      const processedResponse = {
         description: response.description || '',
         schema: response.schema,
         examples: response.examples || {},
-        headers: response.headers || {}
+        headers: response.headers || {},
+        jsonExample: null
       };
+
+      // Generate JSON example from schema or contextual error
+      if (this.responseGenerator) {
+        try {
+          let example = null;
+          
+          // For error responses (4xx, 5xx), use contextual examples
+          if (statusCode.startsWith('4') || statusCode.startsWith('5')) {
+            example = this.responseGenerator.generateContextualErrorExample(
+              statusCode, 
+              endpoint.path, 
+              endpoint.method
+            );
+          } else if (response.schema) {
+            // For success responses, use schema-based generation
+            example = this.responseGenerator.generateResponseExample(response);
+          }
+          
+          if (example) {
+            processedResponse.jsonExample = JSON.stringify(example, null, 2);
+          }
+        } catch (error) {
+          console.warn(`Warning: Could not generate example for ${statusCode} response:`, error.message);
+        }
+      }
+
+      processed[statusCode] = processedResponse;
     }
 
     return processed;

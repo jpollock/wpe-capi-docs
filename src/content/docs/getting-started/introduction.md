@@ -39,7 +39,7 @@ To start using the API, you'll need to:
 The current version of the API is v1. All API requests should include the version in the URL path:
 
 ```
-https://wpengineapi.com/v1/sites
+https://api.wpengineapi.com/v1/sites
 ```
 
 ## Rate Limiting

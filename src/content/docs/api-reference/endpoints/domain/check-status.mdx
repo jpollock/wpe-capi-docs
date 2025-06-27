@@ -1,20 +1,20 @@
 ---
-title: Check the status of a domain
-description: Check the status of a domain
+title: Submit a status report for a domain
+description: Submit a status report for a domain
 ---
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T08:58:09.573Z */}
+{/* Last updated: 2025-06-27T10:43:52.042Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 # POST /installs/\{install_id\}/domains/\{domain_id\}/check_status
 
-Check the status of a domain
+Submit a status report for a domain
 
-Submits a request to check the status of the domain
+Submit a status report for a domain. Returns a &#x60;report_id&#x60; that can be used to check the domain&#x27;s status.
 
 
 ## Parameters
@@ -114,25 +114,24 @@ makeRequest();
 
 ## Responses
 
-### 200 Success
-
-Success
-
-```json
-
-```
-
 ### 202 Accepted
 
 Accepted
 
+```json
+{
+  &quot;report_id&quot;: &quot;6a6d5dbd-5cac-41d5-8f3f-14a3e8ae6f76&quot;
+}
+```
 
 ### 401 Authentication Error
 
 Authentication Error
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Authentication required&quot;
+}
 ```
 
 ### 403 Not authorized
@@ -140,7 +139,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Insufficient permissions to access this resource&quot;
+}
 ```
 
 ### 404 Not found
@@ -148,7 +149,9 @@ Not authorized
 Not found
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Resource not found&quot;
+}
 ```
 
 ### 429 Too many requests
@@ -156,7 +159,9 @@ Not found
 Too many requests
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Rate limit exceeded - too many requests&quot;
+}
 ```
 
 ### 500 Internal server error
@@ -164,7 +169,9 @@ Too many requests
 Internal server error
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Internal server error - please try again later&quot;
+}
 ```
 
 ### 503 
@@ -193,5 +200,4 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 - [API Overview](/api-reference/overview/)
 - [Authentication](/api-reference/authentication/)
-- [ endpoints](/api-reference/endpoints//)
 - [ endpoints](/api-reference/endpoints//)

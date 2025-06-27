@@ -1,20 +1,20 @@
 ---
-title: Update an existing domain for an install
-description: Update an existing domain for an install
+title: Get SSL certificate information for a domain
+description: Get SSL certificate information for a domain
 ---
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T10:43:52.041Z */}
+{/* Last updated: 2025-06-27T10:43:52.043Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# PATCH /installs/\{install_id\}/domains/\{domain_id\}
+# GET /installs/\{install_id\}/domains/\{domain_id\}/ssl_certificate
 
-Update an existing domain for an install
+Get SSL certificate information for a domain
 
-Updates an existing domain for an install. Cannot set a duplicate, wildcard, or redirected domain as the primary.
+Returns certificate information for a given domain on an install
 
 
 ## Parameters
@@ -23,7 +23,7 @@ Updates an existing domain for an install. Cannot set a duplicate, wildcard, or 
 
 | Name | Type | Required | Description |
 |------|------|----------|-------------|
-| install_id | string (uuid) | yes | The install ID |
+| install_id | string (uuid) | yes | ID of install |
 | domain_id | string (uuid) | yes | ID of domain |
 
 
@@ -34,9 +34,9 @@ Updates an existing domain for an install. Cannot set a duplicate, wildcard, or 
   <TabItem label="cURL">
     ```bash
     # Example cURL request
-curl -X PATCH \
+curl -X GET \
   -u "API_USER_ID:API_USER_PASSWORD" \
-  "https://api.wpengineapi.com/v1/installs/\{install_id\}/domains/\{domain_id\}"
+  "https://api.wpengineapi.com/v1/installs/\{install_id\}/domains/\{domain_id\}/ssl_certificate"
     ```
   </TabItem>
   <TabItem label="PHP">
@@ -51,7 +51,7 @@ $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
 try {
-    $response = $client->PATCH('https://api.wpengineapi.com/v1/installs/\{install_id\}/domains/\{domain_id\}', [
+    $response = $client->GET('https://api.wpengineapi.com/v1/installs/\{install_id\}/domains/\{domain_id\}/ssl_certificate', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
         ]
@@ -70,14 +70,14 @@ try {
     import requests
 import base64
 
-url = "https://api.wpengineapi.com/v1/installs/\{install_id\}/domains/\{domain_id\}"
+url = "https://api.wpengineapi.com/v1/installs/\{install_id\}/domains/\{domain_id\}/ssl_certificate"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
 headers = {
     'Authorization': f'Basic {auth_string}'
 }
 
 try:
-    response = requests.PATCH(url, headers=headers)
+    response = requests.GET(url, headers=headers)
     response.raise_for_status()
     result = response.json()
     print(result)
@@ -90,8 +90,8 @@ except requests.exceptions.RequestException as e:
     const axios = require('axios');
 
 const config = {
-  method: 'PATCH',
-  url: 'https://api.wpengineapi.com/v1/installs/\{install_id\}/domains/\{domain_id\}',
+  method: 'GET',
+  url: 'https://api.wpengineapi.com/v1/installs/\{install_id\}/domains/\{domain_id\}/ssl_certificate',
   headers: {
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
   }
@@ -114,48 +114,39 @@ makeRequest();
 
 ## Responses
 
-### 200 Updated
+### 200 Domain certificate information
 
-Updated
+Domain certificate information
 
 ```json
 {
-  &quot;name&quot;: &quot;torquemag.io&quot;,
-  &quot;duplicate&quot;: true,
-  &quot;primary&quot;: true,
-  &quot;id&quot;: &quot;e41fa98f-ea80-4654-b229-a9b765d0863a&quot;,
-  &quot;network_type&quot;: &quot;AN&quot;,
-  &quot;network_details&quot;: {
-    &quot;dns_config_info&quot;: {
-      &quot;cname&quot;: &quot;wp.wpenginepowered.com&quot;,
-      &quot;a_records&quot;: [
-        &quot;example-value&quot;
-      ]
-    },
-    &quot;network_info&quot;: {
-      &quot;status&quot;: &quot;ACTIVE&quot;,
-      &quot;ssl&quot;: {
-        &quot;status&quot;: &quot;active&quot;
-      }
-    }
+  &quot;cert_name&quot;: &quot;customdomain.com&quot;,
+  &quot;cert_info&quot;: {
+    &quot;key&quot;: &quot;example-value&quot;,
+    &quot;cert&quot;: &quot;example-value&quot;
   },
-  &quot;redirects_to&quot;: [
-    {
-      &quot;id&quot;: &quot;e41fa98f-ea80-4006-b229-a9b765d0863a&quot;,
-      &quot;name&quot;: &quot;redirect.com&quot;
-    }
-  ],
-  &quot;secure_all_urls&quot;: false
-}
-```
-
-### 400 Bad Request
-
-Bad Request
-
-```json
-{
-  &quot;message&quot;: &quot;Invalid domain ID format&quot;
+  &quot;certificate&quot;: {
+    &quot;id&quot;: 100,
+    &quot;account&quot;: &quot;myaccountname&quot;,
+    &quot;auto_renew&quot;: true,
+    &quot;auth_file&quot;: &quot;example-value&quot;,
+    &quot;approver_email&quot;: &quot;example-value&quot;,
+    &quot;common_name&quot;: &quot;customdomain.com&quot;,
+    &quot;cancel_time&quot;: &quot;example-value&quot;,
+    &quot;cert_source&quot;: &quot;CERT_SOURCE_UNSPECIFIED&quot;,
+    &quot;ordered_time&quot;: &quot;example-value&quot;,
+    &quot;wildcard&quot;: true,
+    &quot;domains&quot;: [
+      &quot;example-value&quot;
+    ],
+    &quot;order_id&quot;: &quot;example-value&quot;,
+    &quot;status&quot;: &quot;SSL_STATE_UNSPECIFIED&quot;,
+    &quot;parent_id&quot;: &quot;example-value&quot;,
+    &quot;wpe_order_id&quot;: &quot;example-value&quot;,
+    &quot;approved_time&quot;: &quot;example-value&quot;,
+    &quot;expires_time&quot;: &quot;example-value&quot;
+  },
+  &quot;criteria&quot;: &quot;example-value&quot;
 }
 ```
 
@@ -189,9 +180,8 @@ Not found
 }
 ```
 
-### 429 Too many requests
+### 429 
 
-Too many requests
 
 
 ### 503 
@@ -201,11 +191,10 @@ Too many requests
 
 ## Error Responses
 
-- **400**: Bad Request
 - **401**: Authentication Error
 - **403**: Not authorized
 - **404**: Not found
-- **429**: Too many requests
+- **429**: 
 - **503**: 
 
 ## Authentication

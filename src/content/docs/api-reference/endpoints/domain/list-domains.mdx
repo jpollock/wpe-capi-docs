@@ -5,7 +5,7 @@ description: Get the domains for an install by install id
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T08:58:09.569Z */}
+{/* Last updated: 2025-06-27T10:43:52.039Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -118,7 +118,41 @@ makeRequest();
 List of domains for install
 
 ```json
-
+{
+  &quot;previous&quot;: &quot;https://api.wpengineapi.com/v1/example-endpoint?limit&#x3D;100&amp;offset&#x3D;0&quot;,
+  &quot;next&quot;: &quot;https://api.wpengineapi.com/v1/example-endpoint?limit&#x3D;100&amp;offset&#x3D;200&quot;,
+  &quot;count&quot;: 225,
+  &quot;results&quot;: [
+    {
+      &quot;name&quot;: &quot;torquemag.io&quot;,
+      &quot;duplicate&quot;: true,
+      &quot;primary&quot;: true,
+      &quot;id&quot;: &quot;e41fa98f-ea80-4654-b229-a9b765d0863a&quot;,
+      &quot;network_type&quot;: &quot;AN&quot;,
+      &quot;network_details&quot;: {
+        &quot;dns_config_info&quot;: {
+          &quot;cname&quot;: &quot;wp.wpenginepowered.com&quot;,
+          &quot;a_records&quot;: [
+            &quot;example-value&quot;
+          ]
+        },
+        &quot;network_info&quot;: {
+          &quot;status&quot;: &quot;ACTIVE&quot;,
+          &quot;ssl&quot;: {
+            &quot;status&quot;: &quot;active&quot;
+          }
+        }
+      },
+      &quot;redirects_to&quot;: [
+        {
+          &quot;id&quot;: &quot;e41fa98f-ea80-4006-b229-a9b765d0863a&quot;,
+          &quot;name&quot;: &quot;redirect.com&quot;
+        }
+      ],
+      &quot;secure_all_urls&quot;: false
+    }
+  ]
+}
 ```
 
 ### 401 Authentication Error
@@ -126,7 +160,9 @@ List of domains for install
 Authentication Error
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Authentication required&quot;
+}
 ```
 
 ### 403 Not authorized
@@ -134,7 +170,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Insufficient permissions to access this resource&quot;
+}
 ```
 
 ### 404 Not found
@@ -142,7 +180,9 @@ Not authorized
 Not found
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Resource not found&quot;
+}
 ```
 
 ### 429 

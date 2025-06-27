@@ -5,7 +5,7 @@ description: Update a WordPress installation
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T08:58:09.568Z */}
+{/* Last updated: 2025-06-27T10:43:52.037Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -117,7 +117,16 @@ makeRequest();
 Updated
 
 ```json
-
+{
+  &quot;id&quot;: &quot;294deacc-d8b8-4005-82c4-0727ba8ddde0&quot;,
+  &quot;name&quot;: &quot;torquemag&quot;,
+  &quot;account&quot;: {
+    &quot;id&quot;: &quot;eeda3227-9a39-46ae-9e14-20958bb4e6c9&quot;
+  },
+  &quot;php_version&quot;: &quot;7.0&quot;,
+  &quot;status&quot;: &quot;active&quot;,
+  &quot;cname&quot;: &quot;mywebsite.wpengine.com&quot;
+}
 ```
 
 ### 400 Bad Request
@@ -125,7 +134,9 @@ Updated
 Bad Request
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Invalid install ID format&quot;
+}
 ```
 
 ### 401 Authentication Error
@@ -133,7 +144,9 @@ Bad Request
 Authentication Error
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Authentication required&quot;
+}
 ```
 
 ### 403 Not authorized
@@ -141,7 +154,9 @@ Authentication Error
 Not authorized
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Insufficient permissions to access this resource&quot;
+}
 ```
 
 ### 429 

@@ -1,28 +1,30 @@
 swagger: '2.0'
+# Documentation:
+#  https://swagger.io/specification/v2/
+#  https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-swagger-extensions.html
 info:
   description: |
     The API described in this document is subject to change.
-  version: 1.6.7
+  version: 1.6.15
   title: WP Engine API
   termsOfService: https://wpengine.com/legal/terms-of-service/
 host: api.wpengineapi.com
-basePath: /v1
+basePath: '/v1'
 schemes:
   - https
 paths:
   /status:
+    # /status is unauthenticated, in violation of Security Policy.  Permanent exception granted 1/2024.
+    #   https://wpengine.atlassian.net/servicedesk/customer/portal/1031/ASKSEC-496
     get:
       tags:
         - status
       summary: The status of the WP Engine Public API
-      description: >
+      description: |
         # Description
-
-        This endpoint will report the system status and any outages that might
-        be occurring.
+        This endpoint will report the system status and any outages that might be occurring.
       operationId: status
-      produces:
-        - application/json
+      produces: [application/json]
       responses:
         '200':
           description: Status of API
@@ -33,7 +35,7 @@ paths:
         '503':
           $ref: '#/definitions/ServiceUnavailableOperation'
       x-amazon-apigateway-integration:
-        uri: https://my.wpengine.com/capi/v1/status
+        uri: 'https://my.wpengine.com/capi/v1/status'
         responses:
           '200':
             statusCode: '200'
@@ -44,12 +46,14 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-        passthroughBehavior: when_no_match
-        httpMethod: GET
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'GET'
+        type: 'http'
   /swagger:
+    # /swagger is unauthenticated, in violation of Security Policy.  Permanent exception granted 1/2024.
+    #   https://wpengine.atlassian.net/servicedesk/customer/portal/1031/ASKSEC-496
     get:
       tags:
         - swagger
@@ -68,7 +72,7 @@ paths:
         '503':
           $ref: '#/definitions/ServiceUnavailableOperation'
       x-amazon-apigateway-integration:
-        uri: https://my.wpengine.com/capi/v1/swagger
+        uri: 'https://my.wpengine.com/capi/v1/swagger'
         responses:
           '200':
             statusCode: '200'
@@ -78,12 +82,12 @@ paths:
             statusCode: '503'
           default:
             statusCode: '500'
-        passthroughBehavior: when_no_match
+        passthroughBehavior: 'when_no_match'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-        httpMethod: GET
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+        httpMethod: 'GET'
+        type: 'http'
   /accounts:
     get:
       tags:
@@ -130,7 +134,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: https://my.wpengine.com/capi/v1/accounts
+        uri: 'https://my.wpengine.com/capi/v1/accounts'
         responses:
           '200':
             statusCode: '200'
@@ -145,14 +149,14 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-          integration.request.querystring.offset: method.request.querystring.offset
-          integration.request.querystring.limit: method.request.querystring.limit
-        passthroughBehavior: when_no_match
-        httpMethod: GET
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.querystring.offset: 'method.request.querystring.offset'
+          integration.request.querystring.limit: 'method.request.querystring.limit'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'GET'
+        type: 'http'
   /accounts/{account_id}:
     get:
       tags:
@@ -191,7 +195,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: https://my.wpengine.com/capi/v1/accounts/{account_id}
+        uri: 'https://my.wpengine.com/capi/v1/accounts/{account_id}'
         responses:
           '200':
             statusCode: '200'
@@ -206,13 +210,13 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-          integration.request.path.account_id: method.request.path.account_id
-        passthroughBehavior: when_no_match
-        httpMethod: GET
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.path.account_id: 'method.request.path.account_id'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'GET'
+        type: 'http'
   /accounts/{account_id}/account_users:
     get:
       tags:
@@ -256,7 +260,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: https://my.wpengine.com/capi/v1/accounts/{account_id}/account_users
+        uri: 'https://my.wpengine.com/capi/v1/accounts/{account_id}/account_users'
         responses:
           '200':
             statusCode: '200'
@@ -271,13 +275,13 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-          integration.request.path.account_id: method.request.path.account_id
-        passthroughBehavior: when_no_match
-        httpMethod: GET
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.path.account_id: 'method.request.path.account_id'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'GET'
+        type: 'http'
     post:
       tags:
         - account_user
@@ -346,16 +350,12 @@ paths:
                   roles:
                     type: string
                     example: full,billing
-                    description: >-
-                      choose from 'owner', 'full,billing', 'full',
-                      'partial,billing', and 'partial'
+                    description: choose from 'owner', 'full,billing', 'full', 'partial,billing', and 'partial'
                   install_ids:
                     type: array
                     items:
                       type: string
-                    example:
-                      - ddda3227-9a39-46ae-9e14-20958bb4e6c9
-                      - qada3227-9a39-46ae-9e14-20958bb4e45y
+                    example: ['ddda3227-9a39-46ae-9e14-20958bb4e6c9', 'qada3227-9a39-46ae-9e14-20958bb4e45y']
       responses:
         '201':
           description: Created
@@ -386,7 +386,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: https://my.wpengine.com/capi/v1/accounts/{account_id}/account_users
+        uri: 'https://my.wpengine.com/capi/v1/accounts/{account_id}/account_users'
         responses:
           '201':
             statusCode: '201'
@@ -403,13 +403,13 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-          integration.request.path.account_id: method.request.path.account_id
-        passthroughBehavior: when_no_match
-        httpMethod: POST
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.path.account_id: 'method.request.path.account_id'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'POST'
+        type: 'http'
   /accounts/{account_id}/account_users/{user_id}:
     get:
       tags:
@@ -459,8 +459,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: >-
-          https://my.wpengine.com/capi/v1/accounts/{account_id}/account_users/{user_id}
+        uri: 'https://my.wpengine.com/capi/v1/accounts/{account_id}/account_users/{user_id}'
         responses:
           '200':
             statusCode: '200'
@@ -477,14 +476,14 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-          integration.request.path.account_id: method.request.path.account_id
-          integration.request.path.user_id: method.request.path.user_id
-        passthroughBehavior: when_no_match
-        httpMethod: GET
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.path.account_id: 'method.request.path.account_id'
+          integration.request.path.user_id: 'method.request.path.user_id'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'GET'
+        type: 'http'
     patch:
       tags:
         - account_user
@@ -513,18 +512,15 @@ paths:
           x-example: a1b2c3d4-e5f6-41b2-b3d4-e5f6a1b2c3d4
         - in: body
           name: body
-          description: >
+          description: |
             ##### Properties
-
-            * roles -- **required** - The roles the user is allowed. The
-            following roles are valid
+            * roles -- **required** - The roles the user is allowed. The following roles are valid
               * owner
               * full
               * full,billing
               * partial
               * partial,billing
-            * install_ids - **optional** - Used with partial role selection. The
-            ids of the installs the user will have access to.
+            * install_ids - **optional** - Used with partial role selection. The ids of the installs the user will have access to.
           required: true
           schema:
             type: object
@@ -534,16 +530,12 @@ paths:
               roles:
                 type: string
                 example: full,billing
-                description: >-
-                  choose from 'owner', 'full,billing', 'full',
-                  'partial,billing', and 'partial'
+                description: choose from 'owner', 'full,billing', 'full', 'partial,billing', and 'partial'
               install_ids:
                 type: array
                 items:
                   type: string
-                example:
-                  - ddda3227-9a39-46ae-9e14-20958bb4e6c9
-                  - qada3227-9a39-46ae-9e14-20958bb4e45y
+                example: ['ddda3227-9a39-46ae-9e14-20958bb4e6c9', 'qada3227-9a39-46ae-9e14-20958bb4e45y']
       responses:
         '200':
           description: Updated
@@ -582,8 +574,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: >-
-          https://my.wpengine.com/capi/v1/accounts/{account_id}/account_users/{user_id}
+        uri: 'https://my.wpengine.com/capi/v1/accounts/{account_id}/account_users/{user_id}'
         responses:
           '200':
             statusCode: '200'
@@ -604,21 +595,19 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-          integration.request.path.account_id: method.request.path.account_id
-          integration.request.path.user_id: method.request.path.user_id
-        passthroughBehavior: when_no_match
-        httpMethod: PATCH
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.path.account_id: 'method.request.path.account_id'
+          integration.request.path.user_id: 'method.request.path.user_id'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'PATCH'
+        type: 'http'
     delete:
       tags:
         - account_user
       summary: Delete an account user
-      description: >-
-        This will remove the association this user has to this account. This
-        delete is permanent and there is no confirmation prompt.
+      description: 'This will remove the association this user has to this account. This delete is permanent and there is no confirmation prompt.'
       operationId: deleteAccountUser
       consumes:
         - application/json
@@ -666,8 +655,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: >-
-          https://my.wpengine.com/capi/v1/accounts/{account_id}/account_users/{user_id}
+        uri: 'https://my.wpengine.com/capi/v1/accounts/{account_id}/account_users/{user_id}'
         responses:
           '204':
             statusCode: '204'
@@ -686,14 +674,14 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-          integration.request.path.account_id: method.request.path.account_id
-          integration.request.path.user_id: method.request.path.user_id
-        passthroughBehavior: when_no_match
-        httpMethod: DELETE
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.path.account_id: 'method.request.path.account_id'
+          integration.request.path.user_id: 'method.request.path.user_id'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'DELETE'
+        type: 'http'
   /sites:
     get:
       tags:
@@ -739,7 +727,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: https://my.wpengine.com/capi/v1/sites
+        uri: 'https://my.wpengine.com/capi/v1/sites'
         responses:
           '200':
             statusCode: '200'
@@ -754,15 +742,15 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-          integration.request.querystring.offset: method.request.querystring.offset
-          integration.request.querystring.limit: method.request.querystring.limit
-          integration.request.querystring.account_id: method.request.querystring.account_id
-        passthroughBehavior: when_no_match
-        httpMethod: GET
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.querystring.offset: 'method.request.querystring.offset'
+          integration.request.querystring.limit: 'method.request.querystring.limit'
+          integration.request.querystring.account_id: 'method.request.querystring.account_id'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'GET'
+        type: 'http'
     post:
       tags:
         - site
@@ -777,13 +765,10 @@ paths:
         - $ref: '#/parameters/authorization'
         - in: body
           name: body
-          description: >
+          description: |
             ##### Properties
-
             * name - **required** - The name of the site
-
-            * account_id - **required** - The ID of the account that the site
-            will belong to
+            * account_id - **required** - The ID of the account that the site will belong to
           required: true
           schema:
             type: object
@@ -823,7 +808,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: https://my.wpengine.com/capi/v1/sites
+        uri: 'https://my.wpengine.com/capi/v1/sites'
         responses:
           '201':
             statusCode: '201'
@@ -840,12 +825,12 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-        passthroughBehavior: when_no_match
-        httpMethod: POST
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'POST'
+        type: 'http'
   /sites/{site_id}:
     get:
       tags:
@@ -888,7 +873,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: https://my.wpengine.com/capi/v1/sites/{site_id}
+        uri: 'https://my.wpengine.com/capi/v1/sites/{site_id}'
         responses:
           '200':
             statusCode: '200'
@@ -905,13 +890,13 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-          integration.request.path.site_id: method.request.path.site_id
-        passthroughBehavior: when_no_match
-        httpMethod: GET
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.path.site_id: 'method.request.path.site_id'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'GET'
+        type: 'http'
     patch:
       tags:
         - site
@@ -926,13 +911,11 @@ paths:
         - $ref: '#/parameters/authorization'
         - name: site_id
           in: path
-          description: >-
-            The ID of the site to change the name of *(For accounts with sites
-            enabled)*
+          description: The ID of the site to change the name of *(For accounts with sites enabled)*
           required: true
           type: string
           format: uuid
-          x-example: 294deacc-d8b8-4005-82c4-0727ba8ddde0
+          x-example: '294deacc-d8b8-4005-82c4-0727ba8ddde0'
         - in: body
           name: body
           description: |
@@ -945,7 +928,7 @@ paths:
               name:
                 type: string
                 description: The new site name
-                example: My New Name
+                example: 'My New Name'
       responses:
         '200':
           description: Updated
@@ -974,7 +957,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: https://my.wpengine.com/capi/v1/sites/{site_id}
+        uri: 'https://my.wpengine.com/capi/v1/sites/{site_id}'
         responses:
           '200':
             statusCode: '200'
@@ -993,20 +976,18 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-          integration.request.path.site_id: method.request.path.site_id
-        passthroughBehavior: when_no_match
-        httpMethod: PATCH
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.path.site_id: 'method.request.path.site_id'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'PATCH'
+        type: 'http'
     delete:
       tags:
         - site
       summary: Delete a site
-      description: >-
-        This will delete the site and any installs associated with this site.
-        This delete is permanent and there is no confirmation prompt.
+      description: 'This will delete the site and any installs associated with this site. This delete is permanent and there is no confirmation prompt.'
       operationId: deleteSite
       consumes:
         - application/json
@@ -1020,7 +1001,7 @@ paths:
           required: true
           type: string
           format: uuid
-          x-example: 294deacc-d8b8-4005-82c4-0727ba8ddde0
+          x-example: '294deacc-d8b8-4005-82c4-0727ba8ddde0'
       responses:
         '204':
           description: Deleted
@@ -1047,7 +1028,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: https://my.wpengine.com/capi/v1/sites/{site_id}
+        uri: 'https://my.wpengine.com/capi/v1/sites/{site_id}'
         responses:
           '204':
             statusCode: '204'
@@ -1066,13 +1047,13 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-          integration.request.path.site_id: method.request.path.site_id
-        passthroughBehavior: when_no_match
-        httpMethod: DELETE
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.path.site_id: 'method.request.path.site_id'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'DELETE'
+        type: 'http'
   /installs:
     get:
       tags:
@@ -1118,7 +1099,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: https://my.wpengine.com/capi/v1/installs
+        uri: 'https://my.wpengine.com/capi/v1/installs'
         responses:
           '200':
             statusCode: '200'
@@ -1133,15 +1114,15 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-          integration.request.querystring.offset: method.request.querystring.offset
-          integration.request.querystring.limit: method.request.querystring.limit
-          integration.request.querystring.account_id: method.request.querystring.account_id
-        passthroughBehavior: when_no_match
-        httpMethod: GET
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.querystring.offset: 'method.request.querystring.offset'
+          integration.request.querystring.limit: 'method.request.querystring.limit'
+          integration.request.querystring.account_id: 'method.request.querystring.account_id'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'GET'
+        type: 'http'
     post:
       tags:
         - install
@@ -1156,19 +1137,12 @@ paths:
         - $ref: '#/parameters/authorization'
         - in: body
           name: body
-          description: >
+          description: |
             ##### Properties
-
             * name  - **required** - The name of the install
-
-            * account_id - **required**  - The ID of the account that the
-            install will belong to
-
-            * site_id - **required for accounts with sites enabled** - The ID of
-            the site that the install will belong to
-
-            * environment - **required for accounts with sites enabled** - The
-            site environment that the install will fill
+            * account_id - **required**  - The ID of the account that the install will belong to
+            * site_id - **required for accounts with sites enabled** - The ID of the site that the install will belong to
+            * environment - **required for accounts with sites enabled** - The site environment that the install will fill
           required: true
           schema:
             type: object
@@ -1226,7 +1200,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: https://my.wpengine.com/capi/v1/installs
+        uri: 'https://my.wpengine.com/capi/v1/installs'
         responses:
           '201':
             statusCode: '201'
@@ -1243,12 +1217,12 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-        passthroughBehavior: when_no_match
-        httpMethod: POST
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'POST'
+        type: 'http'
   /installs/{install_id}:
     get:
       tags:
@@ -1287,7 +1261,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: https://my.wpengine.com/capi/v1/installs/{install_id}
+        uri: 'https://my.wpengine.com/capi/v1/installs/{install_id}'
         responses:
           '200':
             statusCode: '200'
@@ -1302,20 +1276,18 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-          integration.request.path.install_id: method.request.path.install_id
-        passthroughBehavior: when_no_match
-        httpMethod: GET
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.path.install_id: 'method.request.path.install_id'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'GET'
+        type: 'http'
     delete:
       tags:
         - install
       summary: Delete an install by ID
-      description: >-
-        This will delete the install, The delete is permanent and there is no
-        confirmation prompt.
+      description: This will delete the install, The delete is permanent and there is no confirmation prompt.
       operationId: deleteInstall
       parameters:
         - $ref: '#/parameters/authorization'
@@ -1348,7 +1320,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: https://my.wpengine.com/capi/v1/installs/{install_id}
+        uri: 'https://my.wpengine.com/capi/v1/installs/{install_id}'
         responses:
           '204':
             statusCode: '204'
@@ -1365,13 +1337,13 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-          integration.request.path.install_id: method.request.path.install_id
-        passthroughBehavior: when_no_match
-        httpMethod: DELETE
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.path.install_id: 'method.request.path.install_id'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'DELETE'
+        type: 'http'
     patch:
       tags:
         - install
@@ -1390,17 +1362,13 @@ paths:
           required: true
           type: string
           format: uuid
-          x-example: 294deacc-d8b8-4005-82c4-0727ba8ddde0
+          x-example: '294deacc-d8b8-4005-82c4-0727ba8ddde0'
         - in: body
           name: body
-          description: >
+          description: |
             ##### Properties
-
-            * site_id - **optional** - The ID of the site that the install will
-            belong to *(For accounts with sites enabled)*
-
-            * environment - **optional** - The site environment that the install
-            will fill *(For accounts with sites enabled)*
+            * site_id - **optional** - The ID of the site that the install will belong to *(For accounts with sites enabled)*
+            * environment - **optional** - The site environment that the install will fill *(For accounts with sites enabled)*
           required: true
           schema:
             type: object
@@ -1419,7 +1387,7 @@ paths:
                   - development
                   - null
             example:
-              site_id: 28c78b6d-c2da-4f09-85f5-1ad588089b2d
+              site_id: '28c78b6d-c2da-4f09-85f5-1ad588089b2d'
               environment: development
       responses:
         '200':
@@ -1445,7 +1413,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: https://my.wpengine.com/capi/v1/installs/{install_id}
+        uri: 'https://my.wpengine.com/capi/v1/installs/{install_id}'
         responses:
           '200':
             statusCode: '200'
@@ -1455,6 +1423,296 @@ paths:
             statusCode: '401'
           '403':
             statusCode: '403'
+          '429':
+            statusCode: '429'
+          '503':
+            statusCode: '503'
+          default:
+            statusCode: '500'
+        requestParameters:
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.path.install_id: 'method.request.path.install_id'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'PATCH'
+        type: 'http'
+  /installs/{install_id}/offload_settings/largefs_validation_file:
+      get:
+        tags:
+          - offload_settings
+        summary: Get the validation file needed to configure LargeFS
+        description: Returns the validation filename and contents necessary to configure an S3 bucket for LargeFS
+        operationId: getLargeFSValidationFile
+        produces:
+          - application/json
+        parameters:
+          - $ref: '#/parameters/authorization'
+          - name: install_id
+            in: path
+            format: uuid
+            description: ID of install
+            required: true
+            type: string
+            x-example: 294deacc-d8b8-4005-82c4-0727ba8ddde0
+        responses:
+          '200':
+            description: LargeFS validation filename and contents
+            schema:
+              $ref: '#/definitions/LargeFSValidationFile'
+          '401':
+            description: Authentication Error
+            schema:
+              $ref: '#/definitions/AuthenticationErrorResponse'
+          '403':
+            description: Not authorized
+            schema:
+              $ref: '#/definitions/ForbiddenErrorResponse'
+          '404':
+            description: Not found
+            schema:
+              $ref: '#/definitions/NotFoundErrorResponse'
+          '429':
+            $ref: '#/definitions/TooManyRequestsOperation'
+          '503':
+            $ref: '#/definitions/ServiceUnavailableOperation'
+        security:
+          - basicAuth: []
+        x-amazon-apigateway-integration:
+          uri: https://my.wpengine.com/capi/v1/installs/{install_id}/offload_settings/largefs_validation_file
+          responses:
+            '200':
+              statusCode: '200'
+            '401':
+              statusCode: '401'
+            '403':
+              statusCode: '403'
+            '404':
+              statusCode: '404'
+            '429':
+              statusCode: '429'
+            '503':
+              statusCode: '503'
+            default:
+              statusCode: '500'
+          requestParameters:
+            integration.request.header.X-Request-ID: context.requestId
+            integration.request.header.sourceIp: context.identity.sourceIp
+            integration.request.header.authorization: method.request.header.Authorization
+            integration.request.path.install_id: method.request.path.install_id
+          passthroughBehavior: when_no_match
+          httpMethod: GET
+          type: http
+  /installs/{install_id}/offload_settings/files:
+    get:
+      tags:
+        - offload_settings
+      summary: Get the offload settings for an install
+      description: Returns the offload settings configuration for a specific install
+      operationId: getOffloadSettings
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - name: install_id
+          in: path
+          format: uuid
+          description: ID of install
+          required: true
+          type: string
+          x-example: 294deacc-d8b8-4005-82c4-0727ba8ddde0
+      responses:
+        '200':
+          description: LargeFS offload settings configuration
+          schema:
+            $ref: '#/definitions/LargeFSConfig'
+        '401':
+          description: Authentication Error
+          schema:
+            $ref: '#/definitions/AuthenticationErrorResponse'
+        '403':
+          description: Not authorized
+          schema:
+            $ref: '#/definitions/ForbiddenErrorResponse'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/NotFoundErrorResponse'
+        '429':
+          $ref: '#/definitions/TooManyRequestsOperation'
+        '503':
+          $ref: '#/definitions/ServiceUnavailableOperation'
+      security:
+        - basicAuth: []
+      x-amazon-apigateway-integration:
+        uri: https://my.wpengine.com/capi/v1/installs/{install_id}/offload_settings/files
+        responses:
+          '200':
+            statusCode: '200'
+          '401':
+            statusCode: '401'
+          '403':
+            statusCode: '403'
+          '404':
+            statusCode: '404'
+          '429':
+            statusCode: '429'
+          '503':
+            statusCode: '503'
+          default:
+            statusCode: '500'
+        requestParameters:
+          integration.request.header.X-Request-ID: context.requestId
+          integration.request.header.sourceIp: context.identity.sourceIp
+          integration.request.header.authorization: method.request.header.Authorization
+          integration.request.path.install_id: method.request.path.install_id
+        passthroughBehavior: when_no_match
+        httpMethod: GET
+        type: http
+    post:
+      tags:
+        - offload_settings
+      summary: Configure offload settings for an install
+      description: Updates the offload settings configuration for a specific install
+      operationId: updateOffloadSettings
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - name: install_id
+          in: path
+          format: uuid
+          description: ID of install
+          required: true
+          type: string
+          x-example: 294deacc-d8b8-4005-82c4-0727ba8ddde0
+        - in: body
+          name: body
+          description: |
+            ##### Properties
+            * large_fs_config - **required** - The configuration for offloaded storage
+          required: true
+          schema:
+            $ref: '#/definitions/LargeFSConfig'
+      responses:
+        '202':
+          description: Accepted
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestErrorResponse'
+        '401':
+          description: Authentication Error
+          schema:
+            $ref: '#/definitions/AuthenticationErrorResponse'
+        '403':
+          description: Not authorized
+          schema:
+            $ref: '#/definitions/ForbiddenErrorResponse'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/NotFoundErrorResponse'
+        '429':
+          description: Too many requests
+        '503':
+          $ref: '#/definitions/ServiceUnavailableOperation'
+      security:
+        - basicAuth: []
+      x-amazon-apigateway-integration:
+        uri: https://my.wpengine.com/capi/v1/installs/{install_id}/offload_settings/files
+        responses:
+          '202':
+            statusCode: '202'
+          '400':
+            statusCode: '400'
+          '401':
+            statusCode: '401'
+          '403':
+            statusCode: '403'
+          '404':
+            statusCode: '404'
+          '429':
+            statusCode: '429'
+          '503':
+            statusCode: '503'
+          default:
+            statusCode: '500'
+        requestParameters:
+          integration.request.header.X-Request-ID: context.requestId
+          integration.request.header.sourceIp: context.identity.sourceIp
+          integration.request.header.authorization: method.request.header.Authorization
+          integration.request.path.install_id: method.request.path.install_id
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: http
+    patch:
+      tags:
+        - offload_settings
+      summary: Update specific offload settings for an install
+      description: Partially updates the offload settings configuration for a specific install
+      operationId: patchOffloadSettings
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - name: install_id
+          in: path
+          format: uuid
+          description: ID of install
+          required: true
+          type: string
+          x-example: 294deacc-d8b8-4005-82c4-0727ba8ddde0
+        - in: body
+          name: body
+          description: |
+            ##### Properties
+            * large_fs_config - **required** - The configuration for offloaded storage
+          required: true
+          schema:
+            $ref: '#/definitions/LargeFSConfig'
+      responses:
+        '202':
+          description: Accepted
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestErrorResponse'
+        '401':
+          description: Authentication Error
+          schema:
+            $ref: '#/definitions/AuthenticationErrorResponse'
+        '403':
+          description: Not authorized
+          schema:
+            $ref: '#/definitions/ForbiddenErrorResponse'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/NotFoundErrorResponse'
+        '429':
+          description: Too many requests
+        '503':
+          $ref: '#/definitions/ServiceUnavailableOperation'
+      security:
+        - basicAuth: []
+      x-amazon-apigateway-integration:
+        uri: https://my.wpengine.com/capi/v1/installs/{install_id}/offload_settings/files
+        responses:
+          '202':
+            statusCode: '202'
+          '400':
+            statusCode: '400'
+          '401':
+            statusCode: '401'
+          '403':
+            statusCode: '403'
+          '404':
+            statusCode: '404'
           '429':
             statusCode: '429'
           '503':
@@ -1524,7 +1782,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: https://my.wpengine.com/capi/v1/installs/{install_id}/domains
+        uri: 'https://my.wpengine.com/capi/v1/installs/{install_id}/domains'
         responses:
           '200':
             statusCode: '200'
@@ -1541,22 +1799,20 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-          integration.request.path.install_id: method.request.path.install_id
-          integration.request.querystring.offset: method.request.querystring.offset
-          integration.request.querystring.limit: method.request.querystring.limit
-        passthroughBehavior: when_no_match
-        httpMethod: GET
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.path.install_id: 'method.request.path.install_id'
+          integration.request.querystring.offset: 'method.request.querystring.offset'
+          integration.request.querystring.limit: 'method.request.querystring.limit'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'GET'
+        type: 'http'
     post:
       tags:
         - domain
       summary: Add a new domain or redirect to an existing install
-      description: >-
-        Adds a domain or redirect to a specific install and optionally sets it
-        as the primary domain
+      description: Adds a domain or redirect to a specific install and optionally sets it as the primary domain
       operationId: createDomain
       consumes:
         - application/json
@@ -1573,16 +1829,11 @@ paths:
           x-example: 294deacc-d8b8-4005-82c4-0727ba8ddde0
         - in: body
           name: body
-          description: >
+          description: |
             ##### Properties
-
             * name  - **required** - The name of the new domain
-
-            * primary - **optional**  - Sets the domain as the primary domain on
-            the install
-
-            * redirect_to - **optional** - ID of a domain to create a redirect
-            to
+            * primary - **optional**  - Sets the domain as the primary domain on the install
+            * redirect_to - **optional** - ID of a domain to create a redirect to
           required: true
           schema:
             type: object
@@ -1623,7 +1874,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: https://my.wpengine.com/capi/v1/installs/{install_id}/domains
+        uri: 'https://my.wpengine.com/capi/v1/installs/{install_id}/domains'
         responses:
           '201':
             statusCode: '201'
@@ -1640,13 +1891,13 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-          integration.request.path.install_id: method.request.path.install_id
-        passthroughBehavior: when_no_match
-        httpMethod: POST
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.path.install_id: 'method.request.path.install_id'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'POST'
+        type: 'http'
   /installs/{install_id}/domains/bulk:
     post:
       tags:
@@ -1669,11 +1920,9 @@ paths:
           x-example: 294deacc-d8b8-4005-82c4-0727ba8ddde0
         - in: body
           name: body
-          description: >
+          description: |
             ##### Properties
-
-            * domains - **required** - array of domains to be created, min size:
-            1, max size: 20
+            * domains - **required** - array of domains to be created, min size: 1, max size: 20
               * items:
                 * name  - **required** - The name of the new domain (or redirect)
                 * redirect_to - **optional**  - Name of the domain to set redirect to
@@ -1725,7 +1974,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: https://my.wpengine.com/capi/v1/installs/{install_id}/domains/bulk
+        uri: 'https://my.wpengine.com/capi/v1/installs/{install_id}/domains/bulk'
         responses:
           '201':
             statusCode: '201'
@@ -1742,13 +1991,13 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-          integration.request.path.install_id: method.request.path.install_id
-        passthroughBehavior: when_no_match
-        httpMethod: POST
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.path.install_id: 'method.request.path.install_id'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'POST'
+        type: 'http'
   /installs/{install_id}/domains/{domain_id}:
     get:
       tags:
@@ -1798,8 +2047,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: >-
-          https://my.wpengine.com/capi/v1/installs/{install_id}/domains/{domain_id}
+        uri: 'https://my.wpengine.com/capi/v1/installs/{install_id}/domains/{domain_id}'
         responses:
           '200':
             statusCode: '200'
@@ -1816,21 +2064,19 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-          integration.request.path.install_id: method.request.path.install_id
-          integration.request.path.domain_id: method.request.path.domain_id
-        passthroughBehavior: when_no_match
-        httpMethod: GET
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.path.install_id: 'method.request.path.install_id'
+          integration.request.path.domain_id: 'method.request.path.domain_id'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'GET'
+        type: 'http'
     patch:
       tags:
         - domain
-      summary: Set an existing domain as primary
-      description: >-
-        Sets a domain as the primary. Cannot set a duplicate, wildcard, or
-        redirected domain as the primary.
+      summary: Update an existing domain for an install
+      description: 'Updates an existing domain for an install. Cannot set a duplicate, wildcard, or redirected domain as the primary.'
       operationId: updateDomain
       consumes:
         - application/json
@@ -1844,7 +2090,7 @@ paths:
           required: true
           type: string
           format: uuid
-          x-example: 294deacc-d8b8-4005-82c4-0727ba8ddde0
+          x-example: '294deacc-d8b8-4005-82c4-0727ba8ddde0'
         - name: domain_id
           in: path
           format: uuid
@@ -1854,14 +2100,11 @@ paths:
           x-example: e41fa98f-ea80-4654-b229-a9b765d0863a
         - in: body
           name: body
-          description: >
+          description: |
             ##### Properties
-
-            * primary - **optional** - Boolean value to make the domain primary
-            on the given install
-
-            * redirect_to - **optional** - The UUID of another Domain record, or
-            "nil" to remove an existing redirect.
+            * primary - **optional** - Boolean value to make the domain primary on the given install
+            * redirect_to - **optional** - The UUID of another Domain record, or "nil" to remove an existing redirect.
+            * secure_all_urls - **optional** - Boolean value to force all URLs to use HTTPS
           required: true
           schema:
             type: object
@@ -1872,6 +2115,9 @@ paths:
               redirect_to:
                 type: string
                 example: 6977805b-1f65-4a5d-8d36-6fe609a4d9f3
+              secure_all_urls:
+                type: boolean
+                example: false
       responses:
         '200':
           description: Updated
@@ -1900,8 +2146,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: >-
-          https://my.wpengine.com/capi/v1/installs/{install_id}/domains/{domain_id}
+        uri: 'https://my.wpengine.com/capi/v1/installs/{install_id}/domains/{domain_id}'
         responses:
           '200':
             statusCode: '200'
@@ -1920,14 +2165,14 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-          integration.request.path.install_id: method.request.path.install_id
-          integration.request.path.domain_id: method.request.path.domain_id
-        passthroughBehavior: when_no_match
-        httpMethod: PATCH
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.path.install_id: 'method.request.path.install_id'
+          integration.request.path.domain_id: 'method.request.path.domain_id'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'PATCH'
+        type: 'http'
     delete:
       tags:
         - domain
@@ -1976,8 +2221,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: >-
-          https://my.wpengine.com/capi/v1/installs/{install_id}/domains/{domain_id}
+        uri: 'https://my.wpengine.com/capi/v1/installs/{install_id}/domains/{domain_id}'
         responses:
           '204':
             statusCode: '204'
@@ -1996,21 +2240,20 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-          integration.request.path.install_id: method.request.path.install_id
-          integration.request.path.domain_id: method.request.path.domain_id
-        passthroughBehavior: when_no_match
-        httpMethod: DELETE
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.path.install_id: 'method.request.path.install_id'
+          integration.request.path.domain_id: 'method.request.path.domain_id'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'DELETE'
+        type: 'http'
   /installs/{install_id}/domains/{domain_id}/check_status:
     post:
       tags:
         - domain
-        - cdn
-      summary: Check the status of a domain
-      description: Submits a request to check the status of the domain
+      summary: Submit a status report for a domain
+      description: Submit a status report for a domain. Returns a `report_id` that can be used to check the domain's status.
       operationId: checkStatus
       produces:
         - application/json
@@ -2031,12 +2274,10 @@ paths:
           type: string
           x-example: e41fa98f-ea80-4654-b229-a9b765d0863a
       responses:
-        '200':
-          description: Success
-          schema:
-            $ref: '#/definitions/Domain'
         '202':
           description: Accepted
+          schema:
+            $ref: '#/definitions/DomainReport'
         '401':
           description: Authentication Error
           schema:
@@ -2059,9 +2300,7 @@ paths:
               message:
                 type: string
                 description: A message regarding the error that occurred on the server
-                example: >-
-                  Domain status checks are rate-limited to one request every 5
-                  seconds for each install
+                example: 'Domain status checks are rate-limited to one request every 5 seconds for each install'
         '500':
           description: Internal server error
           schema:
@@ -2071,11 +2310,8 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: >-
-          https://my.wpengine.com/capi/v1/installs/{install_id}/domains/{domain_id}/check_status
+        uri: 'https://my.wpengine.com/capi/v1/installs/{install_id}/domains/{domain_id}/check_status'
         responses:
-          '200':
-            statusCode: '200'
           '202':
             statusCode: '202'
           '401':
@@ -2093,14 +2329,169 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.path.install_id: 'method.request.path.install_id'
+          integration.request.path.domain_id: 'method.request.path.domain_id'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'POST'
+        type: 'http'
+  /installs/{install_id}/domains/{domain_id}/ssl_certificate:
+    get:
+      tags:
+        - certificates
+      summary: Get SSL certificate information for a domain
+      description: Returns certificate information for a given domain on an install
+      operationId: getDomainCertificate
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - name: install_id
+          in: path
+          format: uuid
+          description: ID of install
+          required: true
+          type: string
+          x-example: 294deacc-d8b8-4005-82c4-0727ba8ddde0
+        - name: domain_id
+          in: path
+          format: uuid
+          description: ID of domain
+          required: true
+          type: string
+          x-example: e41fa98f-ea80-4654-b229-a9b765d0863a
+      responses:
+        '200':
+          description: Domain certificate information
+          schema:
+            $ref: '#/definitions/DomainCertificate'
+        '401':
+          description: Authentication Error
+          schema:
+            $ref: '#/definitions/AuthenticationErrorResponse'
+        '403':
+          description: Not authorized
+          schema:
+            $ref: '#/definitions/ForbiddenErrorResponse'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/NotFoundErrorResponse'
+        '429':
+          $ref: '#/definitions/TooManyRequestsOperation'
+        '503':
+          $ref: '#/definitions/ServiceUnavailableOperation'
+      security:
+        - basicAuth: []
+      x-amazon-apigateway-integration:
+        uri: https://my.wpengine.com/capi/v1/installs/{install_id}/domains/{domain_id}/ssl_certificate
+        responses:
+          '200':
+            statusCode: '200'
+          '401':
+            statusCode: '401'
+          '403':
+            statusCode: '403'
+          '404':
+            statusCode: '404'
+          '429':
+            statusCode: '429'
+          '503':
+            statusCode: '503'
+          default:
+            statusCode: '500'
+        requestParameters:
           integration.request.header.X-Request-ID: context.requestId
           integration.request.header.sourceIp: context.identity.sourceIp
           integration.request.header.authorization: method.request.header.Authorization
           integration.request.path.install_id: method.request.path.install_id
           integration.request.path.domain_id: method.request.path.domain_id
         passthroughBehavior: when_no_match
-        httpMethod: POST
+        httpMethod: GET
         type: http
+  /installs/{install_id}/domains/check_status/{report_id}:
+    get:
+      tags:
+        - domain
+      summary: Retrieve a status report for a domain
+      description: Fetches a status report for a specific domain. Accepts a `report_id`.
+      operationId: getDomainReportStatus
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - name: install_id
+          in: path
+          required: true
+          type: string
+          x-example: 294deacc-d8b8-4005-82c4-0727ba8ddde0
+        - name: report_id
+          in: path
+          required: true
+          type: string
+          x-example: 6a6d5dbd-5cac-41d5-8f3f-14a3e8ae6f76
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: object
+            properties:
+              report:
+                $ref: '#/definitions/DomainStatusReport'
+        '401':
+          description: Authentication Error
+          schema:
+            $ref: '#/definitions/AuthenticationErrorResponse'
+        '403':
+          description: Not authorized
+          schema:
+            $ref: '#/definitions/ForbiddenErrorResponse'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/NotFoundErrorResponse'
+        '429':
+            $ref: '#/definitions/TooManyRequestsOperation'
+        '500':
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/InternalServerErrorResponse'
+        '503':
+          $ref: '#/definitions/ServiceUnavailableOperation'
+      security:
+        - basicAuth: []
+      x-amazon-apigateway-integration:
+        uri: 'https://my.wpengine.com/capi/v1/installs/{install_id}/domains/check_status/{report_id}'
+        responses:
+          '200':
+            statusCode: '200'
+          '401':
+            statusCode: '401'
+          '403':
+            statusCode: '403'
+          '404':
+            statusCode: '404'
+          '429':
+            statusCode: '429'
+          '500':
+            statusCode: '500'
+          '503':
+            statusCode: '503'
+          default:
+            statusCode: '500'
+        requestParameters:
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.path.install_id: 'method.request.path.install_id'
+          integration.request.path.report_id: 'method.request.path.report_id'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'GET'
+        type: 'http'
   /installs/{install_id}/backups:
     post:
       tags:
@@ -2123,13 +2514,10 @@ paths:
           x-example: 294deacc-d8b8-4005-82c4-0727ba8ddde0
         - in: body
           name: body
-          description: >
+          description: |
             ##### Properties
-
             * description - **required**  - A description of this backup.
-
-            * notification_emails - **required** - The email address(es) that
-            will receive an email once the backup has completed.
+            * notification_emails - **required** - The email address(es) that will receive an email once the backup has completed.
           required: true
           schema:
             type: object
@@ -2144,16 +2532,10 @@ paths:
                 type: array
                 items:
                   type: string
-                description: >-
-                  The email address(es) that will receive an email once the
-                  backup has completed.
+                description: The email address(es) that will receive an email once the backup has completed.
             example:
-              description: >-
-                Taking a backup of torquemag before I start developing new
-                features for it
-              notification_emails:
-                - myself@torquemag.com
-                - other_person_interested_in_backup@torquemag.com
+              description: 'Taking a backup of torquemag before I start developing new features for it'
+              notification_emails: ['myself@torquemag.com', 'other_person_interested_in_backup@torquemag.com']
       responses:
         '202':
           description: Accepted
@@ -2182,7 +2564,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: https://my.wpengine.com/capi/v1/installs/{install_id}/backups
+        uri: 'https://my.wpengine.com/capi/v1/installs/{install_id}/backups'
         responses:
           '202':
             statusCode: '202'
@@ -2201,18 +2583,18 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-          integration.request.path.install_id: method.request.path.install_id
-        passthroughBehavior: when_no_match
-        httpMethod: POST
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.path.install_id: 'method.request.path.install_id'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'POST'
+        type: 'http'
   /installs/{install_id}/backups/{backup_id}:
     get:
       tags:
         - backup
-      summary: Retreives the status of a backup of a WordPress installation
+      summary: Retrieves the status of a backup of a WordPress installation
       description: Retrieves the status of a backup of a WordPress installation.
       operationId: showBackup
       produces:
@@ -2257,8 +2639,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: >-
-          https://my.wpengine.com/capi/v1/installs/{install_id}/backups/{backup_id}
+        uri: 'https://my.wpengine.com/capi/v1/installs/{install_id}/backups/{backup_id}'
         responses:
           '200':
             statusCode: '200'
@@ -2275,20 +2656,27 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-          integration.request.path.install_id: method.request.path.install_id
-          integration.request.path.backup_id: method.request.path.backup_id
-        passthroughBehavior: when_no_match
-        httpMethod: GET
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.path.install_id: 'method.request.path.install_id'
+          integration.request.path.backup_id: 'method.request.path.backup_id'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'GET'
+        type: 'http'
   /installs/{install_id}/purge_cache:
     post:
       tags:
         - cache
       summary: Purge an install's cache
-      description: This will purge the specified cache associated with the install
+      description: |
+        This will purge the specified cache associated with the install.
+        Allowed types:
+        
+                  - "object"
+                  - "page"
+                  - "cdn"
+                  - "all"
       operationId: purgeCache
       consumes:
         - application/json
@@ -2320,6 +2708,7 @@ paths:
                   - object
                   - page
                   - cdn
+                  - all
             example:
               type: object
       responses:
@@ -2351,15 +2740,13 @@ paths:
               message:
                 type: string
                 description: A message regarding the error that occurred on the server
-                example: >-
-                  Object cache purges are rate-limited to one request every 60
-                  seconds for each install
+                example: 'Object cache purges are rate-limited to one request every 60 seconds for each install'
         '503':
           $ref: '#/definitions/ServiceUnavailableOperation'
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: https://my.wpengine.com/capi/v1/installs/{install_id}/purge_cache
+        uri: 'https://my.wpengine.com/capi/v1/installs/{install_id}/purge_cache'
         responses:
           '202':
             statusCode: '202'
@@ -2378,13 +2765,13 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-          integration.request.path.install_id: method.request.path.install_id
-        passthroughBehavior: when_no_match
-        httpMethod: POST
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.path.install_id: 'method.request.path.install_id'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'POST'
+        type: 'http'
   /user:
     get:
       tags:
@@ -2412,7 +2799,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: https://my.wpengine.com/capi/v1/user
+        uri: 'https://my.wpengine.com/capi/v1/user'
         responses:
           '200':
             statusCode: '200'
@@ -2425,12 +2812,12 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-        passthroughBehavior: when_no_match
-        httpMethod: GET
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'GET'
+        type: 'http'
   /ssh_keys:
     get:
       tags:
@@ -2477,7 +2864,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: https://my.wpengine.com/capi/v1/ssh_keys
+        uri: 'https://my.wpengine.com/capi/v1/ssh_keys'
         responses:
           '200':
             statusCode: '200'
@@ -2492,14 +2879,14 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-          integration.request.querystring.offset: method.request.querystring.offset
-          integration.request.querystring.limit: method.request.querystring.limit
-        passthroughBehavior: when_no_match
-        httpMethod: GET
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.querystring.offset: 'method.request.querystring.offset'
+          integration.request.querystring.limit: 'method.request.querystring.limit'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'GET'
+        type: 'http'
     post:
       tags:
         - ssh_key
@@ -2527,9 +2914,7 @@ paths:
             properties:
               public_key:
                 type: string
-                example: >-
-                  ssh-rsa AAAAbcdefg+567te/4i9ASKGHtw9euaskl+Iksldfjw==
-                  joe@gmail.com
+                example: ssh-rsa AAAAbcdefg+567te/4i9ASKGHtw9euaskl+Iksldfjw== joe@gmail.com
       responses:
         '201':
           description: Created
@@ -2554,7 +2939,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: https://my.wpengine.com/capi/v1/ssh_keys
+        uri: 'https://my.wpengine.com/capi/v1/ssh_keys'
         responses:
           '201':
             statusCode: '201'
@@ -2571,12 +2956,12 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-        passthroughBehavior: when_no_match
-        httpMethod: POST
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'POST'
+        type: 'http'
   /ssh_keys/{ssh_key_id}:
     delete:
       tags:
@@ -2598,7 +2983,7 @@ paths:
           required: true
           type: string
           format: uuid
-          x-example: 294deacc-d8b8-4005-82c4-0727ba8ddde0
+          x-example: '294deacc-d8b8-4005-82c4-0727ba8ddde0'
       responses:
         '204':
           description: Deleted
@@ -2615,7 +3000,7 @@ paths:
       security:
         - basicAuth: []
       x-amazon-apigateway-integration:
-        uri: https://my.wpengine.com/capi/v1/ssh_keys/{ssh_key_id}
+        uri: 'https://my.wpengine.com/capi/v1/ssh_keys/{ssh_key_id}'
         responses:
           '204':
             statusCode: '204'
@@ -2632,19 +3017,17 @@ paths:
           default:
             statusCode: '500'
         requestParameters:
-          integration.request.header.X-Request-ID: context.requestId
-          integration.request.header.sourceIp: context.identity.sourceIp
-          integration.request.header.authorization: method.request.header.Authorization
-          integration.request.path.ssh_key_id: method.request.path.ssh_key_id
-        passthroughBehavior: when_no_match
-        httpMethod: DELETE
-        type: http
+          integration.request.header.X-Request-ID: 'context.requestId'
+          integration.request.header.sourceIp: 'context.identity.sourceIp'
+          integration.request.header.authorization: 'method.request.header.Authorization'
+          integration.request.path.ssh_key_id: 'method.request.path.ssh_key_id'
+        passthroughBehavior: 'when_no_match'
+        httpMethod: 'DELETE'
+        type: 'http'
 securityDefinitions:
   basicAuth:
     type: basic
-    description: >-
-      API username and password from Portal's API Access page:
-      https://my.wpengine.com/api_access
+    description: 'API username and password from Portal''s API Access page: https://my.wpengine.com/api_access'
 definitions:
   Status:
     type: object
@@ -2725,9 +3108,7 @@ definitions:
       last_owner:
         type: boolean
         x-nullable: true
-        description: >-
-          Whether or not this owner is the last on the account. Only shows with
-          users that have owner level roles.
+        description: Whether or not this owner is the last on the account. Only shows with users that have owner level roles.
         example: false
       installs:
         type: array
@@ -2739,7 +3120,7 @@ definitions:
             id:
               type: string
               description: The ID of the install
-              example: 3hda2d4h-9a39-o20x-9e14-20958bb4ekd8
+              example: '3hda2d4h-9a39-o20x-9e14-20958bb4ekd8'
             name:
               type: string
               description: The name of the install
@@ -2752,12 +3133,10 @@ definitions:
       message:
         type: string
         description: A message regarding the error that occurred on the server
-        example: Bad Credentials
+        example: 'Bad Credentials'
       documentation_url:
         type: string
-        description: >-
-          (Optional) A URL where documentation regarding this specific error can
-          be found
+        description: (Optional) A URL where documentation regarding this specific error can be found
   NotFoundErrorResponse:
     type: object
     required:
@@ -2766,12 +3145,10 @@ definitions:
       message:
         type: string
         description: A message regarding the error that occurred on the server
-        example: Not Found
+        example: 'Not Found'
       documentation_url:
         type: string
-        description: >-
-          (Optional) A URL where documentation regarding this specific error can
-          be found
+        description: (Optional) A URL where documentation regarding this specific error can be found
   InternalServerErrorResponse:
     type: object
     required:
@@ -2780,7 +3157,7 @@ definitions:
       message:
         type: string
         description: A message regarding the error that occurred on the server
-        example: An unexpected error occurred, please try again in a few minutes
+        example: 'An unexpected error occurred, please try again in a few minutes'
   ForbiddenErrorResponse:
     type: object
     required:
@@ -2789,12 +3166,10 @@ definitions:
       message:
         type: string
         description: A message regarding the error that occurred on the server
-        example: You don't have permission to perform that action
+        example: 'You don''t have permission to perform that action'
       documentation_url:
         type: string
-        description: >-
-          (Optional) A URL where documentation regarding this specific error can
-          be found
+        description: (Optional) A URL where documentation regarding this specific error can be found
   BadRequestErrorResponse:
     type: object
     required:
@@ -2806,14 +3181,10 @@ definitions:
         example: 'Invalid Site: Name cannot be empty.'
       documentation_url:
         type: string
-        description: >-
-          (Optional) A URL where documentation regarding this specific error can
-          be found
+        description: (Optional) A URL where documentation regarding this specific error can be found
       errors:
         type: array
-        description: >-
-          An array of error objects describing specific errors that arose when
-          servicing the request
+        description: An array of error objects describing specific errors that arose when servicing the request
         items:
           $ref: '#/definitions/ResourceError'
   TooManyRequestsOperation:
@@ -2870,12 +3241,8 @@ definitions:
         type: array
         items:
           type: string
-        description: >-
-          A list of stable IPs bound to the install. This will only apply to
-          some premium/enterprise plans
-        example:
-          - 1.2.3.2
-          - 1.1.1.2
+        description: A list of stable IPs bound to the install. This will only apply to some premium/enterprise plans
+        example: ['1.2.3.2', '1.1.1.2']
         x-nullable: true
       environment:
         type: string
@@ -2914,9 +3281,7 @@ definitions:
     properties:
       resource:
         type: string
-        description: >-
-          The name of the resource that was being processed when the error
-          occurred
+        description: The name of the resource that was being processed when the error occurred
         example: Site
       field:
         type: string
@@ -2924,21 +3289,15 @@ definitions:
         example: name
       type:
         type: string
-        description: >-
-          (Optional) A type associated with the error. `invalid_value`,
-          `access_error`, `value_unavailable`
+        description: (Optional) A type associated with the error. `invalid_value`, `access_error`, `value_unavailable`
         example: invalid_value
       code:
         type: string
-        description: >-
-          (Optional) A machine code relating to the error that occurred with the
-          field and resource
+        description: (Optional) A machine code relating to the error that occurred with the field and resource
         example: too_long
       message:
         type: string
-        description: >-
-          (Optional) A human-readable message relating to the error that
-          occurred with the field and resource
+        description: (Optional) A human-readable message relating to the error that occurred with the field and resource
         example: Name is too long (maximum is 40 characters)
   Site:
     type: object
@@ -2972,9 +3331,9 @@ definitions:
           type: string
           description: Tag name
         example:
-          - tag1
-          - tag2
-          - tag3
+        - tag1
+        - tag2
+        - tag3
       installs:
         type: array
         items:
@@ -3014,6 +3373,7 @@ definitions:
       - duplicate
       - primary
       - id
+      - secure_all_urls
     properties:
       name:
         type: string
@@ -3027,6 +3387,42 @@ definitions:
       id:
         type: string
         example: e41fa98f-ea80-4654-b229-a9b765d0863a
+      network_type:
+        type: string
+        description: The WP Engine network type configured for the domain. Possible values are 'AN' (Advanced Network) 'GES' (Global Edge Security) and 'LEGACY'.
+        example: 'AN'
+      network_details:
+        type: object
+        description: Details about the network configuration for the domain.
+        properties:
+          dns_config_info:
+            type: object
+            description: DNS configuration information for the domain.
+            properties:
+              cname:
+                type: string
+                description: The CNAME value to use to configure a DNS CNAME record for the domain.
+                example: 'wp.wpenginepowered.com'
+              a_records:
+                type: array
+                items:
+                  type: string
+                description: IP addresses that can be used to configure a DNS A record for the domain.
+                example: ['127.0.0.1']
+          network_info:
+            type: object
+            properties:
+              status:
+                type: string
+                description: The status of the network configuration for the domain.
+                example: 'ACTIVE'
+              ssl:
+                type: object
+                description: SSL configuration status
+                properties:
+                  status:
+                    type: string
+                    example: 'active'
       redirects_to:
         type: array
         items:
@@ -3038,7 +3434,101 @@ definitions:
               example: e41fa98f-ea80-4006-b229-a9b765d0863a
             name:
               type: string
-              example: redirect.com
+              example: 'redirect.com'
+      secure_all_urls:
+        type: boolean
+        example: false
+  DomainCertificate:
+    type: object
+    properties:
+      cert_name:
+        type: string
+        description: The name of the certificate
+        example: customdomain.com
+      cert_info:
+        type: object
+        properties:
+          key:
+            type: string
+            description: The private key of the certificate
+          cert:
+            type: string
+            description: The certificate
+      certificate:
+        type: object
+        properties:
+          id:
+            type: integer
+            description: The id of the certificate
+          account:
+            type: string
+            description: The account name of the owner of the certificate
+            example: myaccountname
+          auto_renew:
+            type: boolean
+            description: Whether auto renew is enabled (true) or disabled (false)
+          auth_file:
+            type: string
+            description: The auth file for the certificate
+          approver_email:
+            type: string
+            description: The approver email for the certificate
+          common_name:
+            type: string
+            description: The common name for the domain
+            example: customdomain.com
+          cancel_time:
+            type: string
+            description: The time when the certificate was cancelled
+          cert_source:
+            type: string
+            description: The source of the certificate
+            enum:
+              - CERT_SOURCE_UNSPECIFIED
+              - THIRD_PARTY
+              - LETS_ENCRYPT
+              - SELF_SIGNED
+          ordered_time:
+            type: string
+            description: The time when the certificate was ordered
+          wildcard:
+            type: boolean
+            description: A boolean flag that indicates if the certificate is for a wildcard domain
+          domains:
+            type: array
+            items:
+              type: string
+            description: A list of domains for the certificate
+            example: ["customdomain.com", "*.customdomain.com"]
+          order_id:
+            type: string
+            description: The certificate order id
+          status:
+            type: string
+            enum:
+              - SSL_STATE_UNSPECIFIED
+              - ENABLED
+              - DISABLED
+              - EXPIRED
+              - CANCELED
+              - REJECTED
+              - SUBMITTED
+            description: The current status of the certificate
+          parent_id:
+            type: string
+            description: The identifier of the certificate that the current certificate replaced
+          wpe_order_id:
+            type: string
+            description: The WP Engine order id
+          approved_time:
+            type: string
+            description: The time the certificate was approved
+          expires_time:
+            type: string
+            description: The time when the certificate expires
+      criteria:
+        type: string
+        description: The criteria of the certificate
   DomainOrRedirect:
     type: object
     required:
@@ -3070,6 +3560,267 @@ definitions:
           name:
             type: string
             example: redirect.com
+  DomainReport:
+    type: object
+    required:
+      - report_id
+    properties:
+      report_id:
+        type: string
+        format: uuid
+        example: 6a6d5dbd-5cac-41d5-8f3f-14a3e8ae6f76
+  DomainStatusReport:
+    type: object
+    properties:
+      complete:
+        type: boolean
+        description: The status of the report
+        example: true
+      id:
+        type: string
+        description: The UUID of the report
+        example: 6a6d5dbd-5cac-41d5-8f3f-14a3e8ae6f76
+      install_name:
+        type: string
+        description: Name of the install
+      install_ip:
+        type: string
+        description: IP address for the install
+      admin:
+        type: boolean
+        description: Admin status
+        example: false
+      domains:
+        type: array
+        description: The list of domains associated with this report
+        items:
+          $ref: '#/definitions/DomainStatus'
+  DomainStatus:
+    type: object
+    properties:
+      name:
+        type: string
+        description: The domain name
+      cname:
+        type: string
+        description: The CNAME of the domain
+      a_record:
+        type: string
+        description: The A record of the domain
+      aaaa_record:
+        type: string
+        description: The AAAA record of the domain
+      complete:
+        type: boolean
+        description: The status of the request to ping the domain
+        example: true
+      result:
+        type: string
+        description: The result of the request to ping the domain
+      dns_provider:
+        type: string
+        description: The DNS provider of the domain
+      dns_error:
+        type: boolean
+        description: Indicates if there was an error retrieving DNS information
+        example: false
+      install_name:
+        type: string
+        description: The name of the install
+      cluster_id:
+        type: string
+        description: The cluster ID of the install
+      http_forwarded:
+        type: string
+        description: The HTTP forwarded value of the domain
+      http_forwarded_list:
+        type: string
+        description: The HTTP forwarded list of the domain
+      http_error:
+        type: boolean
+        description: Indicates if there was an error retrieving HTTP information
+        example: false
+      atlas_env_id:
+        type: string
+        description: "Atlas environment ID associated with this domain"
+      ns:
+        type: array
+        description: The name servers of the domain
+        items:
+          type: object
+          properties:
+            host:
+              type: string
+              description: Hostname of the name server
+      mx:
+        type: array
+        description: "Mail exchange record information"
+        items:
+          type: object
+          properties:
+            Host:
+              type: string
+              description: "Hostname of the mail server"
+            Pref:
+              type: integer
+              description: "Priority of the mail server (lower values have higher priority)"
+      txt:
+        type: array
+        description: TXT records for the domain
+        items:
+          type: string
+      soa:
+        type: array
+        description: The start of authority records of the domain
+        items:
+          type: object
+          properties:
+            hdr:
+              type: object
+              description: "Header of the start of authority record"
+            ns:
+              type: string
+              description: "Primary name server for the zone"
+              example: "ns1.example.com"
+            mbox:
+              type: string
+              description: "Email address of the zone administrator (@ replaced with .)"
+              example: "hostmaster.example.com"
+            serial:
+              type: integer
+              description: "Zone file version number"
+            refresh:
+              type: integer
+              description: "Time in seconds secondary servers wait before refreshing zone data"
+            retry:
+              type: integer
+              description: "Time in seconds to wait before retrying failed zone transfers"
+            expire:
+              type: integer
+              description: "Time in seconds zone data is valid without refreshing"
+            minttl:
+              type: integer
+              description: "Minimum time-to-live in seconds for negative responses"
+      caa:
+        type: array
+        description: The certification authority authorization records of the domain
+        items:
+          type: object
+          properties:
+            hdr:
+              type: object
+              description: "Header of the start of authority record"
+            flag:
+              type: integer
+              description: The flags for the CAA record
+            tag:
+              type: string
+              description: The tag for the CAA record
+            value:
+              type: string
+              description: The value for the CAA record
+      ip:
+        type: array
+        description: The IP addresses of the domain
+        items:
+          type: string
+        example: ["192.0.2.10", "192.0.2.11"]
+      address:
+        type: array
+        description: The addresses of the domain
+        items:
+          type: string
+        example: ["192.0.2.10", "192.0.2.11"]
+      aname:
+        type: array
+        description: The A name records of the domain
+        items:
+          type: object
+          properties:
+            hdr:
+              type: object
+              description: "Header of the start of authority record"
+            a:
+              type: string
+              description: The A name record
+      ssl:
+        type: object
+        description: The SSL information of the domain
+        properties:
+          status:
+            type: string
+            description: "Status of the SSL certificate"
+            example: "verified"
+          issuer:
+            type: string
+            description: "Certificate issuer name"
+          not_before:
+            type: string
+            description: "Certificate validity start date"
+          not_after:
+            type: string
+            description: "Certificate expiration date"
+          error:
+            type: string
+            description: "Error message if certificate validation failed"
+          dns_names:
+            type: array
+            description: "DNS names included in the certificate"
+            items:
+              type: string
+          serial_number:
+            type: string
+            description: "Certificate serial number"
+          signature_algorithm:
+            type: integer
+            description: "Signature algorithm identifier used in the certificate"
+          subject:
+            type: object
+            description: "Certificate subject information"
+          common_name:
+            type: string
+            description: "Common name in the certificate"
+          sans:
+            type: array
+            description: "Subject Alternative Names in the certificate"
+            items:
+              type: string
+  LargeFSConfig:
+    type: object
+    properties:
+      largefs_settings:
+        type: object
+        properties:
+          cloud:
+            type: string
+            enum: [s3]
+          bucket:
+            type: string
+          bucket_region:
+            type: string
+          path_settings:
+            type: array
+            items:
+              type: object
+              properties:
+                path:
+                  type: string
+                excluded_paths:
+                  type: array
+                  items:
+                    type: string
+                redirect_type:
+                  type: string
+                  enum: [break, permanent]
+  LargeFSValidationFile:
+    type: object
+    properties:
+      name:
+        type: string
+        example: '64f1250c.largefs'
+      content:
+        type: string
+        example: 'e4ccd0696cff6f94'
   User:
     type: object
     required:
@@ -3110,12 +3861,12 @@ definitions:
         example: e41fa98f-ea80-1f16-a7b7-d748bcc9e64d
   PreviousPage:
     type: string
-    example: https://api.wpengineapi.com/v1/example-endpoint?limit=100&offset=0
+    example: 'https://api.wpengineapi.com/v1/example-endpoint?limit=100&offset=0'
     x-nullable: true
     description: Path to the previous page of results
   NextPage:
     type: string
-    example: https://api.wpengineapi.com/v1/example-endpoint?limit=100&offset=200
+    example: 'https://api.wpengineapi.com/v1/example-endpoint?limit=100&offset=200'
     x-nullable: true
     description: Path to the next page of results
   ResultsCount:

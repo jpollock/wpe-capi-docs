@@ -5,7 +5,7 @@ description: Get an account by ID
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T08:58:09.557Z */}
+{/* Last updated: 2025-06-27T10:43:52.029Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -118,7 +118,10 @@ makeRequest();
 Success
 
 ```json
-
+{
+  &quot;id&quot;: &quot;eeda3227-9a39-46ae-9e14-20958bb4e6c9&quot;,
+  &quot;name&quot;: &quot;joesaccount&quot;
+}
 ```
 
 ### 401 Authentication Error
@@ -126,7 +129,9 @@ Success
 Authentication Error
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Authentication required&quot;
+}
 ```
 
 ### 404 Not found
@@ -134,7 +139,9 @@ Authentication Error
 Not found
 
 ```json
-
+{
+  &quot;message&quot;: &quot;Resource not found&quot;
+}
 ```
 
 ### 429 
