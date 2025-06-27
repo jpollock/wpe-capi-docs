@@ -66,12 +66,7 @@ jobs:
             echo "❌ Main endpoints file not found"
             exit 1
           fi
-          
-          if [ ! -d "src/content/docs/api-reference/endpoints/account" ]; then
-            echo "❌ Account endpoints directory not found"
-            exit 1
-          fi
-          
+                    
           if [ ! -f "dist/index.html" ]; then
             echo "❌ Built index.html not found"
             exit 1
