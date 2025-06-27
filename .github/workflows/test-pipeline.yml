@@ -34,6 +34,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
+      - name: Clear debug environment
+        run: |
+          unset NODE_OPTIONS
+          echo "Cleared NODE_OPTIONS for CI environment"
+      
       - name: Test OpenAPI parsing
         run: |
           echo "🧪 Testing OpenAPI parsing..."
