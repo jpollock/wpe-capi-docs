@@ -5,7 +5,7 @@ description: Complete reference for all WP Engine Customer API endpoints
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T15:21:25.539Z */}
+{/* Last updated: 2025-06-27T17:31:05.497Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -45,14 +45,14 @@ require_once 'vendor/autoload.php';
 use GuzzleHttp\Client;
 
 $client = new Client();
-try {
+try \{
     $response = $client->get('https://api.wpengineapi.com/v1/status');
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -69,26 +69,26 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'get',
   url: 'https://api.wpengineapi.com/v1/status'
-};
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -164,14 +164,14 @@ require_once 'vendor/autoload.php';
 use GuzzleHttp\Client;
 
 $client = new Client();
-try {
+try \{
     $response = $client->get('https://api.wpengineapi.com/v1/swagger');
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -188,26 +188,26 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'get',
   url: 'https://api.wpengineapi.com/v1/swagger'
-};
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -285,7 +285,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->get('https://api.wpengineapi.com/v1/accounts', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
@@ -294,9 +294,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -308,9 +308,9 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/accounts"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
+headers = \{
+    'Authorization': f'Basic \{auth_string\}'
+\}
 
 try:
     response = requests.get(url, headers=headers)
@@ -318,29 +318,29 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'get',
   url: 'https://api.wpengineapi.com/v1/accounts',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
-};
+  \}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -446,7 +446,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->get('https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
@@ -455,9 +455,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -469,9 +469,9 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
+headers = \{
+    'Authorization': f'Basic \{auth_string\}'
+\}
 
 try:
     response = requests.get(url, headers=headers)
@@ -479,29 +479,29 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'get',
   url: 'https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
-};
+  \}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -605,7 +605,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->get('https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
@@ -614,9 +614,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -628,9 +628,9 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
+headers = \{
+    'Authorization': f'Basic \{auth_string\}'
+\}
 
 try:
     response = requests.get(url, headers=headers)
@@ -638,29 +638,29 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'get',
   url: 'https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
-};
+  \}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -785,8 +785,8 @@ Create a new account user
     curl -X POST \
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
-  -d '{
-  "user": {
+  -d '\{
+  "user": \{
     "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
     "first_name": "Joe",
     "last_name": "Smith",
@@ -796,8 +796,8 @@ Create a new account user
       "ddda3227-9a39-46ae-9e14-20958bb4e6c9",
       "qada3227-9a39-46ae-9e14-20958bb4e45y"
     ]
-  }
-}' \
+  \}
+\}' \
   "https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users"
     ```
   </TabItem>
@@ -811,7 +811,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->post('https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth,
@@ -834,9 +834,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -848,13 +848,13 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}',
+headers = \{
+    'Authorization': f'Basic \{auth_string\}',
     'Content-Type': 'application/json'
-}
+\}
 
-data = {
-    "user": {
+data = \{
+    "user": \{
         "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
         "first_name": "Joe",
         "last_name": "Smith",
@@ -864,8 +864,8 @@ data = {
             "ddda3227-9a39-46ae-9e14-20958bb4e6c9",
             "qada3227-9a39-46ae-9e14-20958bb4e45y"
         ]
-    }
-}
+    \}
+\}
 
 try:
     response = requests.post(url, headers=headers, json=data)
@@ -873,22 +873,22 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'post',
   url: 'https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64'),
     'Content-Type': 'application/json'
-  },
-  data: {
-  "user": {
+  \},
+  data: \{
+  "user": \{
     "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
     "first_name": "Joe",
     "last_name": "Smith",
@@ -898,18 +898,18 @@ const config = {
       "ddda3227-9a39-46ae-9e14-20958bb4e6c9",
       "qada3227-9a39-46ae-9e14-20958bb4e45y"
     ]
-  }
-}
-};
+  \}
+\}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -1038,7 +1038,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->get('https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users/a1b2c3d4-e5f6-41b2-b3d4-e5f6a1b2c3d4', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
@@ -1047,9 +1047,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -1061,9 +1061,9 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users/a1b2c3d4-e5f6-41b2-b3d4-e5f6a1b2c3d4"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
+headers = \{
+    'Authorization': f'Basic \{auth_string\}'
+\}
 
 try:
     response = requests.get(url, headers=headers)
@@ -1071,29 +1071,29 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'get',
   url: 'https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users/a1b2c3d4-e5f6-41b2-b3d4-e5f6a1b2c3d4',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
-};
+  \}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -1214,13 +1214,13 @@ Update an account user
     curl -X PATCH \
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
-  -d '{
+  -d '\{
   "roles": "full,billing",
   "install_ids": [
     "ddda3227-9a39-46ae-9e14-20958bb4e6c9",
     "qada3227-9a39-46ae-9e14-20958bb4e45y"
   ]
-}' \
+\}' \
   "https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users/a1b2c3d4-e5f6-41b2-b3d4-e5f6a1b2c3d4"
     ```
   </TabItem>
@@ -1234,7 +1234,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->patch('https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users/a1b2c3d4-e5f6-41b2-b3d4-e5f6a1b2c3d4', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth,
@@ -1251,9 +1251,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -1265,18 +1265,18 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users/a1b2c3d4-e5f6-41b2-b3d4-e5f6a1b2c3d4"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}',
+headers = \{
+    'Authorization': f'Basic \{auth_string\}',
     'Content-Type': 'application/json'
-}
+\}
 
-data = {
+data = \{
     "roles": "full,billing",
     "install_ids": [
         "ddda3227-9a39-46ae-9e14-20958bb4e6c9",
         "qada3227-9a39-46ae-9e14-20958bb4e45y"
     ]
-}
+\}
 
 try:
     response = requests.patch(url, headers=headers, json=data)
@@ -1284,37 +1284,37 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'patch',
   url: 'https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users/a1b2c3d4-e5f6-41b2-b3d4-e5f6a1b2c3d4',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64'),
     'Content-Type': 'application/json'
-  },
-  data: {
+  \},
+  data: \{
   "roles": "full,billing",
   "install_ids": [
     "ddda3227-9a39-46ae-9e14-20958bb4e6c9",
     "qada3227-9a39-46ae-9e14-20958bb4e45y"
   ]
-}
-};
+\}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -1463,7 +1463,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->delete('https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users/a1b2c3d4-e5f6-41b2-b3d4-e5f6a1b2c3d4', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
@@ -1472,9 +1472,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -1486,9 +1486,9 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users/a1b2c3d4-e5f6-41b2-b3d4-e5f6a1b2c3d4"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
+headers = \{
+    'Authorization': f'Basic \{auth_string\}'
+\}
 
 try:
     response = requests.delete(url, headers=headers)
@@ -1496,29 +1496,29 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'delete',
   url: 'https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users/a1b2c3d4-e5f6-41b2-b3d4-e5f6a1b2c3d4',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
-};
+  \}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -1639,7 +1639,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->get('https://api.wpengineapi.com/v1/sites', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
@@ -1648,9 +1648,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -1662,9 +1662,9 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/sites"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
+headers = \{
+    'Authorization': f'Basic \{auth_string\}'
+\}
 
 try:
     response = requests.get(url, headers=headers)
@@ -1672,29 +1672,29 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'get',
   url: 'https://api.wpengineapi.com/v1/sites',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
-};
+  \}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -1806,10 +1806,10 @@ This endpoint has no parameters.
     curl -X POST \
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
-  -d '{
+  -d '\{
   "name": "Torque Magazine",
   "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
-}' \
+\}' \
   "https://api.wpengineapi.com/v1/sites"
     ```
   </TabItem>
@@ -1823,7 +1823,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->post('https://api.wpengineapi.com/v1/sites', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth,
@@ -1837,9 +1837,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -1851,15 +1851,15 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/sites"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}',
+headers = \{
+    'Authorization': f'Basic \{auth_string\}',
     'Content-Type': 'application/json'
-}
+\}
 
-data = {
+data = \{
     "name": "Torque Magazine",
     "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
-}
+\}
 
 try:
     response = requests.post(url, headers=headers, json=data)
@@ -1867,34 +1867,34 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'post',
   url: 'https://api.wpengineapi.com/v1/sites',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64'),
     'Content-Type': 'application/json'
-  },
-  data: {
+  \},
+  data: \{
   "name": "Torque Magazine",
   "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
-}
-};
+\}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -2019,7 +2019,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->get('https://api.wpengineapi.com/v1/sites/a1b2c3d4-e5f6-41b2-b3d4-e5f6a1b2c3d4', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
@@ -2028,9 +2028,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -2042,9 +2042,9 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/sites/a1b2c3d4-e5f6-41b2-b3d4-e5f6a1b2c3d4"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
+headers = \{
+    'Authorization': f'Basic \{auth_string\}'
+\}
 
 try:
     response = requests.get(url, headers=headers)
@@ -2052,29 +2052,29 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'get',
   url: 'https://api.wpengineapi.com/v1/sites/a1b2c3d4-e5f6-41b2-b3d4-e5f6a1b2c3d4',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
-};
+  \}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -2189,9 +2189,9 @@ Change a site name
     curl -X PATCH \
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
-  -d '{
+  -d '\{
   "name": "My New Name"
-}' \
+\}' \
   "https://api.wpengineapi.com/v1/sites/294deacc-d8b8-4005-82c4-0727ba8ddde0"
     ```
   </TabItem>
@@ -2205,7 +2205,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->patch('https://api.wpengineapi.com/v1/sites/294deacc-d8b8-4005-82c4-0727ba8ddde0', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth,
@@ -2218,9 +2218,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -2232,14 +2232,14 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/sites/294deacc-d8b8-4005-82c4-0727ba8ddde0"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}',
+headers = \{
+    'Authorization': f'Basic \{auth_string\}',
     'Content-Type': 'application/json'
-}
+\}
 
-data = {
+data = \{
     "name": "My New Name"
-}
+\}
 
 try:
     response = requests.patch(url, headers=headers, json=data)
@@ -2247,33 +2247,33 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'patch',
   url: 'https://api.wpengineapi.com/v1/sites/294deacc-d8b8-4005-82c4-0727ba8ddde0',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64'),
     'Content-Type': 'application/json'
-  },
-  data: {
+  \},
+  data: \{
   "name": "My New Name"
-}
-};
+\}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -2408,7 +2408,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->delete('https://api.wpengineapi.com/v1/sites/294deacc-d8b8-4005-82c4-0727ba8ddde0', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
@@ -2417,9 +2417,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -2431,9 +2431,9 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/sites/294deacc-d8b8-4005-82c4-0727ba8ddde0"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
+headers = \{
+    'Authorization': f'Basic \{auth_string\}'
+\}
 
 try:
     response = requests.delete(url, headers=headers)
@@ -2441,29 +2441,29 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'delete',
   url: 'https://api.wpengineapi.com/v1/sites/294deacc-d8b8-4005-82c4-0727ba8ddde0',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
-};
+  \}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -2584,7 +2584,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->get('https://api.wpengineapi.com/v1/installs', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
@@ -2593,9 +2593,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -2607,9 +2607,9 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/installs"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
+headers = \{
+    'Authorization': f'Basic \{auth_string\}'
+\}
 
 try:
     response = requests.get(url, headers=headers)
@@ -2617,29 +2617,29 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'get',
   url: 'https://api.wpengineapi.com/v1/installs',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
-};
+  \}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -2754,12 +2754,12 @@ This endpoint has no parameters.
     curl -X POST \
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
-  -d '{
+  -d '\{
   "name": "torquemag",
   "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
   "site_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
   "environment": "staging"
-}' \
+\}' \
   "https://api.wpengineapi.com/v1/installs"
     ```
   </TabItem>
@@ -2773,7 +2773,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->post('https://api.wpengineapi.com/v1/installs', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth,
@@ -2789,9 +2789,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -2803,17 +2803,17 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/installs"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}',
+headers = \{
+    'Authorization': f'Basic \{auth_string\}',
     'Content-Type': 'application/json'
-}
+\}
 
-data = {
+data = \{
     "name": "torquemag",
     "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
     "site_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
     "environment": "staging"
-}
+\}
 
 try:
     response = requests.post(url, headers=headers, json=data)
@@ -2821,36 +2821,36 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'post',
   url: 'https://api.wpengineapi.com/v1/installs',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64'),
     'Content-Type': 'application/json'
-  },
-  data: {
+  \},
+  data: \{
   "name": "torquemag",
   "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
   "site_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
   "environment": "staging"
-}
-};
+\}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -2975,7 +2975,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->get('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
@@ -2984,9 +2984,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -2998,9 +2998,9 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
+headers = \{
+    'Authorization': f'Basic \{auth_string\}'
+\}
 
 try:
     response = requests.get(url, headers=headers)
@@ -3008,29 +3008,29 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'get',
   url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
-};
+  \}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -3135,7 +3135,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->delete('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
@@ -3144,9 +3144,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -3158,9 +3158,9 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
+headers = \{
+    'Authorization': f'Basic \{auth_string\}'
+\}
 
 try:
     response = requests.delete(url, headers=headers)
@@ -3168,29 +3168,29 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'delete',
   url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
-};
+  \}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -3299,10 +3299,10 @@ Update a WordPress installation
     curl -X PATCH \
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
-  -d '{
+  -d '\{
   "site_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
   "environment": "development"
-}' \
+\}' \
   "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0"
     ```
   </TabItem>
@@ -3316,7 +3316,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->patch('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth,
@@ -3330,9 +3330,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -3344,15 +3344,15 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}',
+headers = \{
+    'Authorization': f'Basic \{auth_string\}',
     'Content-Type': 'application/json'
-}
+\}
 
-data = {
+data = \{
     "site_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
     "environment": "development"
-}
+\}
 
 try:
     response = requests.patch(url, headers=headers, json=data)
@@ -3360,34 +3360,34 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'patch',
   url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64'),
     'Content-Type': 'application/json'
-  },
-  data: {
+  \},
+  data: \{
   "site_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
   "environment": "development"
-}
-};
+\}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -3507,7 +3507,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->get('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/largefs_validation_file', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
@@ -3516,9 +3516,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -3530,9 +3530,9 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/largefs_validation_file"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
+headers = \{
+    'Authorization': f'Basic \{auth_string\}'
+\}
 
 try:
     response = requests.get(url, headers=headers)
@@ -3540,29 +3540,29 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'get',
   url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/largefs_validation_file',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
-};
+  \}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -3671,7 +3671,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->get('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/files', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
@@ -3680,9 +3680,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -3694,9 +3694,9 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/files"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
+headers = \{
+    'Authorization': f'Basic \{auth_string\}'
+\}
 
 try:
     response = requests.get(url, headers=headers)
@@ -3704,29 +3704,29 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'get',
   url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/files',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
-};
+  \}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -3857,7 +3857,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->post('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/files', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth,
@@ -3870,9 +3870,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -3884,12 +3884,12 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/files"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}',
+headers = \{
+    'Authorization': f'Basic \{auth_string\}',
     'Content-Type': 'application/json'
-}
+\}
 
-data = {}
+data = \{\}
 
 try:
     response = requests.post(url, headers=headers, json=data)
@@ -3897,31 +3897,31 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'post',
   url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/files',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64'),
     'Content-Type': 'application/json'
-  },
-  data: {}
-};
+  \},
+  data: \{\}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -4059,7 +4059,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->patch('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/files', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth,
@@ -4072,9 +4072,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -4086,12 +4086,12 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/files"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}',
+headers = \{
+    'Authorization': f'Basic \{auth_string\}',
     'Content-Type': 'application/json'
-}
+\}
 
-data = {}
+data = \{\}
 
 try:
     response = requests.patch(url, headers=headers, json=data)
@@ -4099,31 +4099,31 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'patch',
   url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/files',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64'),
     'Content-Type': 'application/json'
-  },
-  data: {}
-};
+  \},
+  data: \{\}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -4247,7 +4247,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->get('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
@@ -4256,9 +4256,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -4270,9 +4270,9 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
+headers = \{
+    'Authorization': f'Basic \{auth_string\}'
+\}
 
 try:
     response = requests.get(url, headers=headers)
@@ -4280,29 +4280,29 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'get',
   url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
-};
+  \}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -4444,10 +4444,10 @@ Add a new domain or redirect to an existing install
     curl -X POST \
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
-  -d '{
+  -d '\{
   "name": "example.com",
   "primary": true
-}' \
+\}' \
   "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains"
     ```
   </TabItem>
@@ -4461,7 +4461,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->post('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth,
@@ -4475,9 +4475,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -4489,15 +4489,15 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}',
+headers = \{
+    'Authorization': f'Basic \{auth_string\}',
     'Content-Type': 'application/json'
-}
+\}
 
-data = {
+data = \{
     "name": "example.com",
     "primary": true
-}
+\}
 
 try:
     response = requests.post(url, headers=headers, json=data)
@@ -4505,34 +4505,34 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'post',
   url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64'),
     'Content-Type': 'application/json'
-  },
-  data: {
+  \},
+  data: \{
   "name": "example.com",
   "primary": true
-}
-};
+\}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -4682,17 +4682,17 @@ Add multiple domains and redirects to an existing install
     curl -X POST \
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
-  -d '{
+  -d '\{
   "domains": [
-    {
+    \{
       "name": "example.com"
-    },
-    {
+    \},
+    \{
       "name": "www.example.com",
       "redirect_to": "example.com"
-    }
+    \}
   ]
-}' \
+\}' \
   "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/bulk"
     ```
   </TabItem>
@@ -4706,7 +4706,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->post('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/bulk', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth,
@@ -4727,9 +4727,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -4741,22 +4741,22 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/bulk"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}',
+headers = \{
+    'Authorization': f'Basic \{auth_string\}',
     'Content-Type': 'application/json'
-}
+\}
 
-data = {
+data = \{
     "domains": [
-        {
+        \{
             "name": "example.com"
-        },
-        {
+        \},
+        \{
             "name": "www.example.com",
             "redirect_to": "example.com"
-        }
+        \}
     ]
-}
+\}
 
 try:
     response = requests.post(url, headers=headers, json=data)
@@ -4764,41 +4764,41 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'post',
   url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/bulk',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64'),
     'Content-Type': 'application/json'
-  },
-  data: {
+  \},
+  data: \{
   "domains": [
-    {
+    \{
       "name": "example.com"
-    },
-    {
+    \},
+    \{
       "name": "www.example.com",
       "redirect_to": "example.com"
-    }
+    \}
   ]
-}
-};
+\}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -4924,7 +4924,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->get('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
@@ -4933,9 +4933,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -4947,9 +4947,9 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
+headers = \{
+    'Authorization': f'Basic \{auth_string\}'
+\}
 
 try:
     response = requests.get(url, headers=headers)
@@ -4957,29 +4957,29 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'get',
   url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
-};
+  \}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -5116,11 +5116,11 @@ Update an existing domain for an install
     curl -X PATCH \
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
-  -d '{
+  -d '\{
   "primary": true,
   "redirect_to": "6977805b-1f65-4a5d-8d36-6fe609a4d9f3",
   "secure_all_urls": false
-}' \
+\}' \
   "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a"
     ```
   </TabItem>
@@ -5134,7 +5134,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->patch('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth,
@@ -5149,9 +5149,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -5163,16 +5163,16 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}',
+headers = \{
+    'Authorization': f'Basic \{auth_string\}',
     'Content-Type': 'application/json'
-}
+\}
 
-data = {
+data = \{
     "primary": true,
     "redirect_to": "6977805b-1f65-4a5d-8d36-6fe609a4d9f3",
     "secure_all_urls": false
-}
+\}
 
 try:
     response = requests.patch(url, headers=headers, json=data)
@@ -5180,35 +5180,35 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'patch',
   url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64'),
     'Content-Type': 'application/json'
-  },
-  data: {
+  \},
+  data: \{
   "primary": true,
   "redirect_to": "6977805b-1f65-4a5d-8d36-6fe609a4d9f3",
   "secure_all_urls": false
-}
-};
+\}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -5353,7 +5353,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->delete('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
@@ -5362,9 +5362,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -5376,9 +5376,9 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
+headers = \{
+    'Authorization': f'Basic \{auth_string\}'
+\}
 
 try:
     response = requests.delete(url, headers=headers)
@@ -5386,29 +5386,29 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'delete',
   url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
-};
+  \}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -5527,7 +5527,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->post('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a/check_status', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
@@ -5536,9 +5536,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -5550,9 +5550,9 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a/check_status"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
+headers = \{
+    'Authorization': f'Basic \{auth_string\}'
+\}
 
 try:
     response = requests.post(url, headers=headers)
@@ -5560,29 +5560,29 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'post',
   url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a/check_status',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
-};
+  \}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -5702,7 +5702,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->get('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/check_status/6a6d5dbd-5cac-41d5-8f3f-14a3e8ae6f76', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
@@ -5711,9 +5711,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -5725,9 +5725,9 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/check_status/6a6d5dbd-5cac-41d5-8f3f-14a3e8ae6f76"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
+headers = \{
+    'Authorization': f'Basic \{auth_string\}'
+\}
 
 try:
     response = requests.get(url, headers=headers)
@@ -5735,29 +5735,29 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'get',
   url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/check_status/6a6d5dbd-5cac-41d5-8f3f-14a3e8ae6f76',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
-};
+  \}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -5968,7 +5968,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->get('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a/ssl_certificate', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
@@ -5977,9 +5977,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -5991,9 +5991,9 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a/ssl_certificate"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
+headers = \{
+    'Authorization': f'Basic \{auth_string\}'
+\}
 
 try:
     response = requests.get(url, headers=headers)
@@ -6001,29 +6001,29 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'get',
   url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a/ssl_certificate',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
-};
+  \}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -6166,13 +6166,13 @@ Requests a new backup of a WordPress installation
     curl -X POST \
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
-  -d '{
+  -d '\{
   "description": "Taking a backup of torquemag before I start developing new features for it",
   "notification_emails": [
     "myself@torquemag.com",
     "other_person_interested_in_backup@torquemag.com"
   ]
-}' \
+\}' \
   "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups"
     ```
   </TabItem>
@@ -6186,7 +6186,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->post('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth,
@@ -6203,9 +6203,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -6217,18 +6217,18 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}',
+headers = \{
+    'Authorization': f'Basic \{auth_string\}',
     'Content-Type': 'application/json'
-}
+\}
 
-data = {
+data = \{
     "description": "Taking a backup of torquemag before I start developing new features for it",
     "notification_emails": [
         "myself@torquemag.com",
         "other_person_interested_in_backup@torquemag.com"
     ]
-}
+\}
 
 try:
     response = requests.post(url, headers=headers, json=data)
@@ -6236,37 +6236,37 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'post',
   url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64'),
     'Content-Type': 'application/json'
-  },
-  data: {
+  \},
+  data: \{
   "description": "Taking a backup of torquemag before I start developing new features for it",
   "notification_emails": [
     "myself@torquemag.com",
     "other_person_interested_in_backup@torquemag.com"
   ]
-}
-};
+\}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -6396,7 +6396,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->get('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups/e41fa98f-ea80-4654-b229-a9b765d0863a', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
@@ -6405,9 +6405,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -6419,9 +6419,9 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups/e41fa98f-ea80-4654-b229-a9b765d0863a"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
+headers = \{
+    'Authorization': f'Basic \{auth_string\}'
+\}
 
 try:
     response = requests.get(url, headers=headers)
@@ -6429,29 +6429,29 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'get',
   url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups/e41fa98f-ea80-4654-b229-a9b765d0863a',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
-};
+  \}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -6564,9 +6564,9 @@ Purge an install&#x27;s cache
     curl -X POST \
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
-  -d '{
+  -d '\{
   "type": "object"
-}' \
+\}' \
   "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/purge_cache"
     ```
   </TabItem>
@@ -6580,7 +6580,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->post('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/purge_cache', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth,
@@ -6593,9 +6593,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -6607,14 +6607,14 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/purge_cache"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}',
+headers = \{
+    'Authorization': f'Basic \{auth_string\}',
     'Content-Type': 'application/json'
-}
+\}
 
-data = {
+data = \{
     "type": "object"
-}
+\}
 
 try:
     response = requests.post(url, headers=headers, json=data)
@@ -6622,33 +6622,33 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'post',
   url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/purge_cache',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64'),
     'Content-Type': 'application/json'
-  },
-  data: {
+  \},
+  data: \{
   "type": "object"
-}
-};
+\}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -6779,7 +6779,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->get('https://api.wpengineapi.com/v1/user', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
@@ -6788,9 +6788,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -6802,9 +6802,9 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/user"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
+headers = \{
+    'Authorization': f'Basic \{auth_string\}'
+\}
 
 try:
     response = requests.get(url, headers=headers)
@@ -6812,29 +6812,29 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'get',
   url: 'https://api.wpengineapi.com/v1/user',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
-};
+  \}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -6929,7 +6929,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->get('https://api.wpengineapi.com/v1/ssh_keys', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
@@ -6938,9 +6938,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -6952,9 +6952,9 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/ssh_keys"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
+headers = \{
+    'Authorization': f'Basic \{auth_string\}'
+\}
 
 try:
     response = requests.get(url, headers=headers)
@@ -6962,29 +6962,29 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'get',
   url: 'https://api.wpengineapi.com/v1/ssh_keys',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
-};
+  \}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -7089,9 +7089,9 @@ This endpoint has no parameters.
     curl -X POST \
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
-  -d '{
+  -d '\{
   "public_key": "ssh-rsa AAAAbcdefg+567te/4i9ASKGHtw9euaskl+Iksldfjw== joe@gmail.com"
-}' \
+\}' \
   "https://api.wpengineapi.com/v1/ssh_keys"
     ```
   </TabItem>
@@ -7105,7 +7105,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->post('https://api.wpengineapi.com/v1/ssh_keys', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth,
@@ -7118,9 +7118,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -7132,14 +7132,14 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/ssh_keys"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}',
+headers = \{
+    'Authorization': f'Basic \{auth_string\}',
     'Content-Type': 'application/json'
-}
+\}
 
-data = {
+data = \{
     "public_key": "ssh-rsa AAAAbcdefg+567te/4i9ASKGHtw9euaskl+Iksldfjw== joe@gmail.com"
-}
+\}
 
 try:
     response = requests.post(url, headers=headers, json=data)
@@ -7147,33 +7147,33 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'post',
   url: 'https://api.wpengineapi.com/v1/ssh_keys',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64'),
     'Content-Type': 'application/json'
-  },
-  data: {
+  \},
+  data: \{
   "public_key": "ssh-rsa AAAAbcdefg+567te/4i9ASKGHtw9euaskl+Iksldfjw== joe@gmail.com"
-}
-};
+\}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -7293,7 +7293,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->delete('https://api.wpengineapi.com/v1/ssh_keys/294deacc-d8b8-4005-82c4-0727ba8ddde0', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
@@ -7302,9 +7302,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -7316,9 +7316,9 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/ssh_keys/294deacc-d8b8-4005-82c4-0727ba8ddde0"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
+headers = \{
+    'Authorization': f'Basic \{auth_string\}'
+\}
 
 try:
     response = requests.delete(url, headers=headers)
@@ -7326,29 +7326,29 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'delete',
   url: 'https://api.wpengineapi.com/v1/ssh_keys/294deacc-d8b8-4005-82c4-0727ba8ddde0',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
-};
+  \}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
@@ -7441,4 +7441,4 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 - **Endpoint Categories**: 13
 - **Schema Definitions**: 27
 - **API Version**: 1.6.15
-- **Last Updated**: 2025-06-27T15:21:25.539Z
+- **Last Updated**: 2025-06-27T17:31:05.497Z

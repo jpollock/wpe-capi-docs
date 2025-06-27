@@ -140,24 +140,108 @@ class NavigationUpdater {
     // Convert the section to a properly formatted string
     const sectionString = this.formatSidebarSection(newApiSection);
     
-    // Find the API Reference section more precisely
-    // Look for the pattern that includes the Endpoints subsection
-    const apiRefRegex = /{\s*label:\s*['"`]API Reference['"`],\s*items:\s*\[\s*{\s*label:\s*['"`]Overview['"`][\s\S]*?{\s*label:\s*['"`]Endpoints['"`][\s\S]*?\]\s*}\s*\]\s*},?/;
+    // Find the sidebar array and replace the API Reference section within it
+    const sidebarMatch = configContent.match(/sidebar:\s*\[([\s\S]*?)\]/);
+    if (!sidebarMatch) {
+      this.log('Warning: Could not find sidebar array in config');
+      return configContent;
+    }
     
-    if (apiRefRegex.test(configContent)) {
-      this.log('Found existing API Reference section, replacing...');
-      return configContent.replace(apiRefRegex, sectionString + ',');
-    } else {
-      this.log('No existing API Reference section found, adding new one...');
-      // If no existing API Reference section, add it before the Try section
-      const tryRegex = /({\s*label:\s*['"`]Try!['"`])/;
-      if (tryRegex.test(configContent)) {
-        return configContent.replace(tryRegex, `${sectionString},\n              $1`);
+    const sidebarContent = sidebarMatch[1];
+    
+    // Look for existing API Reference section using a more robust approach
+    // Split by sections and find the API Reference one
+    const sections = this.parseSidebarSections(sidebarContent);
+    let apiRefIndex = -1;
+    
+    for (let i = 0; i < sections.length; i++) {
+      if (sections[i].includes("label: 'API Reference'") || 
+          sections[i].includes('label: "API Reference"') ||
+          sections[i].includes('label: `API Reference`')) {
+        apiRefIndex = i;
+        break;
       }
     }
     
-    this.log('Warning: Could not find insertion point for API Reference section');
-    return configContent;
+    if (apiRefIndex !== -1) {
+      this.log('Found existing API Reference section, replacing...');
+      sections[apiRefIndex] = sectionString;
+    } else {
+      this.log('No existing API Reference section found, adding new one...');
+      // Insert before the last section (Try!)
+      sections.splice(-1, 0, sectionString);
+    }
+    
+    // Reconstruct the sidebar
+    const newSidebarContent = sections.join(',\n');
+    const newConfigContent = configContent.replace(
+      /sidebar:\s*\[[\s\S]*?\]/,
+      `sidebar: [\n${newSidebarContent}\n          ]`
+    );
+    
+    return newConfigContent;
+  }
+
+  /**
+   * Parse sidebar sections by finding balanced braces
+   */
+  parseSidebarSections(sidebarContent) {
+    const sections = [];
+    let currentSection = '';
+    let braceCount = 0;
+    let inString = false;
+    let stringChar = '';
+    let escaped = false;
+    
+    for (let i = 0; i < sidebarContent.length; i++) {
+      const char = sidebarContent[i];
+      const prevChar = i > 0 ? sidebarContent[i - 1] : '';
+      
+      currentSection += char;
+      
+      if (escaped) {
+        escaped = false;
+        continue;
+      }
+      
+      if (char === '\\') {
+        escaped = true;
+        continue;
+      }
+      
+      if (!inString && (char === '"' || char === "'" || char === '`')) {
+        inString = true;
+        stringChar = char;
+      } else if (inString && char === stringChar) {
+        inString = false;
+        stringChar = '';
+      } else if (!inString) {
+        if (char === '{') {
+          braceCount++;
+        } else if (char === '}') {
+          braceCount--;
+          
+          if (braceCount === 0) {
+            // End of a section
+            sections.push(currentSection.trim());
+            currentSection = '';
+            
+            // Skip any trailing comma and whitespace
+            while (i + 1 < sidebarContent.length && 
+                   (sidebarContent[i + 1] === ',' || /\s/.test(sidebarContent[i + 1]))) {
+              i++;
+            }
+          }
+        }
+      }
+    }
+    
+    // Add any remaining content
+    if (currentSection.trim()) {
+      sections.push(currentSection.trim());
+    }
+    
+    return sections;
   }
 
   /**
@@ -169,9 +253,9 @@ class NavigationUpdater {
         if (item.items) {
           const subItems = formatItems(item.items, currentIndent + '    ');
           const subItemsString = subItems.join(',\n');
-          return `${currentIndent}{\n${currentIndent}    label: '${item.label}',\n${currentIndent}    collapsed: ${item.collapsed || false},\n${currentIndent}    items: [\n${subItemsString}\n${currentIndent}    ]\n${currentIndent}}`;
+          return `${currentIndent}{\n${currentIndent}    label: '${this.escapeJavaScriptString(item.label)}',\n${currentIndent}    collapsed: ${item.collapsed || false},\n${currentIndent}    items: [\n${subItemsString}\n${currentIndent}    ]\n${currentIndent}}`;
         } else {
-          return `${currentIndent}{ label: '${item.label}', link: '${item.link}' }`;
+          return `${currentIndent}{ label: '${this.escapeJavaScriptString(item.label)}', link: '${item.link}' }`;
         }
       });
     };
@@ -179,7 +263,7 @@ class NavigationUpdater {
     const itemsArray = formatItems(section.items, indent + '    ');
     const itemsString = itemsArray.join(',\n');
     
-    return `${indent}{\n${indent}    label: '${section.label}',\n${indent}    items: [\n${itemsString}\n${indent}    ]\n${indent}}`;
+    return `${indent}{\n${indent}    label: '${this.escapeJavaScriptString(section.label)}',\n${indent}    items: [\n${itemsString}\n${indent}    ]\n${indent}}`;
   }
 
   /**
@@ -211,6 +295,19 @@ class NavigationUpdater {
       .replace(/([a-z])([A-Z])/g, '$1-$2')
       .replace(/[\s_]+/g, '-')
       .toLowerCase();
+  }
+
+  /**
+   * Escape string for safe use in JavaScript string literals
+   */
+  escapeJavaScriptString(str) {
+    return str
+      .replace(/\\/g, '\\\\')  // Escape backslashes first
+      .replace(/'/g, "\\'")    // Escape single quotes
+      .replace(/"/g, '\\"')    // Escape double quotes
+      .replace(/\n/g, '\\n')   // Escape newlines
+      .replace(/\r/g, '\\r')   // Escape carriage returns
+      .replace(/\t/g, '\\t');  // Escape tabs
   }
 
   /**

@@ -25,11 +25,18 @@ export class CodeExampleGenerator {
    */
   generateExamples(endpoint) {
     return {
-      curl: this.generateCurl(endpoint),
-      php: this.generatePhp(endpoint),
-      python: this.generatePython(endpoint),
-      nodejs: this.generateNodejs(endpoint)
+      curl: this.escapeMdxBraces(this.generateCurl(endpoint)),
+      php: this.escapeMdxBraces(this.generatePhp(endpoint)),
+      python: this.escapeMdxBraces(this.generatePython(endpoint)),
+      nodejs: this.escapeMdxBraces(this.generateNodejs(endpoint))
     };
+  }
+
+  /**
+   * Escape curly braces for MDX compatibility
+   */
+  escapeMdxBraces(code) {
+    return code.replace(/\{/g, '\\{').replace(/\}/g, '\\}');
   }
 
   /**

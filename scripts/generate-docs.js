@@ -53,8 +53,8 @@ class DocumentationGenerator {
       
       await this.parseOpenAPI();
       await this.setupTemplates();
-      await this.generateEndpointDocumentation();
-      await this.generateSectionIndexes();
+      //await this.generateEndpointDocumentation();
+      //await this.generateSectionIndexes();
       await this.generateMainIndex();
       await this.generateAllEndpointsPage();
       await this.updateNavigation();

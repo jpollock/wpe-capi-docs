@@ -17,7 +17,7 @@ Before you begin, make sure you have:
 
 For this quick start, we'll use basic authentication with your API credentials. If you're building a user-facing application, you should use OAuth 2.0 instead.
 
-First, [generate API credentials](/getting-started/authentication/#creating-an-api-key) if you don't already have them. You'll need both an API user ID and password.
+First, [generate API credentials](/getting-started/authentication/) if you don't already have them. You'll need both an API user ID and password.
 
 ## Step 2: Make Your First API Request
 
@@ -193,9 +193,9 @@ curl -X GET https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727
 Congratulations! You've made your first API requests to the WP Engine Customer API. Here are some next steps:
 
 1. Explore the [API Reference](/api-reference/overview/) to learn about all available endpoints
-2. Check out the [Examples](/examples/) for more complex use cases
+2. Check out the [Examples](/guides/example/) for more complex use cases
 3. Learn about [Pagination](/api-reference/pagination/) for handling large result sets
-4. Implement proper [Error Handling](/api-reference/error-handling/) in your application
+4. Implement proper Error Handling in your application
 
 ## Code Examples
 

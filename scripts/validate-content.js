@@ -46,6 +46,7 @@ class ContentValidator {
       await this.scanFiles();
       await this.validateFiles();
       await this.validateLinks();
+      await this.validateAstroConfig();
       
       this.printSummary();
       
@@ -127,16 +128,19 @@ class ContentValidator {
    * Validate MDX syntax
    */
   validateMdxSyntax(filePath, content) {
-    // Check for unmatched braces in JSX
+    // Remove code blocks from content before checking for JSX issues
+    const contentWithoutCodeBlocks = this.removeCodeBlocks(content);
+    
+    // Check for unmatched braces in JSX (only outside of code blocks)
     const jsxBraceRegex = /{[^}]*$/gm;
-    const unmatchedBraces = content.match(jsxBraceRegex);
+    const unmatchedBraces = contentWithoutCodeBlocks.match(jsxBraceRegex);
     if (unmatchedBraces) {
       this.addError(filePath, `Unmatched JSX braces found: ${unmatchedBraces.join(', ')}`);
     }
     
-    // Check for unclosed JSX tags
+    // Check for unclosed JSX tags (only outside of code blocks)
     const unclosedTagRegex = /<[A-Z][a-zA-Z]*[^>]*(?<!\/|>)$/gm;
-    const unclosedTags = content.match(unclosedTagRegex);
+    const unclosedTags = contentWithoutCodeBlocks.match(unclosedTagRegex);
     if (unclosedTags) {
       this.addError(filePath, `Unclosed JSX tags found: ${unclosedTags.join(', ')}`);
     }
@@ -148,6 +152,22 @@ class ContentValidator {
         this.addError(filePath, 'Unclosed frontmatter block');
       }
     }
+  }
+
+  /**
+   * Remove code blocks from content to avoid false positives in JSX validation
+   */
+  removeCodeBlocks(content) {
+    // Remove triple backtick code blocks
+    let cleanContent = content.replace(/```[\s\S]*?```/g, '');
+    
+    // Remove single backtick inline code
+    cleanContent = cleanContent.replace(/`[^`\n]*`/g, '');
+    
+    // Remove indented code blocks (4+ spaces at start of line)
+    cleanContent = cleanContent.replace(/^[ ]{4,}.*$/gm, '');
+    
+    return cleanContent;
   }
 
   /**
@@ -243,6 +263,56 @@ class ContentValidator {
       this.log(`✅ All ${this.stats.internalLinks.size} internal links are valid`);
     } else {
       this.log(`❌ Found ${brokenLinks} broken internal links`);
+    }
+  }
+
+  /**
+   * Validate Astro configuration file for JavaScript syntax issues
+   */
+  async validateAstroConfig() {
+    this.log('⚙️  Validating Astro configuration...');
+    
+    const configPath = path.resolve(__dirname, '../astro.config.mjs');
+    
+    try {
+      const content = await fs.readFile(configPath, 'utf8');
+      
+      // Check for unescaped quotes in navigation labels
+      const navigationRegex = /label:\s*'([^'\\]*(?:\\.[^'\\]*)*)'|label:\s*"([^"\\]*(?:\\.[^"\\]*)*)"/g;
+      const matches = [...content.matchAll(navigationRegex)];
+      
+      matches.forEach(match => {
+        const label = match[1] || match[2];
+        if (label && label.includes("'") && !label.includes("\\'")) {
+          this.addError(configPath, `Unescaped apostrophe in navigation label: "${label}"`);
+        }
+      });
+      
+      // Check for basic JavaScript syntax issues
+      const lines = content.split('\n');
+      lines.forEach((line, index) => {
+        const lineNum = index + 1;
+        
+        // Check for unmatched quotes in object literals (accounting for escaped quotes)
+        if (line.includes('label:') || line.includes('link:')) {
+          // Remove escaped quotes before counting
+          const lineWithoutEscapedQuotes = line.replace(/\\'/g, '').replace(/\\"/g, '');
+          const singleQuoteCount = (lineWithoutEscapedQuotes.match(/'/g) || []).length;
+          const doubleQuoteCount = (lineWithoutEscapedQuotes.match(/"/g) || []).length;
+          
+          if (singleQuoteCount % 2 !== 0) {
+            this.addError(configPath, `Unmatched single quote on line ${lineNum}: ${line.trim()}`);
+          }
+          if (doubleQuoteCount % 2 !== 0) {
+            this.addError(configPath, `Unmatched double quote on line ${lineNum}: ${line.trim()}`);
+          }
+        }
+      });
+      
+      this.log('✅ Astro configuration validated');
+      
+    } catch (error) {
+      this.addError(configPath, `Failed to read Astro config: ${error.message}`);
     }
   }
 
