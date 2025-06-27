@@ -5,12 +5,12 @@ description: Retrieve a status report for a domain
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T10:43:52.043Z */}
+{/* Last updated: 2025-06-27T11:05:09.434Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# GET /installs/\{install_id\}/domains/check_status/\{report_id\}
+# GET /installs/{install_id}/domains/check_status/{report_id}
 
 Retrieve a status report for a domain
 
@@ -120,89 +120,89 @@ Success
 
 ```json
 {
-  &quot;report&quot;: {
-    &quot;complete&quot;: true,
-    &quot;id&quot;: &quot;6a6d5dbd-5cac-41d5-8f3f-14a3e8ae6f76&quot;,
-    &quot;install_name&quot;: &quot;example-value&quot;,
-    &quot;install_ip&quot;: &quot;example-value&quot;,
-    &quot;admin&quot;: false,
-    &quot;domains&quot;: [
+  "report": {
+    "complete": true,
+    "id": "6a6d5dbd-5cac-41d5-8f3f-14a3e8ae6f76",
+    "install_name": "example-value",
+    "install_ip": "example-value",
+    "admin": false,
+    "domains": [
       {
-        &quot;name&quot;: &quot;example-value&quot;,
-        &quot;cname&quot;: &quot;example-value&quot;,
-        &quot;a_record&quot;: &quot;example-value&quot;,
-        &quot;aaaa_record&quot;: &quot;example-value&quot;,
-        &quot;complete&quot;: true,
-        &quot;result&quot;: &quot;example-value&quot;,
-        &quot;dns_provider&quot;: &quot;example-value&quot;,
-        &quot;dns_error&quot;: false,
-        &quot;install_name&quot;: &quot;example-value&quot;,
-        &quot;cluster_id&quot;: &quot;example-value&quot;,
-        &quot;http_forwarded&quot;: &quot;example-value&quot;,
-        &quot;http_forwarded_list&quot;: &quot;example-value&quot;,
-        &quot;http_error&quot;: false,
-        &quot;atlas_env_id&quot;: &quot;example-value&quot;,
-        &quot;ns&quot;: [
+        "name": "example-value",
+        "cname": "example-value",
+        "a_record": "example-value",
+        "aaaa_record": "example-value",
+        "complete": true,
+        "result": "example-value",
+        "dns_provider": "example-value",
+        "dns_error": false,
+        "install_name": "example-value",
+        "cluster_id": "example-value",
+        "http_forwarded": "example-value",
+        "http_forwarded_list": "example-value",
+        "http_error": false,
+        "atlas_env_id": "example-value",
+        "ns": [
           {
-            &quot;host&quot;: &quot;example-value&quot;
+            "host": "example-value"
           }
         ],
-        &quot;mx&quot;: [
+        "mx": [
           {
-            &quot;Host&quot;: &quot;example-value&quot;,
-            &quot;Pref&quot;: 100
+            "Host": "example-value",
+            "Pref": 100
           }
         ],
-        &quot;txt&quot;: [
-          &quot;example-value&quot;
+        "txt": [
+          "example-value"
         ],
-        &quot;soa&quot;: [
+        "soa": [
           {
-            &quot;hdr&quot;: {},
-            &quot;ns&quot;: &quot;ns1.example.com&quot;,
-            &quot;mbox&quot;: &quot;hostmaster.example.com&quot;,
-            &quot;serial&quot;: 100,
-            &quot;refresh&quot;: 100,
-            &quot;retry&quot;: 100,
-            &quot;expire&quot;: 100,
-            &quot;minttl&quot;: 100
+            "hdr": {},
+            "ns": "ns1.example.com",
+            "mbox": "hostmaster.example.com",
+            "serial": 100,
+            "refresh": 100,
+            "retry": 100,
+            "expire": 100,
+            "minttl": 100
           }
         ],
-        &quot;caa&quot;: [
+        "caa": [
           {
-            &quot;hdr&quot;: {},
-            &quot;flag&quot;: 100,
-            &quot;tag&quot;: &quot;example-value&quot;,
-            &quot;value&quot;: &quot;example-value&quot;
+            "hdr": {},
+            "flag": 100,
+            "tag": "example-value",
+            "value": "example-value"
           }
         ],
-        &quot;ip&quot;: [
-          &quot;example-value&quot;
+        "ip": [
+          "example-value"
         ],
-        &quot;address&quot;: [
-          &quot;example-value&quot;
+        "address": [
+          "example-value"
         ],
-        &quot;aname&quot;: [
+        "aname": [
           {
-            &quot;hdr&quot;: {},
-            &quot;a&quot;: &quot;example-value&quot;
+            "hdr": {},
+            "a": "example-value"
           }
         ],
-        &quot;ssl&quot;: {
-          &quot;status&quot;: &quot;verified&quot;,
-          &quot;issuer&quot;: &quot;example-value&quot;,
-          &quot;not_before&quot;: &quot;example-value&quot;,
-          &quot;not_after&quot;: &quot;example-value&quot;,
-          &quot;error&quot;: &quot;example-value&quot;,
-          &quot;dns_names&quot;: [
-            &quot;example-value&quot;
+        "ssl": {
+          "status": "verified",
+          "issuer": "example-value",
+          "not_before": "example-value",
+          "not_after": "example-value",
+          "error": "example-value",
+          "dns_names": [
+            "example-value"
           ],
-          &quot;serial_number&quot;: &quot;example-value&quot;,
-          &quot;signature_algorithm&quot;: 100,
-          &quot;subject&quot;: {},
-          &quot;common_name&quot;: &quot;example-value&quot;,
-          &quot;sans&quot;: [
-            &quot;example-value&quot;
+          "serial_number": "example-value",
+          "signature_algorithm": 100,
+          "subject": {},
+          "common_name": "example-value",
+          "sans": [
+            "example-value"
           ]
         }
       }
@@ -217,7 +217,7 @@ Authentication Error
 
 ```json
 {
-  &quot;message&quot;: &quot;Authentication required&quot;
+  "message": "Authentication required"
 }
 ```
 
@@ -227,7 +227,7 @@ Not authorized
 
 ```json
 {
-  &quot;message&quot;: &quot;Insufficient permissions to access this resource&quot;
+  "message": "Insufficient permissions to access this resource"
 }
 ```
 
@@ -237,7 +237,7 @@ Not found
 
 ```json
 {
-  &quot;message&quot;: &quot;Resource not found&quot;
+  "message": "Resource not found"
 }
 ```
 
@@ -251,7 +251,7 @@ Internal server error
 
 ```json
 {
-  &quot;message&quot;: &quot;Internal server error - please try again later&quot;
+  "message": "Internal server error - please try again later"
 }
 ```
 
@@ -281,4 +281,4 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 - [API Overview](/api-reference/overview/)
 - [Authentication](/api-reference/authentication/)
-- [ endpoints](/api-reference/endpoints//)
+- [Domain endpoints](/api-reference/endpoints/domain/)

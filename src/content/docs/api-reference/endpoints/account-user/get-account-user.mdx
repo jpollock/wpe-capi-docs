@@ -5,12 +5,12 @@ description: Get an account user by ID
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T10:43:52.031Z */}
+{/* Last updated: 2025-06-27T11:05:09.409Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# GET /accounts/\{account_id\}/account_users/\{user_id\}
+# GET /accounts/{account_id}/account_users/{user_id}
 
 Get an account user by ID
 
@@ -120,15 +120,15 @@ Success
 
 ```json
 {
-  &quot;user_id&quot;: &quot;28c78b6d-c2da-4f09-85f5-1ad588089b2d&quot;,
-  &quot;account_id&quot;: &quot;eeda3227-9a39-46ae-9e14-20958bb4e6c9&quot;,
-  &quot;first_name&quot;: &quot;Joe&quot;,
-  &quot;last_name&quot;: &quot;Smith&quot;,
-  &quot;email&quot;: &quot;joeSmith@test.com&quot;,
-  &quot;phone&quot;: &quot;1234567890&quot;,
-  &quot;invite_accepted&quot;: false,
-  &quot;mfa_enabled&quot;: true,
-  &quot;roles&quot;: &quot;billing, partial&quot;
+  "user_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+  "first_name": "Joe",
+  "last_name": "Smith",
+  "email": "joeSmith@test.com",
+  "phone": "1234567890",
+  "invite_accepted": false,
+  "mfa_enabled": true,
+  "roles": "billing, partial"
 }
 ```
 
@@ -138,7 +138,7 @@ Authentication Error
 
 ```json
 {
-  &quot;message&quot;: &quot;Authentication required&quot;
+  "message": "Authentication required"
 }
 ```
 
@@ -148,7 +148,7 @@ Not authorized
 
 ```json
 {
-  &quot;message&quot;: &quot;Insufficient permissions to access this resource&quot;
+  "message": "Insufficient permissions to access this resource"
 }
 ```
 
@@ -158,7 +158,7 @@ Not found
 
 ```json
 {
-  &quot;message&quot;: &quot;Resource not found&quot;
+  "message": "Resource not found"
 }
 ```
 
@@ -191,4 +191,4 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 - [API Overview](/api-reference/overview/)
 - [Authentication](/api-reference/authentication/)
-- [ endpoints](/api-reference/endpoints//)
+- [Account User endpoints](/api-reference/endpoints/account-user/)

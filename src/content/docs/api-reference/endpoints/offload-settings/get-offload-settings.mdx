@@ -5,12 +5,12 @@ description: Get the offload settings for an install
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T10:43:52.038Z */}
+{/* Last updated: 2025-06-27T11:05:09.424Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# GET /installs/\{install_id\}/offload_settings/files
+# GET /installs/{install_id}/offload_settings/files
 
 Get the offload settings for an install
 
@@ -119,17 +119,17 @@ LargeFS offload settings configuration
 
 ```json
 {
-  &quot;largefs_settings&quot;: {
-    &quot;cloud&quot;: &quot;s3&quot;,
-    &quot;bucket&quot;: &quot;example-value&quot;,
-    &quot;bucket_region&quot;: &quot;example-value&quot;,
-    &quot;path_settings&quot;: [
+  "largefs_settings": {
+    "cloud": "s3",
+    "bucket": "example-value",
+    "bucket_region": "example-value",
+    "path_settings": [
       {
-        &quot;path&quot;: &quot;example-value&quot;,
-        &quot;excluded_paths&quot;: [
-          &quot;example-value&quot;
+        "path": "example-value",
+        "excluded_paths": [
+          "example-value"
         ],
-        &quot;redirect_type&quot;: &quot;break&quot;
+        "redirect_type": "break"
       }
     ]
   }
@@ -142,7 +142,7 @@ Authentication Error
 
 ```json
 {
-  &quot;message&quot;: &quot;Authentication required&quot;
+  "message": "Authentication required"
 }
 ```
 
@@ -152,7 +152,7 @@ Not authorized
 
 ```json
 {
-  &quot;message&quot;: &quot;Insufficient permissions to access this resource&quot;
+  "message": "Insufficient permissions to access this resource"
 }
 ```
 
@@ -162,7 +162,7 @@ Not found
 
 ```json
 {
-  &quot;message&quot;: &quot;Resource not found&quot;
+  "message": "Resource not found"
 }
 ```
 
@@ -195,4 +195,4 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 - [API Overview](/api-reference/overview/)
 - [Authentication](/api-reference/authentication/)
-- [ endpoints](/api-reference/endpoints//)
+- [Offload Settings endpoints](/api-reference/endpoints/offload-settings/)

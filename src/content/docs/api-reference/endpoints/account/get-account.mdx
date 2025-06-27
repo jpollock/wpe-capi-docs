@@ -5,12 +5,12 @@ description: Get an account by ID
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T10:43:52.029Z */}
+{/* Last updated: 2025-06-27T11:05:09.406Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# GET /accounts/\{account_id\}
+# GET /accounts/{account_id}
 
 Get an account by ID
 
@@ -119,8 +119,8 @@ Success
 
 ```json
 {
-  &quot;id&quot;: &quot;eeda3227-9a39-46ae-9e14-20958bb4e6c9&quot;,
-  &quot;name&quot;: &quot;joesaccount&quot;
+  "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+  "name": "joesaccount"
 }
 ```
 
@@ -130,7 +130,7 @@ Authentication Error
 
 ```json
 {
-  &quot;message&quot;: &quot;Authentication required&quot;
+  "message": "Authentication required"
 }
 ```
 
@@ -140,7 +140,7 @@ Not found
 
 ```json
 {
-  &quot;message&quot;: &quot;Resource not found&quot;
+  "message": "Resource not found"
 }
 ```
 
@@ -172,4 +172,4 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 - [API Overview](/api-reference/overview/)
 - [Authentication](/api-reference/authentication/)
-- [ endpoints](/api-reference/endpoints//)
+- [Account endpoints](/api-reference/endpoints/account/)

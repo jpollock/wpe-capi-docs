@@ -5,12 +5,12 @@ description: Delete a specific domain for an install
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T10:43:52.042Z */}
+{/* Last updated: 2025-06-27T11:05:09.433Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# DELETE /installs/\{install_id\}/domains/\{domain_id\}
+# DELETE /installs/{install_id}/domains/{domain_id}
 
 Delete a specific domain for an install
 
@@ -125,7 +125,7 @@ Bad Request
 
 ```json
 {
-  &quot;message&quot;: &quot;Invalid domain ID format&quot;
+  "message": "Invalid domain ID format"
 }
 ```
 
@@ -135,7 +135,7 @@ Authentication Error
 
 ```json
 {
-  &quot;message&quot;: &quot;Authentication required&quot;
+  "message": "Authentication required"
 }
 ```
 
@@ -145,7 +145,7 @@ Not authorized
 
 ```json
 {
-  &quot;message&quot;: &quot;Insufficient permissions to access this resource&quot;
+  "message": "Insufficient permissions to access this resource"
 }
 ```
 
@@ -155,7 +155,7 @@ Not found
 
 ```json
 {
-  &quot;message&quot;: &quot;Resource not found&quot;
+  "message": "Resource not found"
 }
 ```
 
@@ -189,4 +189,4 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 - [API Overview](/api-reference/overview/)
 - [Authentication](/api-reference/authentication/)
-- [ endpoints](/api-reference/endpoints//)
+- [Domain endpoints](/api-reference/endpoints/domain/)

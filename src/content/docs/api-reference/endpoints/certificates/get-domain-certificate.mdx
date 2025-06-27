@@ -5,12 +5,12 @@ description: Get SSL certificate information for a domain
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T10:43:52.043Z */}
+{/* Last updated: 2025-06-27T11:05:09.433Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# GET /installs/\{install_id\}/domains/\{domain_id\}/ssl_certificate
+# GET /installs/{install_id}/domains/{domain_id}/ssl_certificate
 
 Get SSL certificate information for a domain
 
@@ -120,33 +120,33 @@ Domain certificate information
 
 ```json
 {
-  &quot;cert_name&quot;: &quot;customdomain.com&quot;,
-  &quot;cert_info&quot;: {
-    &quot;key&quot;: &quot;example-value&quot;,
-    &quot;cert&quot;: &quot;example-value&quot;
+  "cert_name": "customdomain.com",
+  "cert_info": {
+    "key": "example-value",
+    "cert": "example-value"
   },
-  &quot;certificate&quot;: {
-    &quot;id&quot;: 100,
-    &quot;account&quot;: &quot;myaccountname&quot;,
-    &quot;auto_renew&quot;: true,
-    &quot;auth_file&quot;: &quot;example-value&quot;,
-    &quot;approver_email&quot;: &quot;example-value&quot;,
-    &quot;common_name&quot;: &quot;customdomain.com&quot;,
-    &quot;cancel_time&quot;: &quot;example-value&quot;,
-    &quot;cert_source&quot;: &quot;CERT_SOURCE_UNSPECIFIED&quot;,
-    &quot;ordered_time&quot;: &quot;example-value&quot;,
-    &quot;wildcard&quot;: true,
-    &quot;domains&quot;: [
-      &quot;example-value&quot;
+  "certificate": {
+    "id": 100,
+    "account": "myaccountname",
+    "auto_renew": true,
+    "auth_file": "example-value",
+    "approver_email": "example-value",
+    "common_name": "customdomain.com",
+    "cancel_time": "example-value",
+    "cert_source": "CERT_SOURCE_UNSPECIFIED",
+    "ordered_time": "example-value",
+    "wildcard": true,
+    "domains": [
+      "example-value"
     ],
-    &quot;order_id&quot;: &quot;example-value&quot;,
-    &quot;status&quot;: &quot;SSL_STATE_UNSPECIFIED&quot;,
-    &quot;parent_id&quot;: &quot;example-value&quot;,
-    &quot;wpe_order_id&quot;: &quot;example-value&quot;,
-    &quot;approved_time&quot;: &quot;example-value&quot;,
-    &quot;expires_time&quot;: &quot;example-value&quot;
+    "order_id": "example-value",
+    "status": "SSL_STATE_UNSPECIFIED",
+    "parent_id": "example-value",
+    "wpe_order_id": "example-value",
+    "approved_time": "example-value",
+    "expires_time": "example-value"
   },
-  &quot;criteria&quot;: &quot;example-value&quot;
+  "criteria": "example-value"
 }
 ```
 
@@ -156,7 +156,7 @@ Authentication Error
 
 ```json
 {
-  &quot;message&quot;: &quot;Authentication required&quot;
+  "message": "Authentication required"
 }
 ```
 
@@ -166,7 +166,7 @@ Not authorized
 
 ```json
 {
-  &quot;message&quot;: &quot;Insufficient permissions to access this resource&quot;
+  "message": "Insufficient permissions to access this resource"
 }
 ```
 
@@ -176,7 +176,7 @@ Not found
 
 ```json
 {
-  &quot;message&quot;: &quot;Resource not found&quot;
+  "message": "Resource not found"
 }
 ```
 
@@ -209,4 +209,4 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 - [API Overview](/api-reference/overview/)
 - [Authentication](/api-reference/authentication/)
-- [ endpoints](/api-reference/endpoints//)
+- [Certificates endpoints](/api-reference/endpoints/certificates/)

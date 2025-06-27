@@ -137,7 +137,9 @@ class DocumentationGenerator {
     const templateData = {
       endpoint: {
         ...endpoint,
-        examples
+        examples,
+        tagDisplayNames: this.getTagDisplayNames(),
+        tagSlugs: this.getTagSlugs()
       },
       spec: this.data.spec,
       timestamp: new Date().toISOString(),
@@ -274,9 +276,26 @@ class DocumentationGenerator {
   async updateNavigation() {
     this.log('🧭 Updating navigation...');
     
-    // This will be implemented in update-navigation.js
-    // For now, just log that it would be updated
-    this.log('✅ Navigation update queued (run npm run update-nav)');
+    try {
+      const { NavigationUpdater } = await import('./update-navigation.js');
+      const updater = new NavigationUpdater({
+        dryRun: this.options.dryRun,
+        verbose: this.options.verbose
+      });
+      
+      // Parse the same data we already have
+      updater.data = this.data;
+      
+      // Skip the parsing step and go straight to config update
+      await updater.readConfig();
+      await updater.updateSidebar();
+      await updater.writeConfig();
+      
+      this.log('✅ Navigation updated successfully');
+    } catch (error) {
+      console.warn(chalk.yellow(`⚠️  Navigation update failed: ${error.message}`));
+      this.log('💡 You can manually run: npm run update-nav');
+    }
   }
 
   /**
@@ -315,6 +334,11 @@ class DocumentationGenerator {
     
     // Helper for JSON formatting
     handlebars.registerHelper('json', (obj) => JSON.stringify(obj, null, 2));
+    
+    // Helper for raw JSON formatting (no HTML escaping)
+    handlebars.registerHelper('rawJson', (obj) => {
+      return new handlebars.SafeString(JSON.stringify(obj, null, 2));
+    });
     
     // Helper for kebab-case conversion
     handlebars.registerHelper('kebabCase', (str) => this.kebabCase(str));
@@ -365,7 +389,7 @@ class DocumentationGenerator {
   getTagDisplayNames() {
     const mapping = {};
     this.data.tags.forEach(tag => {
-      mapping[tag.name] = tag.displayName;
+      mapping[tag.name] = tag.displayName || tag.name;
     });
     return mapping;
   }

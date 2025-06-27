@@ -5,12 +5,12 @@ description: Add multiple domains and redirects to an existing install
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T10:43:52.040Z */}
+{/* Last updated: 2025-06-27T11:05:09.430Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# POST /installs/\{install_id\}/domains/bulk
+# POST /installs/{install_id}/domains/bulk
 
 Add multiple domains and redirects to an existing install
 
@@ -119,13 +119,13 @@ Created
 
 ```json
 {
-  &quot;id&quot;: &quot;e41fa98f-ea80-4654-b229-a9b765d0863a&quot;,
-  &quot;name&quot;: &quot;example.com&quot;,
-  &quot;duplicate&quot;: false,
-  &quot;primary&quot;: true,
-  &quot;redirects_to&quot;: {
-    &quot;id&quot;: &quot;e41fa98f-ea80-4006-b229-a9b765d0863a&quot;,
-    &quot;name&quot;: &quot;redirect.com&quot;
+  "id": "e41fa98f-ea80-4654-b229-a9b765d0863a",
+  "name": "example.com",
+  "duplicate": false,
+  "primary": true,
+  "redirects_to": {
+    "id": "e41fa98f-ea80-4006-b229-a9b765d0863a",
+    "name": "redirect.com"
   }
 }
 ```
@@ -136,14 +136,14 @@ Bad Request
 
 ```json
 {
-  &quot;message&quot;: &quot;Domain name is required&quot;,
-  &quot;errors&quot;: [
+  "message": "Domain name is required",
+  "errors": [
     {
-      &quot;resource&quot;: &quot;Domain&quot;,
-      &quot;field&quot;: &quot;name&quot;,
-      &quot;type&quot;: &quot;missing_field&quot;,
-      &quot;code&quot;: &quot;required&quot;,
-      &quot;message&quot;: &quot;Domain name cannot be empty&quot;
+      "resource": "Domain",
+      "field": "name",
+      "type": "missing_field",
+      "code": "required",
+      "message": "Domain name cannot be empty"
     }
   ]
 }
@@ -155,7 +155,7 @@ Authentication Error
 
 ```json
 {
-  &quot;message&quot;: &quot;Authentication required&quot;
+  "message": "Authentication required"
 }
 ```
 
@@ -165,7 +165,7 @@ Not authorized
 
 ```json
 {
-  &quot;message&quot;: &quot;Insufficient permissions to access this resource&quot;
+  "message": "Insufficient permissions to access this resource"
 }
 ```
 
@@ -199,4 +199,4 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 - [API Overview](/api-reference/overview/)
 - [Authentication](/api-reference/authentication/)
-- [ endpoints](/api-reference/endpoints//)
+- [Domain endpoints](/api-reference/endpoints/domain/)

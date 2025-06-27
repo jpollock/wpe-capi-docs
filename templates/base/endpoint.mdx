@@ -10,7 +10,7 @@ description: {{endpoint.summary}}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# {{endpoint.method}} {{escapePath endpoint.path}}
+# {{endpoint.method}} {{endpoint.path}}
 
 {{endpoint.summary}}
 
@@ -160,7 +160,7 @@ makeRequest();{{/if}}
 
 {{#if schema}}
 ```json
-{{jsonExample}}
+{{{jsonExample}}}
 ```
 {{/if}}
 
@@ -196,6 +196,6 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 - [Authentication](/api-reference/authentication/)
 {{#if endpoint.tags}}
 {{#each endpoint.tags}}
-- [{{../tagDisplayNames.[this]}} endpoints](/api-reference/endpoints/{{../tagSlugs.[this]}}/)
+- [{{lookup ../endpoint.tagDisplayNames this}} endpoints](/api-reference/endpoints/{{lookup ../endpoint.tagSlugs this}}/)
 {{/each}}
 {{/if}}

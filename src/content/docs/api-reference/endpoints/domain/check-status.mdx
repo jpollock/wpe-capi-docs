@@ -5,12 +5,12 @@ description: Submit a status report for a domain
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T10:43:52.042Z */}
+{/* Last updated: 2025-06-27T11:05:09.433Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# POST /installs/\{install_id\}/domains/\{domain_id\}/check_status
+# POST /installs/{install_id}/domains/{domain_id}/check_status
 
 Submit a status report for a domain
 
@@ -120,7 +120,7 @@ Accepted
 
 ```json
 {
-  &quot;report_id&quot;: &quot;6a6d5dbd-5cac-41d5-8f3f-14a3e8ae6f76&quot;
+  "report_id": "6a6d5dbd-5cac-41d5-8f3f-14a3e8ae6f76"
 }
 ```
 
@@ -130,7 +130,7 @@ Authentication Error
 
 ```json
 {
-  &quot;message&quot;: &quot;Authentication required&quot;
+  "message": "Authentication required"
 }
 ```
 
@@ -140,7 +140,7 @@ Not authorized
 
 ```json
 {
-  &quot;message&quot;: &quot;Insufficient permissions to access this resource&quot;
+  "message": "Insufficient permissions to access this resource"
 }
 ```
 
@@ -150,7 +150,7 @@ Not found
 
 ```json
 {
-  &quot;message&quot;: &quot;Resource not found&quot;
+  "message": "Resource not found"
 }
 ```
 
@@ -160,7 +160,7 @@ Too many requests
 
 ```json
 {
-  &quot;message&quot;: &quot;Rate limit exceeded - too many requests&quot;
+  "message": "Rate limit exceeded - too many requests"
 }
 ```
 
@@ -170,7 +170,7 @@ Internal server error
 
 ```json
 {
-  &quot;message&quot;: &quot;Internal server error - please try again later&quot;
+  "message": "Internal server error - please try again later"
 }
 ```
 
@@ -200,4 +200,4 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 - [API Overview](/api-reference/overview/)
 - [Authentication](/api-reference/authentication/)
-- [ endpoints](/api-reference/endpoints//)
+- [Domain endpoints](/api-reference/endpoints/domain/)

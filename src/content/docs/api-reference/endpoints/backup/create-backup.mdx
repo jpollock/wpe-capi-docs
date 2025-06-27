@@ -5,12 +5,12 @@ description: Requests a new backup of a WordPress installation
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T10:43:52.043Z */}
+{/* Last updated: 2025-06-27T11:05:09.434Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# POST /installs/\{install_id\}/backups
+# POST /installs/{install_id}/backups
 
 Requests a new backup of a WordPress installation
 
@@ -119,8 +119,8 @@ Accepted
 
 ```json
 {
-  &quot;id&quot;: &quot;28c78b6d-c2da-4f09-85f5-1ad588089b2d&quot;,
-  &quot;status&quot;: &quot;requested&quot;
+  "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "status": "requested"
 }
 ```
 
@@ -130,14 +130,14 @@ Bad Request
 
 ```json
 {
-  &quot;message&quot;: &quot;Backup description is required&quot;,
-  &quot;errors&quot;: [
+  "message": "Backup description is required",
+  "errors": [
     {
-      &quot;resource&quot;: &quot;Backup&quot;,
-      &quot;field&quot;: &quot;description&quot;,
-      &quot;type&quot;: &quot;missing_field&quot;,
-      &quot;code&quot;: &quot;required&quot;,
-      &quot;message&quot;: &quot;Backup description cannot be empty&quot;
+      "resource": "Backup",
+      "field": "description",
+      "type": "missing_field",
+      "code": "required",
+      "message": "Backup description cannot be empty"
     }
   ]
 }
@@ -149,7 +149,7 @@ Authentication Error
 
 ```json
 {
-  &quot;message&quot;: &quot;Authentication required&quot;
+  "message": "Authentication required"
 }
 ```
 
@@ -159,7 +159,7 @@ Not authorized
 
 ```json
 {
-  &quot;message&quot;: &quot;Insufficient permissions to access this resource&quot;
+  "message": "Insufficient permissions to access this resource"
 }
 ```
 
@@ -169,7 +169,7 @@ Not found
 
 ```json
 {
-  &quot;message&quot;: &quot;Resource not found&quot;
+  "message": "Resource not found"
 }
 ```
 
@@ -204,4 +204,4 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 - [API Overview](/api-reference/overview/)
 - [Authentication](/api-reference/authentication/)
-- [ endpoints](/api-reference/endpoints//)
+- [Backup endpoints](/api-reference/endpoints/backup/)

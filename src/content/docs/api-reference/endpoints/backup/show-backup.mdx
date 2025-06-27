@@ -5,12 +5,12 @@ description: Retrieves the status of a backup of a WordPress installation
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T10:43:52.044Z */}
+{/* Last updated: 2025-06-27T11:05:09.434Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# GET /installs/\{install_id\}/backups/\{backup_id\}
+# GET /installs/{install_id}/backups/{backup_id}
 
 Retrieves the status of a backup of a WordPress installation
 
@@ -120,8 +120,8 @@ A backup
 
 ```json
 {
-  &quot;id&quot;: &quot;28c78b6d-c2da-4f09-85f5-1ad588089b2d&quot;,
-  &quot;status&quot;: &quot;requested&quot;
+  "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "status": "requested"
 }
 ```
 
@@ -131,7 +131,7 @@ Bad Request
 
 ```json
 {
-  &quot;message&quot;: &quot;Bad request - invalid parameters&quot;
+  "message": "Bad request - invalid parameters"
 }
 ```
 
@@ -141,7 +141,7 @@ Authentication Error
 
 ```json
 {
-  &quot;message&quot;: &quot;Authentication required&quot;
+  "message": "Authentication required"
 }
 ```
 
@@ -151,7 +151,7 @@ Not found
 
 ```json
 {
-  &quot;message&quot;: &quot;Resource not found&quot;
+  "message": "Resource not found"
 }
 ```
 
@@ -184,4 +184,4 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 - [API Overview](/api-reference/overview/)
 - [Authentication](/api-reference/authentication/)
-- [ endpoints](/api-reference/endpoints//)
+- [Backup endpoints](/api-reference/endpoints/backup/)

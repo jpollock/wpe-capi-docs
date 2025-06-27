@@ -5,12 +5,12 @@ description: Get the validation file needed to configure LargeFS
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T10:43:52.038Z */}
+{/* Last updated: 2025-06-27T11:05:09.424Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# GET /installs/\{install_id\}/offload_settings/largefs_validation_file
+# GET /installs/{install_id}/offload_settings/largefs_validation_file
 
 Get the validation file needed to configure LargeFS
 
@@ -119,8 +119,8 @@ LargeFS validation filename and contents
 
 ```json
 {
-  &quot;name&quot;: &quot;64f1250c.largefs&quot;,
-  &quot;content&quot;: &quot;e4ccd0696cff6f94&quot;
+  "name": "64f1250c.largefs",
+  "content": "e4ccd0696cff6f94"
 }
 ```
 
@@ -130,7 +130,7 @@ Authentication Error
 
 ```json
 {
-  &quot;message&quot;: &quot;Authentication required&quot;
+  "message": "Authentication required"
 }
 ```
 
@@ -140,7 +140,7 @@ Not authorized
 
 ```json
 {
-  &quot;message&quot;: &quot;Insufficient permissions to access this resource&quot;
+  "message": "Insufficient permissions to access this resource"
 }
 ```
 
@@ -150,7 +150,7 @@ Not found
 
 ```json
 {
-  &quot;message&quot;: &quot;Resource not found&quot;
+  "message": "Resource not found"
 }
 ```
 
@@ -183,4 +183,4 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 - [API Overview](/api-reference/overview/)
 - [Authentication](/api-reference/authentication/)
-- [ endpoints](/api-reference/endpoints//)
+- [Offload Settings endpoints](/api-reference/endpoints/offload-settings/)

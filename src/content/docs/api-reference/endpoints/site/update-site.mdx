@@ -5,12 +5,12 @@ description: Change a site name
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T10:43:52.035Z */}
+{/* Last updated: 2025-06-27T11:05:09.416Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# PATCH /sites/\{site_id\}
+# PATCH /sites/{site_id}
 
 Change a site name
 
@@ -118,15 +118,15 @@ Updated
 
 ```json
 {
-  &quot;id&quot;: &quot;28c78b6d-c2da-4f09-85f5-1ad588089b2d&quot;,
-  &quot;name&quot;: &quot;Torque Magazine&quot;,
-  &quot;account&quot;: {
-    &quot;id&quot;: &quot;eeda3227-9a39-46ae-9e14-20958bb4e6c9&quot;
+  "id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "name": "Torque Magazine",
+  "account": {
+    "id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
   },
-  &quot;tags&quot;: [
-    &quot;example-value&quot;
+  "tags": [
+    "example-value"
   ],
-  &quot;installs&quot;: []
+  "installs": []
 }
 ```
 
@@ -136,14 +136,14 @@ Bad Request
 
 ```json
 {
-  &quot;message&quot;: &quot;Invalid site name&quot;,
-  &quot;errors&quot;: [
+  "message": "Invalid site name",
+  "errors": [
     {
-      &quot;resource&quot;: &quot;Site&quot;,
-      &quot;field&quot;: &quot;name&quot;,
-      &quot;type&quot;: &quot;invalid_value&quot;,
-      &quot;code&quot;: &quot;too_long&quot;,
-      &quot;message&quot;: &quot;Site name is too long (maximum is 40 characters)&quot;
+      "resource": "Site",
+      "field": "name",
+      "type": "invalid_value",
+      "code": "too_long",
+      "message": "Site name is too long (maximum is 40 characters)"
     }
   ]
 }
@@ -155,7 +155,7 @@ Authentication Error
 
 ```json
 {
-  &quot;message&quot;: &quot;Authentication required&quot;
+  "message": "Authentication required"
 }
 ```
 
@@ -165,7 +165,7 @@ Not authorized
 
 ```json
 {
-  &quot;message&quot;: &quot;Insufficient permissions to access this resource&quot;
+  "message": "Insufficient permissions to access this resource"
 }
 ```
 
@@ -175,7 +175,7 @@ Not found
 
 ```json
 {
-  &quot;message&quot;: &quot;Resource not found&quot;
+  "message": "Resource not found"
 }
 ```
 
@@ -209,4 +209,4 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 - [API Overview](/api-reference/overview/)
 - [Authentication](/api-reference/authentication/)
-- [ endpoints](/api-reference/endpoints//)
+- [Site endpoints](/api-reference/endpoints/site/)

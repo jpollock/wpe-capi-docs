@@ -5,12 +5,12 @@ description: Update an existing domain for an install
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T10:43:52.041Z */}
+{/* Last updated: 2025-06-27T11:05:09.431Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# PATCH /installs/\{install_id\}/domains/\{domain_id\}
+# PATCH /installs/{install_id}/domains/{domain_id}
 
 Update an existing domain for an install
 
@@ -120,32 +120,32 @@ Updated
 
 ```json
 {
-  &quot;name&quot;: &quot;torquemag.io&quot;,
-  &quot;duplicate&quot;: true,
-  &quot;primary&quot;: true,
-  &quot;id&quot;: &quot;e41fa98f-ea80-4654-b229-a9b765d0863a&quot;,
-  &quot;network_type&quot;: &quot;AN&quot;,
-  &quot;network_details&quot;: {
-    &quot;dns_config_info&quot;: {
-      &quot;cname&quot;: &quot;wp.wpenginepowered.com&quot;,
-      &quot;a_records&quot;: [
-        &quot;example-value&quot;
+  "name": "torquemag.io",
+  "duplicate": true,
+  "primary": true,
+  "id": "e41fa98f-ea80-4654-b229-a9b765d0863a",
+  "network_type": "AN",
+  "network_details": {
+    "dns_config_info": {
+      "cname": "wp.wpenginepowered.com",
+      "a_records": [
+        "example-value"
       ]
     },
-    &quot;network_info&quot;: {
-      &quot;status&quot;: &quot;ACTIVE&quot;,
-      &quot;ssl&quot;: {
-        &quot;status&quot;: &quot;active&quot;
+    "network_info": {
+      "status": "ACTIVE",
+      "ssl": {
+        "status": "active"
       }
     }
   },
-  &quot;redirects_to&quot;: [
+  "redirects_to": [
     {
-      &quot;id&quot;: &quot;e41fa98f-ea80-4006-b229-a9b765d0863a&quot;,
-      &quot;name&quot;: &quot;redirect.com&quot;
+      "id": "e41fa98f-ea80-4006-b229-a9b765d0863a",
+      "name": "redirect.com"
     }
   ],
-  &quot;secure_all_urls&quot;: false
+  "secure_all_urls": false
 }
 ```
 
@@ -155,7 +155,7 @@ Bad Request
 
 ```json
 {
-  &quot;message&quot;: &quot;Invalid domain ID format&quot;
+  "message": "Invalid domain ID format"
 }
 ```
 
@@ -165,7 +165,7 @@ Authentication Error
 
 ```json
 {
-  &quot;message&quot;: &quot;Authentication required&quot;
+  "message": "Authentication required"
 }
 ```
 
@@ -175,7 +175,7 @@ Not authorized
 
 ```json
 {
-  &quot;message&quot;: &quot;Insufficient permissions to access this resource&quot;
+  "message": "Insufficient permissions to access this resource"
 }
 ```
 
@@ -185,7 +185,7 @@ Not found
 
 ```json
 {
-  &quot;message&quot;: &quot;Resource not found&quot;
+  "message": "Resource not found"
 }
 ```
 
@@ -220,4 +220,4 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 - [API Overview](/api-reference/overview/)
 - [Authentication](/api-reference/authentication/)
-- [ endpoints](/api-reference/endpoints//)
+- [Domain endpoints](/api-reference/endpoints/domain/)
