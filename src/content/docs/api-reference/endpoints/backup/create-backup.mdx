@@ -5,7 +5,7 @@ description: Requests a new backup of a WordPress installation
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T15:47:03.393Z */}
+{/* Last updated: 2025-06-27T16:04:27.486Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -52,13 +52,13 @@ Kicks off a backup of a WordPress installation.
     curl -X POST \
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
-  -d '{
+  -d '\{
   "description": "Taking a backup of torquemag before I start developing new features for it",
   "notification_emails": [
     "myself@torquemag.com",
     "other_person_interested_in_backup@torquemag.com"
   ]
-}' \
+\}' \
   "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups"
     ```
   </TabItem>
@@ -72,7 +72,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->post('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth,
@@ -89,9 +89,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -103,18 +103,18 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}',
+headers = \{
+    'Authorization': f'Basic \{auth_string\}',
     'Content-Type': 'application/json'
-}
+\}
 
-data = {
+data = \{
     "description": "Taking a backup of torquemag before I start developing new features for it",
     "notification_emails": [
         "myself@torquemag.com",
         "other_person_interested_in_backup@torquemag.com"
     ]
-}
+\}
 
 try:
     response = requests.post(url, headers=headers, json=data)
@@ -122,37 +122,37 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'post',
   url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64'),
     'Content-Type': 'application/json'
-  },
-  data: {
+  \},
+  data: \{
   "description": "Taking a backup of torquemag before I start developing new features for it",
   "notification_emails": [
     "myself@torquemag.com",
     "other_person_interested_in_backup@torquemag.com"
   ]
-}
-};
+\}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```

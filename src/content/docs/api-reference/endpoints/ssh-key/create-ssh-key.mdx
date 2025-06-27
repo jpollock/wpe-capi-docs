@@ -5,7 +5,7 @@ description: Add a new SSH key
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T15:47:03.395Z */}
+{/* Last updated: 2025-06-27T16:04:27.488Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -44,9 +44,9 @@ Use this to add a new SSH key to WP Engine.
     curl -X POST \
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
-  -d '{
+  -d '\{
   "public_key": "ssh-rsa AAAAbcdefg+567te/4i9ASKGHtw9euaskl+Iksldfjw== joe@gmail.com"
-}' \
+\}' \
   "https://api.wpengineapi.com/v1/ssh_keys"
     ```
   </TabItem>
@@ -60,7 +60,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->post('https://api.wpengineapi.com/v1/ssh_keys', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth,
@@ -73,9 +73,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -87,14 +87,14 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/ssh_keys"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}',
+headers = \{
+    'Authorization': f'Basic \{auth_string\}',
     'Content-Type': 'application/json'
-}
+\}
 
-data = {
+data = \{
     "public_key": "ssh-rsa AAAAbcdefg+567te/4i9ASKGHtw9euaskl+Iksldfjw== joe@gmail.com"
-}
+\}
 
 try:
     response = requests.post(url, headers=headers, json=data)
@@ -102,33 +102,33 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'post',
   url: 'https://api.wpengineapi.com/v1/ssh_keys',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64'),
     'Content-Type': 'application/json'
-  },
-  data: {
+  \},
+  data: \{
   "public_key": "ssh-rsa AAAAbcdefg+567te/4i9ASKGHtw9euaskl+Iksldfjw== joe@gmail.com"
-}
-};
+\}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```

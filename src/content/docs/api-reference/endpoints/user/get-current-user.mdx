@@ -5,7 +5,7 @@ description: Get the current user
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T15:47:03.394Z */}
+{/* Last updated: 2025-06-27T16:04:27.487Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -43,7 +43,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
-try {
+try \{
     $response = $client->get('https://api.wpengineapi.com/v1/user', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
@@ -52,9 +52,9 @@ try {
 
     $data = json_decode($response->getBody(), true);
     print_r($data);
-} catch (Exception $e) {
+\} catch (Exception $e) \{
     echo 'Error: ' . $e->getMessage();
-}
+\}
 ?>
     ```
   </TabItem>
@@ -66,9 +66,9 @@ import base64
 
 url = "https://api.wpengineapi.com/v1/user"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
+headers = \{
+    'Authorization': f'Basic \{auth_string\}'
+\}
 
 try:
     response = requests.get(url, headers=headers)
@@ -76,29 +76,29 @@ try:
     result = response.json()
     print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
+    print(f"Error: \{e\}")
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
     const axios = require('axios');
 
-const config = {
+const config = \{
   method: 'get',
   url: 'https://api.wpengineapi.com/v1/user',
-  headers: {
+  headers: \{
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
-};
+  \}
+\};
 
-async function makeRequest() {
-  try {
+async function makeRequest() \{
+  try \{
     const response = await axios(config);
     console.log(JSON.stringify(response.data, null, 2));
-  } catch (error) {
+  \} catch (error) \{
     console.error('Error:', error.response?.data || error.message);
-  }
-}
+  \}
+\}
 
 makeRequest();
     ```
