@@ -127,16 +127,19 @@ class ContentValidator {
    * Validate MDX syntax
    */
   validateMdxSyntax(filePath, content) {
-    // Check for unmatched braces in JSX
+    // Remove code blocks from content before checking for JSX issues
+    const contentWithoutCodeBlocks = this.removeCodeBlocks(content);
+    
+    // Check for unmatched braces in JSX (only outside of code blocks)
     const jsxBraceRegex = /{[^}]*$/gm;
-    const unmatchedBraces = content.match(jsxBraceRegex);
+    const unmatchedBraces = contentWithoutCodeBlocks.match(jsxBraceRegex);
     if (unmatchedBraces) {
       this.addError(filePath, `Unmatched JSX braces found: ${unmatchedBraces.join(', ')}`);
     }
     
-    // Check for unclosed JSX tags
+    // Check for unclosed JSX tags (only outside of code blocks)
     const unclosedTagRegex = /<[A-Z][a-zA-Z]*[^>]*(?<!\/|>)$/gm;
-    const unclosedTags = content.match(unclosedTagRegex);
+    const unclosedTags = contentWithoutCodeBlocks.match(unclosedTagRegex);
     if (unclosedTags) {
       this.addError(filePath, `Unclosed JSX tags found: ${unclosedTags.join(', ')}`);
     }
@@ -148,6 +151,22 @@ class ContentValidator {
         this.addError(filePath, 'Unclosed frontmatter block');
       }
     }
+  }
+
+  /**
+   * Remove code blocks from content to avoid false positives in JSX validation
+   */
+  removeCodeBlocks(content) {
+    // Remove triple backtick code blocks
+    let cleanContent = content.replace(/```[\s\S]*?```/g, '');
+    
+    // Remove single backtick inline code
+    cleanContent = cleanContent.replace(/`[^`\n]*`/g, '');
+    
+    // Remove indented code blocks (4+ spaces at start of line)
+    cleanContent = cleanContent.replace(/^[ ]{4,}.*$/gm, '');
+    
+    return cleanContent;
   }
 
   /**
