@@ -1,0 +1,189 @@
+# WP Engine Customer API Documentation Rules
+
+## Engineering Philosophy
+- Act as a professional engineer prioritizing user experience over convenience
+- Build everything possible from OpenAPI spec to maintain consistency
+- Minimize manual maintenance burden while maximizing documentation quality
+- Treat documentation as code with proper review processes
+
+## Content Generation Strategy
+
+### Auto-Generated vs Human-Editable Content
+**CRITICAL RULE**: All files must clearly indicate their generation status
+
+#### Auto-Generated Content (DO NOT EDIT)
+- Files with `<!-- AUTO-GENERATED: Do not edit directly -->` header
+- Endpoint documentation derived from OpenAPI spec
+- Code examples (cURL, PHP, Python, Node.js, JavaScript)
+- Parameter tables and response schemas
+- Navigation structure for API endpoints
+
+#### Human-Editable Content (SAFE TO EDIT)
+- Files with `<!-- HUMAN-EDITABLE: Safe to modify -->` header
+- Getting Started guides
+- Conceptual documentation
+- Custom examples and tutorials
+- Override sections marked with `<!-- CUSTOM-START -->` / `<!-- CUSTOM-END -->`
+
+#### Hybrid Content (MIXED)
+- Files with `<!-- HYBRID: Contains both auto-generated and custom content -->`
+- Custom sections preserved during regeneration
+- Auto-generated sections clearly marked
+
+### Code Example Standards
+- **Languages**: cURL, PHP, Python, Node.js (JavaScript same as Node.js)
+- **Order**: Always present in this order for consistency
+- **Authentication**: Include proper auth examples in all code samples
+- **Error Handling**: Show proper error handling patterns
+
+## Branching & Review Strategy
+
+### Branch Protection
+- `main`: Production documentation, requires PR + review
+- `develop`: Integration branch for multiple features
+- `feature/*`: Individual documentation updates
+- `auto-update/*`: Automated OpenAPI spec updates
+
+### Review Requirements
+- **Auto-generated changes**: Technical review for accuracy
+- **Human content changes**: Content + technical review
+- **OpenAPI spec updates**: Automated PR with human approval required
+
+### Ephemeral Environments
+- Every PR gets preview deployment on WP Engine Headless
+- Preview URLs shared in PR for stakeholder review
+- Automated checks for broken links and build errors
+
+## File Organization Rules
+
+### Generated Content Location
+```
+src/content/docs/api-reference/endpoints/
+├── [auto-generated files only]
+└── [organized by OpenAPI tags]
+```
+
+### Human Content Location
+```
+src/content/docs/
+├── getting-started/ [human-editable]
+├── guides/ [human-editable]
+├── examples/ [human-editable]
+└── api-reference/
+    ├── overview.mdx [human-editable]
+    ├── authentication.mdx [human-editable]
+    └── endpoints/ [auto-generated]
+```
+
+## Content Markers System
+
+### File Headers
+Every file must start with one of:
+```markdown
+<!-- AUTO-GENERATED: Do not edit directly -->
+<!-- Source: public/openapi/v1.yaml -->
+<!-- Last updated: [timestamp] -->
+
+<!-- HUMAN-EDITABLE: Safe to modify -->
+<!-- Maintained by: [team/person] -->
+
+<!-- HYBRID: Contains both auto-generated and custom content -->
+<!-- See markers below for editable sections -->
+```
+
+### Section Markers
+```markdown
+<!-- AUTO-GENERATED-START: endpoint-description -->
+[Generated content here]
+<!-- AUTO-GENERATED-END: endpoint-description -->
+
+<!-- CUSTOM-START: additional-examples -->
+[Human-added content here - preserved during regeneration]
+<!-- CUSTOM-END: additional-examples -->
+```
+
+## Audit & Management
+
+### Pre-commit Hooks
+- Validate content markers are present
+- Check for edits to auto-generated sections
+- Warn about potential conflicts
+
+### Build Process Checks
+- Detect human modifications in auto-generated files
+- Generate conflict reports
+- Preserve custom sections during regeneration
+
+### Documentation Debt Tracking
+- Track files that need human review after auto-generation
+- Monitor custom sections that might be outdated
+- Regular audits of hybrid content consistency
+
+## Implementation Standards
+
+### Script Organization
+```
+scripts/
+├── parse-openapi.js          # OpenAPI parser
+├── generate-docs.js          # Main documentation generator
+├── update-navigation.js      # Navigation config updater
+├── validate-content.js       # Content marker validation
+└── utils/
+    ├── template-engine.js    # Template processing utilities
+    ├── file-manager.js       # File operations and comparisons
+    ├── code-examples.js      # Code example generators
+    └── content-markers.js    # Marker system utilities
+```
+
+### Template Standards
+- Use clear variable naming: `{{endpoint.method}}`, `{{endpoint.path}}`
+- Include proper error handling in all templates
+- Generate consistent formatting across all files
+- Support conditional content based on endpoint properties
+
+### Quality Assurance
+- All generated content must pass MDX validation
+- Internal links must be verified during build
+- Code examples must be syntactically correct
+- Generated navigation must match file structure
+
+## Deployment Integration
+
+### WP Engine Headless Requirements
+- Build process must be compatible with Node.js environment
+- Static assets properly organized for CDN delivery
+- Preview environments for all branches
+- Automated deployment on main branch merge
+
+### GitHub Actions Integration
+
+### External OpenAPI Spec Monitoring
+- **Repository Dispatch**: External API repo triggers documentation updates via GitHub Actions
+- **Webhook Integration**: Alternative webhook-based triggering for real-time updates
+- **Change Detection**: Smart diff analysis to avoid unnecessary builds
+- **Validation Pipeline**: Comprehensive checks before documentation generation
+
+### Automated Workflow Pipeline
+```
+External Change → GitHub Actions → Validate Spec → Create Branch → 
+Generate Docs → Build Site → Deploy Preview → Create PR → Review → Merge
+```
+
+### Preview Environment Strategy
+- **Branch Mapping**: Each PR gets unique preview environment
+- **WP Engine Atlas Integration**: Automated deployment to preview environments
+- **Environment Lifecycle**: 7-day automatic cleanup for feature branches
+- **URL Pattern**: `https://preview-{branch-name}.docs.wpengine.com`
+
+### Deployment Environments
+```yaml
+Production:  main → https://docs.wpengine.com
+Staging:     develop → https://staging-docs.wpengine.com  
+Preview:     feature/* → https://preview-{branch}.docs.wpengine.com
+```
+
+### Automated PR Management
+- **Auto-generated PRs**: Created for external OpenAPI spec changes
+- **Change Summaries**: Detailed impact analysis in PR descriptions
+- **Review Checklists**: Automated validation results and manual review items
+- **Preview Links**: Direct links to preview environments in PR comments

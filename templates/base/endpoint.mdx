@@ -1,0 +1,143 @@
+---
+title: {{endpoint.displayName}}
+description: {{endpoint.summary}}
+---
+
+<!-- AUTO-GENERATED: Do not edit directly -->
+<!-- Source: public/openapi/v1.yaml -->
+<!-- Last updated: {{timestamp}} -->
+<!-- Generator: scripts/generate-docs.js v1.0.0 -->
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+# {{endpoint.method}} {{endpoint.path}}
+
+{{endpoint.summary}}
+
+{{#if endpoint.description}}
+{{endpoint.description}}
+{{/if}}
+
+{{#if endpoint.deprecated}}
+:::caution[Deprecated]
+This endpoint is deprecated and may be removed in future versions.
+:::
+{{/if}}
+
+## Parameters
+
+{{#if endpoint.parameters.path.length}}
+### Path Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+{{#each endpoint.parameters.path}}
+| {{name}} | {{type}}{{#if format}} ({{format}}){{/if}} | {{#if required}}yes{{else}}no{{/if}} | {{description}} |
+{{/each}}
+{{/if}}
+
+{{#if endpoint.parameters.query.length}}
+### Query Parameters
+
+| Name | Type | Required | Description | Default |
+|------|------|----------|-------------|---------|
+{{#each endpoint.parameters.query}}
+| {{name}} | {{type}}{{#if format}} ({{format}}){{/if}} | {{#if required}}yes{{else}}no{{/if}} | {{description}} | {{#if default}}{{default}}{{else}}-{{/if}} |
+{{/each}}
+{{/if}}
+
+{{#if endpoint.parameters.header.length}}
+### Header Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+{{#each endpoint.parameters.header}}
+| {{name}} | {{type}}{{#if format}} ({{format}}){{/if}} | {{#if required}}yes{{else}}no{{/if}} | {{description}} |
+{{/each}}
+{{/if}}
+
+## Code Examples
+
+<Tabs>
+  <TabItem label="cURL">
+    ```bash
+    {{examples.curl}}
+    ```
+  </TabItem>
+  <TabItem label="PHP">
+    ```php
+    {{examples.php}}
+    ```
+  </TabItem>
+  <TabItem label="Python">
+    ```python
+    {{examples.python}}
+    ```
+  </TabItem>
+  <TabItem label="Node.js">
+    ```javascript
+    {{examples.nodejs}}
+    ```
+  </TabItem>
+</Tabs>
+
+{{#if endpoint.requestBody}}
+## Request Body
+
+{{endpoint.requestBody.description}}
+
+```json
+{{endpoint.requestBody.example}}
+```
+{{/if}}
+
+## Responses
+
+{{#each endpoint.responses}}
+### {{@key}} {{description}}
+
+{{#if description}}
+{{description}}
+{{/if}}
+
+{{#if schema}}
+```json
+{{jsonExample}}
+```
+{{/if}}
+
+{{/each}}
+
+## Error Responses
+
+{{#each endpoint.responses}}
+{{#unless (eq @key "200")}}
+{{#unless (eq @key "201")}}
+{{#unless (eq @key "202")}}
+{{#unless (eq @key "204")}}
+- **{{@key}}**: {{description}}
+{{/unless}}
+{{/unless}}
+{{/unless}}
+{{/unless}}
+{{/each}}
+
+{{#if endpoint.security.length}}
+## Authentication
+
+This endpoint requires authentication. See the [Authentication guide](/api-reference/authentication/) for details.
+{{/if}}
+
+<!-- CUSTOM-START: additional-notes -->
+<!-- Add any custom notes or examples here -->
+<!-- CUSTOM-END: additional-notes -->
+
+## Related Resources
+
+- [API Overview](/api-reference/overview/)
+- [Authentication](/api-reference/authentication/)
+{{#if endpoint.tags}}
+{{#each endpoint.tags}}
+- [{{../tagDisplayNames.[this]}} endpoints](/api-reference/endpoints/{{../tagSlugs.[this]}}/)
+{{/each}}
+{{/if}}
