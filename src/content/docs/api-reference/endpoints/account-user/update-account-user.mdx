@@ -5,7 +5,7 @@ description: Update an account user
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T13:06:23.895Z */}
+{/* Last updated: 2025-06-27T14:35:34.862Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -27,21 +27,44 @@ Update an account user
 
 
 
+### Request Body
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| roles | string | yes | choose from &#x27;owner&#x27;, &#x27;full,billing&#x27;, &#x27;full&#x27;, &#x27;partial,billing&#x27;, and &#x27;partial&#x27; |
+| install_ids | array | no |  |
+
+```json
+{
+  "roles": "full,billing",
+  "install_ids": [
+    "ddda3227-9a39-46ae-9e14-20958bb4e6c9",
+    "qada3227-9a39-46ae-9e14-20958bb4e45y"
+  ]
+}
+```
+
 ## Code Examples
 
 <Tabs>
   <TabItem label="cURL">
     ```bash
-    # Example cURL request
-curl -X PATCH \
+    curl -X PATCH \
   -u "API_USER_ID:API_USER_PASSWORD" \
-  "https://api.wpengineapi.com/v1/accounts/\{account_id\}/account_users/\{user_id\}"
+  -H "Content-Type: application/json" \
+  -d '{
+  "roles": "full,billing",
+  "install_ids": [
+    "ddda3227-9a39-46ae-9e14-20958bb4e6c9",
+    "qada3227-9a39-46ae-9e14-20958bb4e45y"
+  ]
+}' \
+  "https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users/a1b2c3d4-e5f6-41b2-b3d4-e5f6a1b2c3d4"
     ```
   </TabItem>
   <TabItem label="PHP">
     ```php
     <?php
-// Example PHP request using GuzzleHttp
 require_once 'vendor/autoload.php';
 
 use GuzzleHttp\Client;
@@ -50,12 +73,20 @@ $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
 try {
-    $response = $client->PATCH('https://api.wpengineapi.com/v1/accounts/\{account_id\}/account_users/\{user_id\}', [
+    $response = $client->patch('https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users/a1b2c3d4-e5f6-41b2-b3d4-e5f6a1b2c3d4', [
         'headers' => [
-            'Authorization' => 'Basic ' . $auth
-        ]
+            'Authorization' => 'Basic ' . $auth,
+            'Content-Type' => 'application/json'
+        ],
+        'json' => [
+    'roles' => 'full,billing',
+    'install_ids' => [
+    '0' => 'ddda3227-9a39-46ae-9e14-20958bb4e6c9',
+    '1' => 'qada3227-9a39-46ae-9e14-20958bb4e45y'
+]
+]
     ]);
-    
+
     $data = json_decode($response->getBody(), true);
     print_r($data);
 } catch (Exception $e) {
@@ -67,19 +98,29 @@ try {
   <TabItem label="Python">
     ```python
     import requests
+import json
 import base64
 
-url = "https://api.wpengineapi.com/v1/accounts/\{account_id\}/account_users/\{user_id\}"
+url = "https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users/a1b2c3d4-e5f6-41b2-b3d4-e5f6a1b2c3d4"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
 headers = {
-    'Authorization': f'Basic {auth_string}'
+    'Authorization': f'Basic {auth_string}',
+    'Content-Type': 'application/json'
+}
+
+data = {
+    "roles": "full,billing",
+    "install_ids": [
+        "ddda3227-9a39-46ae-9e14-20958bb4e6c9",
+        "qada3227-9a39-46ae-9e14-20958bb4e45y"
+    ]
 }
 
 try:
-    response = requests.PATCH(url, headers=headers)
+    response = requests.patch(url, headers=headers, json=data)
     response.raise_for_status()
     result = response.json()
-    print(result)
+    print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
     print(f"Error: {e}")
     ```
@@ -89,17 +130,25 @@ except requests.exceptions.RequestException as e:
     const axios = require('axios');
 
 const config = {
-  method: 'PATCH',
-  url: 'https://api.wpengineapi.com/v1/accounts/\{account_id\}/account_users/\{user_id\}',
+  method: 'patch',
+  url: 'https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users/a1b2c3d4-e5f6-41b2-b3d4-e5f6a1b2c3d4',
   headers: {
-    'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
+    'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64'),
+    'Content-Type': 'application/json'
+  },
+  data: {
+  "roles": "full,billing",
+  "install_ids": [
+    "ddda3227-9a39-46ae-9e14-20958bb4e6c9",
+    "qada3227-9a39-46ae-9e14-20958bb4e45y"
+  ]
+}
 };
 
 async function makeRequest() {
   try {
     const response = await axios(config);
-    console.log(response.data);
+    console.log(JSON.stringify(response.data, null, 2));
   } catch (error) {
     console.error('Error:', error.response?.data || error.message);
   }
@@ -109,7 +158,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 ## Responses
 

@@ -5,12 +5,10 @@ description: Complete reference for all WP Engine Customer API endpoints
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T13:06:23.930Z */}
+{/* Last updated: 2025-06-27T14:35:34.894Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
-
-# API Endpoints
 
 This page documents all available endpoints in the WP Engine Customer API. For general API information, see the [API Overview](/api-reference/overview/). For authentication details, see [Authentication](/api-reference/authentication/). For information about working with paginated responses, see [Pagination](/api-reference/pagination/).
 
@@ -20,16 +18,14 @@ Manage Status resources using the WP Engine Customer API.
 
 ### The status of the WP Engine Public API
 
+`GET /status`
+
 The status of the WP Engine Public API
-
-# Description
-This endpoint will report the system status and any outages that might be occurring.
-
 
 
 #### Parameters
 
-
+This endpoint has no parameters.
 
 
 #### Code Examples
@@ -99,7 +95,6 @@ makeRequest();
   </TabItem>
 </Tabs>
 
-
 #### Responses
 
 ##### 200 Status of API
@@ -142,16 +137,14 @@ Manage Swagger resources using the WP Engine Customer API.
 
 ### The current swagger specification
 
+`GET /swagger`
+
 The current swagger specification
-
-# Description
-This will output the current swagger specification
-
 
 
 #### Parameters
 
-
+This endpoint has no parameters.
 
 
 #### Code Examples
@@ -221,7 +214,6 @@ makeRequest();
   </TabItem>
 </Tabs>
 
-
 #### Responses
 
 ##### 200 Current swagger specification
@@ -263,16 +255,14 @@ Manage Account resources using the WP Engine Customer API.
 
 ### List your WP Engine accounts
 
+`GET /accounts`
+
 List your WP Engine accounts
-
-# Description
-Use this to list your WP Engine accounts.
-
 
 
 #### Parameters
 
-
+This endpoint has no parameters.
 
 
 #### Code Examples
@@ -357,7 +347,6 @@ makeRequest();
   </TabItem>
 </Tabs>
 
-
 #### Responses
 
 ##### 200 List of WP Engine accounts
@@ -425,19 +414,16 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Get an account by ID
 
-Get an account by ID
+`GET /accounts/{account_id}`
 
-Returns a single Account
+Get an account by ID
 
 
 #### Parameters
 
-##### Path Parameters
-
-| Name | Type | Required | Description |
-|------|------|----------|-------------|
-| account_id | string (uuid) | yes | ID of account |
-
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| account_id | string (uuid) | path | yes | ID of account |
 
 
 #### Code Examples
@@ -522,7 +508,6 @@ makeRequest();
   </TabItem>
 </Tabs>
 
-
 #### Responses
 
 ##### 200 Success
@@ -588,18 +573,16 @@ Manage Account User resources using the WP Engine Customer API.
 
 ### List your account users
 
-List your account users
+`GET /accounts/{account_id}/account_users`
 
+List your account users
 
 
 #### Parameters
 
-##### Path Parameters
-
-| Name | Type | Required | Description |
-|------|------|----------|-------------|
-| account_id | string (uuid) | yes | ID of account |
-
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| account_id | string (uuid) | path | yes | ID of account |
 
 
 #### Code Examples
@@ -684,7 +667,6 @@ makeRequest();
   </TabItem>
 </Tabs>
 
-
 #### Responses
 
 ##### 200 List of account users
@@ -756,19 +738,44 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Create a new account user
 
-Create a new account user
+`POST /accounts/{account_id}/account_users`
 
+Create a new account user
 
 
 #### Parameters
 
-##### Path Parameters
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| account_id | string (uuid) | path | yes | ID of account |
+
+#### Request Body
 
 | Name | Type | Required | Description |
 |------|------|----------|-------------|
-| account_id | string (uuid) | yes | ID of account |
+| user | object | yes | The user that will be created |
+| user.account_id | string (uuid) | yes | The account ID |
+| user.first_name | string | yes |  |
+| user.last_name | string | yes |  |
+| user.email | string | yes |  |
+| user.roles | string | yes | choose from &#x27;owner&#x27;, &#x27;full,billing&#x27;, &#x27;full&#x27;, &#x27;partial,billing&#x27;, and &#x27;partial&#x27; |
+| user.install_ids | array | no |  |
 
-
+```json
+{
+  "user": {
+    "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+    "first_name": "Joe",
+    "last_name": "Smith",
+    "email": "joe@gmail.com",
+    "roles": "full,billing",
+    "install_ids": [
+      "ddda3227-9a39-46ae-9e14-20958bb4e6c9",
+      "qada3227-9a39-46ae-9e14-20958bb4e45y"
+    ]
+  }
+}
+```
 
 #### Code Examples
 
@@ -779,10 +786,17 @@ Create a new account user
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
   -d '{
-  "email": "user@example.com",
-  "first_name": "John",
-  "last_name": "Doe",
-  "roles": "partial"
+  "user": {
+    "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+    "first_name": "Joe",
+    "last_name": "Smith",
+    "email": "joe@gmail.com",
+    "roles": "full,billing",
+    "install_ids": [
+      "ddda3227-9a39-46ae-9e14-20958bb4e6c9",
+      "qada3227-9a39-46ae-9e14-20958bb4e45y"
+    ]
+  }
 }' \
   "https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users"
     ```
@@ -804,10 +818,17 @@ try {
             'Content-Type' => 'application/json'
         ],
         'json' => [
-    'email' => 'user@example.com',
-    'first_name' => 'John',
-    'last_name' => 'Doe',
-    'roles' => 'partial'
+    'user' => [
+    'account_id' => 'eeda3227-9a39-46ae-9e14-20958bb4e6c9',
+    'first_name' => 'Joe',
+    'last_name' => 'Smith',
+    'email' => 'joe@gmail.com',
+    'roles' => 'full,billing',
+    'install_ids' => [
+    '0' => 'ddda3227-9a39-46ae-9e14-20958bb4e6c9',
+    '1' => 'qada3227-9a39-46ae-9e14-20958bb4e45y'
+]
+]
 ]
     ]);
 
@@ -833,10 +854,17 @@ headers = {
 }
 
 data = {
-    "email": "user@example.com",
-    "first_name": "John",
-    "last_name": "Doe",
-    "roles": "partial"
+    "user": {
+        "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+        "first_name": "Joe",
+        "last_name": "Smith",
+        "email": "joe@gmail.com",
+        "roles": "full,billing",
+        "install_ids": [
+            "ddda3227-9a39-46ae-9e14-20958bb4e6c9",
+            "qada3227-9a39-46ae-9e14-20958bb4e45y"
+        ]
+    }
 }
 
 try:
@@ -860,10 +888,17 @@ const config = {
     'Content-Type': 'application/json'
   },
   data: {
-  "email": "user@example.com",
-  "first_name": "John",
-  "last_name": "Doe",
-  "roles": "partial"
+  "user": {
+    "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+    "first_name": "Joe",
+    "last_name": "Smith",
+    "email": "joe@gmail.com",
+    "roles": "full,billing",
+    "install_ids": [
+      "ddda3227-9a39-46ae-9e14-20958bb4e6c9",
+      "qada3227-9a39-46ae-9e14-20958bb4e45y"
+    ]
+  }
 }
 };
 
@@ -880,7 +915,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 #### Responses
 
@@ -971,20 +1005,17 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Get an account user by ID
 
-Get an account user by ID
+`GET /accounts/{account_id}/account_users/{user_id}`
 
-Returns a single account user
+Get an account user by ID
 
 
 #### Parameters
 
-##### Path Parameters
-
-| Name | Type | Required | Description |
-|------|------|----------|-------------|
-| account_id | string (uuid) | yes | ID of account |
-| user_id | string (uuid) | yes | ID of the user |
-
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| account_id | string (uuid) | path | yes | ID of account |
+| user_id | string (uuid) | path | yes | ID of the user |
 
 
 #### Code Examples
@@ -1069,7 +1100,6 @@ makeRequest();
   </TabItem>
 </Tabs>
 
-
 #### Responses
 
 ##### 200 Success
@@ -1147,20 +1177,34 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Update an account user
 
-Update an account user
+`PATCH /accounts/{account_id}/account_users/{user_id}`
 
+Update an account user
 
 
 #### Parameters
 
-##### Path Parameters
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| account_id | string (uuid) | path | yes | ID of account |
+| user_id | string (uuid) | path | yes | ID of the user |
+
+#### Request Body
 
 | Name | Type | Required | Description |
 |------|------|----------|-------------|
-| account_id | string (uuid) | yes | ID of account |
-| user_id | string (uuid) | yes | ID of the user |
+| roles | string | yes | choose from &#x27;owner&#x27;, &#x27;full,billing&#x27;, &#x27;full&#x27;, &#x27;partial,billing&#x27;, and &#x27;partial&#x27; |
+| install_ids | array | no |  |
 
-
+```json
+{
+  "roles": "full,billing",
+  "install_ids": [
+    "ddda3227-9a39-46ae-9e14-20958bb4e6c9",
+    "qada3227-9a39-46ae-9e14-20958bb4e45y"
+  ]
+}
+```
 
 #### Code Examples
 
@@ -1171,7 +1215,11 @@ Update an account user
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
   -d '{
-  "roles": "full"
+  "roles": "full,billing",
+  "install_ids": [
+    "ddda3227-9a39-46ae-9e14-20958bb4e6c9",
+    "qada3227-9a39-46ae-9e14-20958bb4e45y"
+  ]
 }' \
   "https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users/a1b2c3d4-e5f6-41b2-b3d4-e5f6a1b2c3d4"
     ```
@@ -1193,7 +1241,11 @@ try {
             'Content-Type' => 'application/json'
         ],
         'json' => [
-    'roles' => 'full'
+    'roles' => 'full,billing',
+    'install_ids' => [
+    '0' => 'ddda3227-9a39-46ae-9e14-20958bb4e6c9',
+    '1' => 'qada3227-9a39-46ae-9e14-20958bb4e45y'
+]
 ]
     ]);
 
@@ -1219,7 +1271,11 @@ headers = {
 }
 
 data = {
-    "roles": "full"
+    "roles": "full,billing",
+    "install_ids": [
+        "ddda3227-9a39-46ae-9e14-20958bb4e6c9",
+        "qada3227-9a39-46ae-9e14-20958bb4e45y"
+    ]
 }
 
 try:
@@ -1243,7 +1299,11 @@ const config = {
     'Content-Type': 'application/json'
   },
   data: {
-  "roles": "full"
+  "roles": "full,billing",
+  "install_ids": [
+    "ddda3227-9a39-46ae-9e14-20958bb4e6c9",
+    "qada3227-9a39-46ae-9e14-20958bb4e45y"
+  ]
 }
 };
 
@@ -1260,7 +1320,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 #### Responses
 
@@ -1371,20 +1430,17 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Delete an account user
 
-Delete an account user
+`DELETE /accounts/{account_id}/account_users/{user_id}`
 
-This will remove the association this user has to this account. This delete is permanent and there is no confirmation prompt.
+Delete an account user
 
 
 #### Parameters
 
-##### Path Parameters
-
-| Name | Type | Required | Description |
-|------|------|----------|-------------|
-| account_id | string (uuid) | yes | ID of account |
-| user_id | string (uuid) | yes | ID of the user |
-
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| account_id | string (uuid) | path | yes | ID of account |
+| user_id | string (uuid) | path | yes | ID of the user |
 
 
 #### Code Examples
@@ -1468,7 +1524,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 #### Responses
 
@@ -1554,13 +1609,14 @@ Manage Site resources using the WP Engine Customer API.
 
 ### List your sites
 
-List your sites
+`GET /sites`
 
+List your sites
 
 
 #### Parameters
 
-
+This endpoint has no parameters.
 
 
 #### Code Examples
@@ -1645,7 +1701,6 @@ makeRequest();
   </TabItem>
 </Tabs>
 
-
 #### Responses
 
 ##### 200 List of sites
@@ -1720,14 +1775,28 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Create a new site
 
-Create a new site
+`POST /sites`
 
+Create a new site
 
 
 #### Parameters
 
+This endpoint has no parameters.
 
+#### Request Body
 
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| name | string | yes |  |
+| account_id | string (uuid) | yes | The account ID |
+
+```json
+{
+  "name": "Torque Magazine",
+  "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
+}
+```
 
 #### Code Examples
 
@@ -1738,7 +1807,8 @@ Create a new site
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
   -d '{
-  "name": "My New Site"
+  "name": "Torque Magazine",
+  "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
 }' \
   "https://api.wpengineapi.com/v1/sites"
     ```
@@ -1760,7 +1830,8 @@ try {
             'Content-Type' => 'application/json'
         ],
         'json' => [
-    'name' => 'My New Site'
+    'name' => 'Torque Magazine',
+    'account_id' => 'eeda3227-9a39-46ae-9e14-20958bb4e6c9'
 ]
     ]);
 
@@ -1786,7 +1857,8 @@ headers = {
 }
 
 data = {
-    "name": "My New Site"
+    "name": "Torque Magazine",
+    "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
 }
 
 try:
@@ -1810,7 +1882,8 @@ const config = {
     'Content-Type': 'application/json'
   },
   data: {
-  "name": "My New Site"
+  "name": "Torque Magazine",
+  "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9"
 }
 };
 
@@ -1827,7 +1900,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 #### Responses
 
@@ -1915,19 +1987,16 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Get a site by ID
 
-Get a site by ID
+`GET /sites/{site_id}`
 
-Returns a single site
+Get a site by ID
 
 
 #### Parameters
 
-##### Path Parameters
-
-| Name | Type | Required | Description |
-|------|------|----------|-------------|
-| site_id | string (uuid) | yes | The site ID |
-
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| site_id | string (uuid) | path | yes | The site ID |
 
 
 #### Code Examples
@@ -2012,7 +2081,6 @@ makeRequest();
   </TabItem>
 </Tabs>
 
-
 #### Responses
 
 ##### 200 Success
@@ -2090,19 +2158,28 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Change a site name
 
-Change a site name
+`PATCH /sites/{site_id}`
 
+Change a site name
 
 
 #### Parameters
 
-##### Path Parameters
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| site_id | string (uuid) | path | yes | The ID of the site to change the name of *(For accounts with sites enabled)* |
+
+#### Request Body
 
 | Name | Type | Required | Description |
 |------|------|----------|-------------|
-| site_id | string (uuid) | yes | The ID of the site to change the name of *(For accounts with sites enabled)* |
+| name | string | no | The new site name |
 
-
+```json
+{
+  "name": "My New Name"
+}
+```
 
 #### Code Examples
 
@@ -2113,7 +2190,7 @@ Change a site name
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
   -d '{
-  "name": "Updated Site Name"
+  "name": "My New Name"
 }' \
   "https://api.wpengineapi.com/v1/sites/294deacc-d8b8-4005-82c4-0727ba8ddde0"
     ```
@@ -2135,7 +2212,7 @@ try {
             'Content-Type' => 'application/json'
         ],
         'json' => [
-    'name' => 'Updated Site Name'
+    'name' => 'My New Name'
 ]
     ]);
 
@@ -2161,7 +2238,7 @@ headers = {
 }
 
 data = {
-    "name": "Updated Site Name"
+    "name": "My New Name"
 }
 
 try:
@@ -2185,7 +2262,7 @@ const config = {
     'Content-Type': 'application/json'
   },
   data: {
-  "name": "Updated Site Name"
+  "name": "My New Name"
 }
 };
 
@@ -2202,7 +2279,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 #### Responses
 
@@ -2300,19 +2376,16 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Delete a site
 
-Delete a site
+`DELETE /sites/{site_id}`
 
-This will delete the site and any installs associated with this site. This delete is permanent and there is no confirmation prompt.
+Delete a site
 
 
 #### Parameters
 
-##### Path Parameters
-
-| Name | Type | Required | Description |
-|------|------|----------|-------------|
-| site_id | string (uuid) | yes | The ID of the site to delete *(For accounts with sites enabled)* |
-
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| site_id | string (uuid) | path | yes | The ID of the site to delete *(For accounts with sites enabled)* |
 
 
 #### Code Examples
@@ -2396,7 +2469,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 #### Responses
 
@@ -2482,13 +2554,14 @@ Manage Install resources using the WP Engine Customer API.
 
 ### List your WordPress installations
 
-List your WordPress installations
+`GET /installs`
 
+List your WordPress installations
 
 
 #### Parameters
 
-
+This endpoint has no parameters.
 
 
 #### Code Examples
@@ -2573,7 +2646,6 @@ makeRequest();
   </TabItem>
 </Tabs>
 
-
 #### Responses
 
 ##### 200 List of WordPress installations
@@ -2647,14 +2719,32 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Create a new WordPress installation
 
-Create a new WordPress installation
+`POST /installs`
 
+Create a new WordPress installation
 
 
 #### Parameters
 
+This endpoint has no parameters.
 
+#### Request Body
 
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| name | string | yes | The name of the install |
+| account_id | string (uuid) | yes | The ID of the account that the install will belong to |
+| site_id | string (uuid) | no | The ID of the site that the install will belong to |
+| environment | string | no | The site environment that the install will fill |
+
+```json
+{
+  "name": "torquemag",
+  "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+  "site_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "environment": "staging"
+}
+```
 
 #### Code Examples
 
@@ -2665,7 +2755,10 @@ Create a new WordPress installation
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
   -d '{
-  "name": "mynewsite"
+  "name": "torquemag",
+  "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+  "site_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "environment": "staging"
 }' \
   "https://api.wpengineapi.com/v1/installs"
     ```
@@ -2687,7 +2780,10 @@ try {
             'Content-Type' => 'application/json'
         ],
         'json' => [
-    'name' => 'mynewsite'
+    'name' => 'torquemag',
+    'account_id' => 'eeda3227-9a39-46ae-9e14-20958bb4e6c9',
+    'site_id' => '28c78b6d-c2da-4f09-85f5-1ad588089b2d',
+    'environment' => 'staging'
 ]
     ]);
 
@@ -2713,7 +2809,10 @@ headers = {
 }
 
 data = {
-    "name": "mynewsite"
+    "name": "torquemag",
+    "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+    "site_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+    "environment": "staging"
 }
 
 try:
@@ -2737,7 +2836,10 @@ const config = {
     'Content-Type': 'application/json'
   },
   data: {
-  "name": "mynewsite"
+  "name": "torquemag",
+  "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+  "site_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "environment": "staging"
 }
 };
 
@@ -2754,7 +2856,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 #### Responses
 
@@ -2842,19 +2943,16 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Get an install by ID
 
-Get an install by ID
+`GET /installs/{install_id}`
 
-Returns a single Install
+Get an install by ID
 
 
 #### Parameters
 
-##### Path Parameters
-
-| Name | Type | Required | Description |
-|------|------|----------|-------------|
-| install_id | string (uuid) | yes | ID of install |
-
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| install_id | string (uuid) | path | yes | ID of install |
 
 
 #### Code Examples
@@ -2939,7 +3037,6 @@ makeRequest();
   </TabItem>
 </Tabs>
 
-
 #### Responses
 
 ##### 200 Success
@@ -3006,19 +3103,16 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Delete an install by ID
 
-Delete an install by ID
+`DELETE /installs/{install_id}`
 
-This will delete the install, The delete is permanent and there is no confirmation prompt.
+Delete an install by ID
 
 
 #### Parameters
 
-##### Path Parameters
-
-| Name | Type | Required | Description |
-|------|------|----------|-------------|
-| install_id | string (uuid) | yes | ID of install |
-
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| install_id | string (uuid) | path | yes | ID of install |
 
 
 #### Code Examples
@@ -3103,7 +3197,6 @@ makeRequest();
   </TabItem>
 </Tabs>
 
-
 #### Responses
 
 ##### 204 Deleted
@@ -3173,19 +3266,30 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Update a WordPress installation
 
-Update a WordPress installation
+`PATCH /installs/{install_id}`
 
+Update a WordPress installation
 
 
 #### Parameters
 
-##### Path Parameters
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| install_id | string (uuid) | path | yes | The install ID |
+
+#### Request Body
 
 | Name | Type | Required | Description |
 |------|------|----------|-------------|
-| install_id | string (uuid) | yes | The install ID |
+| site_id | string (uuid) | no | The site ID |
+| environment | string | no |  |
 
-
+```json
+{
+  "site_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "environment": "development"
+}
+```
 
 #### Code Examples
 
@@ -3195,7 +3299,10 @@ Update a WordPress installation
     curl -X PATCH \
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
-  -d '{}' \
+  -d '{
+  "site_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "environment": "development"
+}' \
   "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0"
     ```
   </TabItem>
@@ -3216,7 +3323,8 @@ try {
             'Content-Type' => 'application/json'
         ],
         'json' => [
-
+    'site_id' => '28c78b6d-c2da-4f09-85f5-1ad588089b2d',
+    'environment' => 'development'
 ]
     ]);
 
@@ -3241,7 +3349,10 @@ headers = {
     'Content-Type': 'application/json'
 }
 
-data = {}
+data = {
+    "site_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+    "environment": "development"
+}
 
 try:
     response = requests.patch(url, headers=headers, json=data)
@@ -3263,7 +3374,10 @@ const config = {
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64'),
     'Content-Type': 'application/json'
   },
-  data: {}
+  data: {
+  "site_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "environment": "development"
+}
 };
 
 async function makeRequest() {
@@ -3279,7 +3393,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 #### Responses
 
@@ -3362,19 +3475,16 @@ Manage Offload Settings resources using the WP Engine Customer API.
 
 ### Get the validation file needed to configure LargeFS
 
-Get the validation file needed to configure LargeFS
+`GET /installs/{install_id}/offload_settings/largefs_validation_file`
 
-Returns the validation filename and contents necessary to configure an S3 bucket for LargeFS
+Get the validation file needed to configure LargeFS
 
 
 #### Parameters
 
-##### Path Parameters
-
-| Name | Type | Required | Description |
-|------|------|----------|-------------|
-| install_id | string (uuid) | yes | ID of install |
-
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| install_id | string (uuid) | path | yes | ID of install |
 
 
 #### Code Examples
@@ -3459,7 +3569,6 @@ makeRequest();
   </TabItem>
 </Tabs>
 
-
 #### Responses
 
 ##### 200 LargeFS validation filename and contents
@@ -3530,19 +3639,16 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Get the offload settings for an install
 
-Get the offload settings for an install
+`GET /installs/{install_id}/offload_settings/files`
 
-Returns the offload settings configuration for a specific install
+Get the offload settings for an install
 
 
 #### Parameters
 
-##### Path Parameters
-
-| Name | Type | Required | Description |
-|------|------|----------|-------------|
-| install_id | string (uuid) | yes | ID of install |
-
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| install_id | string (uuid) | path | yes | ID of install |
 
 
 #### Code Examples
@@ -3627,7 +3733,6 @@ makeRequest();
   </TabItem>
 </Tabs>
 
-
 #### Responses
 
 ##### 200 LargeFS offload settings configuration
@@ -3710,20 +3815,25 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Configure offload settings for an install
 
-Configure offload settings for an install
+`POST /installs/{install_id}/offload_settings/files`
 
-Updates the offload settings configuration for a specific install
+Configure offload settings for an install
 
 
 #### Parameters
 
-##### Path Parameters
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| install_id | string (uuid) | path | yes | ID of install |
+
+#### Request Body
 
 | Name | Type | Required | Description |
 |------|------|----------|-------------|
-| install_id | string (uuid) | yes | ID of install |
 
-
+```json
+null
+```
 
 #### Code Examples
 
@@ -3733,7 +3843,7 @@ Updates the offload settings configuration for a specific install
     curl -X POST \
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
-  -d '{}' \
+  -d 'undefined' \
   "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/files"
     ```
   </TabItem>
@@ -3817,7 +3927,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 #### Responses
 
@@ -3908,20 +4017,25 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Update specific offload settings for an install
 
-Update specific offload settings for an install
+`PATCH /installs/{install_id}/offload_settings/files`
 
-Partially updates the offload settings configuration for a specific install
+Update specific offload settings for an install
 
 
 #### Parameters
 
-##### Path Parameters
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| install_id | string (uuid) | path | yes | ID of install |
+
+#### Request Body
 
 | Name | Type | Required | Description |
 |------|------|----------|-------------|
-| install_id | string (uuid) | yes | ID of install |
 
-
+```json
+null
+```
 
 #### Code Examples
 
@@ -3931,7 +4045,7 @@ Partially updates the offload settings configuration for a specific install
     curl -X PATCH \
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
-  -d '{}' \
+  -d 'undefined' \
   "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/offload_settings/files"
     ```
   </TabItem>
@@ -4015,7 +4129,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 #### Responses
 
@@ -4102,19 +4215,16 @@ Manage Domain resources using the WP Engine Customer API.
 
 ### Get the domains for an install by install id
 
-Get the domains for an install by install id
+`GET /installs/{install_id}/domains`
 
-Returns domains for a specific install
+Get the domains for an install by install id
 
 
 #### Parameters
 
-##### Path Parameters
-
-| Name | Type | Required | Description |
-|------|------|----------|-------------|
-| install_id | string (uuid) | yes | ID of install |
-
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| install_id | string (uuid) | path | yes | ID of install |
 
 
 #### Code Examples
@@ -4198,7 +4308,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 #### Responses
 
@@ -4301,20 +4410,31 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Add a new domain or redirect to an existing install
 
-Add a new domain or redirect to an existing install
+`POST /installs/{install_id}/domains`
 
-Adds a domain or redirect to a specific install and optionally sets it as the primary domain
+Add a new domain or redirect to an existing install
 
 
 #### Parameters
 
-##### Path Parameters
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| install_id | string (uuid) | path | yes | ID of install |
+
+#### Request Body
 
 | Name | Type | Required | Description |
 |------|------|----------|-------------|
-| install_id | string (uuid) | yes | ID of install |
+| name | string | yes |  |
+| primary | boolean | no |  |
+| redirect_to | string (uuid) | no |  |
 
-
+```json
+{
+  "name": "example.com",
+  "primary": true
+}
+```
 
 #### Code Examples
 
@@ -4418,7 +4538,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 #### Responses
 
@@ -4524,20 +4643,36 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Add multiple domains and redirects to an existing install
 
-Add multiple domains and redirects to an existing install
+`POST /installs/{install_id}/domains/bulk`
 
-Adds multiple domains and redirects to a specific install
+Add multiple domains and redirects to an existing install
 
 
 #### Parameters
 
-##### Path Parameters
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| install_id | string (uuid) | path | yes | ID of install |
+
+#### Request Body
 
 | Name | Type | Required | Description |
 |------|------|----------|-------------|
-| install_id | string (uuid) | yes | ID of install |
+| domains | array | yes |  |
 
-
+```json
+{
+  "domains": [
+    {
+      "name": "example.com"
+    },
+    {
+      "name": "www.example.com",
+      "redirect_to": "example.com"
+    }
+  ]
+}
+```
 
 #### Code Examples
 
@@ -4548,8 +4683,15 @@ Adds multiple domains and redirects to a specific install
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
   -d '{
-  "name": "example.com",
-  "primary": true
+  "domains": [
+    {
+      "name": "example.com"
+    },
+    {
+      "name": "www.example.com",
+      "redirect_to": "example.com"
+    }
+  ]
 }' \
   "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/bulk"
     ```
@@ -4571,8 +4713,15 @@ try {
             'Content-Type' => 'application/json'
         ],
         'json' => [
-    'name' => 'example.com',
-    'primary' => true
+    'domains' => [
+    '0' => [
+    'name' => 'example.com'
+],
+    '1' => [
+    'name' => 'www.example.com',
+    'redirect_to' => 'example.com'
+]
+]
 ]
     ]);
 
@@ -4598,8 +4747,15 @@ headers = {
 }
 
 data = {
-    "name": "example.com",
-    "primary": true
+    "domains": [
+        {
+            "name": "example.com"
+        },
+        {
+            "name": "www.example.com",
+            "redirect_to": "example.com"
+        }
+    ]
 }
 
 try:
@@ -4623,8 +4779,15 @@ const config = {
     'Content-Type': 'application/json'
   },
   data: {
-  "name": "example.com",
-  "primary": true
+  "domains": [
+    {
+      "name": "example.com"
+    },
+    {
+      "name": "www.example.com",
+      "redirect_to": "example.com"
+    }
+  ]
 }
 };
 
@@ -4641,7 +4804,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 #### Responses
 
@@ -4729,20 +4891,17 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Get a specific domain for an install
 
-Get a specific domain for an install
+`GET /installs/{install_id}/domains/{domain_id}`
 
-Returns specific domain for an install
+Get a specific domain for an install
 
 
 #### Parameters
 
-##### Path Parameters
-
-| Name | Type | Required | Description |
-|------|------|----------|-------------|
-| install_id | string (uuid) | yes | ID of install |
-| domain_id | string (uuid) | yes | ID of domain |
-
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| install_id | string (uuid) | path | yes | ID of install |
+| domain_id | string (uuid) | path | yes | ID of domain |
 
 
 #### Code Examples
@@ -4826,7 +4985,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 #### Responses
 
@@ -4922,21 +5080,33 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Update an existing domain for an install
 
-Update an existing domain for an install
+`PATCH /installs/{install_id}/domains/{domain_id}`
 
-Updates an existing domain for an install. Cannot set a duplicate, wildcard, or redirected domain as the primary.
+Update an existing domain for an install
 
 
 #### Parameters
 
-##### Path Parameters
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| install_id | string (uuid) | path | yes | The install ID |
+| domain_id | string (uuid) | path | yes | ID of domain |
+
+#### Request Body
 
 | Name | Type | Required | Description |
 |------|------|----------|-------------|
-| install_id | string (uuid) | yes | The install ID |
-| domain_id | string (uuid) | yes | ID of domain |
+| primary | boolean | no |  |
+| redirect_to | string | no |  |
+| secure_all_urls | boolean | no |  |
 
-
+```json
+{
+  "primary": true,
+  "redirect_to": "6977805b-1f65-4a5d-8d36-6fe609a4d9f3",
+  "secure_all_urls": false
+}
+```
 
 #### Code Examples
 
@@ -4947,7 +5117,9 @@ Updates an existing domain for an install. Cannot set a duplicate, wildcard, or 
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
   -d '{
-  "primary": true
+  "primary": true,
+  "redirect_to": "6977805b-1f65-4a5d-8d36-6fe609a4d9f3",
+  "secure_all_urls": false
 }' \
   "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a"
     ```
@@ -4969,7 +5141,9 @@ try {
             'Content-Type' => 'application/json'
         ],
         'json' => [
-    'primary' => true
+    'primary' => true,
+    'redirect_to' => '6977805b-1f65-4a5d-8d36-6fe609a4d9f3',
+    'secure_all_urls' => false
 ]
     ]);
 
@@ -4995,7 +5169,9 @@ headers = {
 }
 
 data = {
-    "primary": true
+    "primary": true,
+    "redirect_to": "6977805b-1f65-4a5d-8d36-6fe609a4d9f3",
+    "secure_all_urls": false
 }
 
 try:
@@ -5019,7 +5195,9 @@ const config = {
     'Content-Type': 'application/json'
   },
   data: {
-  "primary": true
+  "primary": true,
+  "redirect_to": "6977805b-1f65-4a5d-8d36-6fe609a4d9f3",
+  "secure_all_urls": false
 }
 };
 
@@ -5036,7 +5214,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 #### Responses
 
@@ -5143,20 +5320,17 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Delete a specific domain for an install
 
-Delete a specific domain for an install
+`DELETE /installs/{install_id}/domains/{domain_id}`
 
-Delete specific domain for an install
+Delete a specific domain for an install
 
 
 #### Parameters
 
-##### Path Parameters
-
-| Name | Type | Required | Description |
-|------|------|----------|-------------|
-| install_id | string (uuid) | yes | ID of install |
-| domain_id | string (uuid) | yes | ID of domain |
-
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| install_id | string (uuid) | path | yes | ID of install |
+| domain_id | string (uuid) | path | yes | ID of domain |
 
 
 #### Code Examples
@@ -5241,7 +5415,6 @@ makeRequest();
   </TabItem>
 </Tabs>
 
-
 #### Responses
 
 ##### 204 Deleted
@@ -5321,20 +5494,17 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Submit a status report for a domain
 
-Submit a status report for a domain
+`POST /installs/{install_id}/domains/{domain_id}/check_status`
 
-Submit a status report for a domain. Returns a &#x60;report_id&#x60; that can be used to check the domain&#x27;s status.
+Submit a status report for a domain
 
 
 #### Parameters
 
-##### Path Parameters
-
-| Name | Type | Required | Description |
-|------|------|----------|-------------|
-| install_id | string (uuid) | yes | ID of install |
-| domain_id | string (uuid) | yes | ID of domain |
-
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| install_id | string (uuid) | path | yes | ID of install |
+| domain_id | string (uuid) | path | yes | ID of domain |
 
 
 #### Code Examples
@@ -5344,8 +5514,6 @@ Submit a status report for a domain. Returns a &#x60;report_id&#x60; that can be
     ```bash
     curl -X POST \
   -u "API_USER_ID:API_USER_PASSWORD" \
-  -H "Content-Type: application/json" \
-  -d '{}' \
   "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a/check_status"
     ```
   </TabItem>
@@ -5362,12 +5530,8 @@ $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 try {
     $response = $client->post('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a/check_status', [
         'headers' => [
-            'Authorization' => 'Basic ' . $auth,
-            'Content-Type' => 'application/json'
-        ],
-        'json' => [
-
-]
+            'Authorization' => 'Basic ' . $auth
+        ]
     ]);
 
     $data = json_decode($response->getBody(), true);
@@ -5387,14 +5551,11 @@ import base64
 url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a/check_status"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
 headers = {
-    'Authorization': f'Basic {auth_string}',
-    'Content-Type': 'application/json'
+    'Authorization': f'Basic {auth_string}'
 }
 
-data = {}
-
 try:
-    response = requests.post(url, headers=headers, json=data)
+    response = requests.post(url, headers=headers)
     response.raise_for_status()
     result = response.json()
     print(json.dumps(result, indent=2))
@@ -5410,10 +5571,8 @@ const config = {
   method: 'post',
   url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/domains/e41fa98f-ea80-4654-b229-a9b765d0863a/check_status',
   headers: {
-    'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64'),
-    'Content-Type': 'application/json'
-  },
-  data: {}
+    'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
+  }
 };
 
 async function makeRequest() {
@@ -5429,7 +5588,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 #### Responses
 
@@ -5511,20 +5669,17 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Retrieve a status report for a domain
 
-Retrieve a status report for a domain
+`GET /installs/{install_id}/domains/check_status/{report_id}`
 
-Fetches a status report for a specific domain. Accepts a &#x60;report_id&#x60;.
+Retrieve a status report for a domain
 
 
 #### Parameters
 
-##### Path Parameters
-
-| Name | Type | Required | Description |
-|------|------|----------|-------------|
-| install_id | string | yes |  |
-| report_id | string | yes |  |
-
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| install_id | string | path | yes |  |
+| report_id | string | path | yes |  |
 
 
 #### Code Examples
@@ -5608,7 +5763,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 #### Responses
 
@@ -5781,20 +5935,17 @@ Manage Certificates resources using the WP Engine Customer API.
 
 ### Get SSL certificate information for a domain
 
-Get SSL certificate information for a domain
+`GET /installs/{install_id}/domains/{domain_id}/ssl_certificate`
 
-Returns certificate information for a given domain on an install
+Get SSL certificate information for a domain
 
 
 #### Parameters
 
-##### Path Parameters
-
-| Name | Type | Required | Description |
-|------|------|----------|-------------|
-| install_id | string (uuid) | yes | ID of install |
-| domain_id | string (uuid) | yes | ID of domain |
-
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| install_id | string (uuid) | path | yes | ID of install |
+| domain_id | string (uuid) | path | yes | ID of domain |
 
 
 #### Code Examples
@@ -5878,7 +6029,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 #### Responses
 
@@ -5980,20 +6130,33 @@ Manage Backup resources using the WP Engine Customer API.
 
 ### Requests a new backup of a WordPress installation
 
-Requests a new backup of a WordPress installation
+`POST /installs/{install_id}/backups`
 
-Kicks off a backup of a WordPress installation.
+Requests a new backup of a WordPress installation
 
 
 #### Parameters
 
-##### Path Parameters
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| install_id | string (uuid) | path | yes | ID of install |
+
+#### Request Body
 
 | Name | Type | Required | Description |
 |------|------|----------|-------------|
-| install_id | string (uuid) | yes | ID of install |
+| description | string | yes | A description of this backup. |
+| notification_emails | array | yes | The email address(es) that will receive an email once the backup has completed. |
 
-
+```json
+{
+  "description": "Taking a backup of torquemag before I start developing new features for it",
+  "notification_emails": [
+    "myself@torquemag.com",
+    "other_person_interested_in_backup@torquemag.com"
+  ]
+}
+```
 
 #### Code Examples
 
@@ -6003,7 +6166,13 @@ Kicks off a backup of a WordPress installation.
     curl -X POST \
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
-  -d '{}' \
+  -d '{
+  "description": "Taking a backup of torquemag before I start developing new features for it",
+  "notification_emails": [
+    "myself@torquemag.com",
+    "other_person_interested_in_backup@torquemag.com"
+  ]
+}' \
   "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups"
     ```
   </TabItem>
@@ -6024,7 +6193,11 @@ try {
             'Content-Type' => 'application/json'
         ],
         'json' => [
-
+    'description' => 'Taking a backup of torquemag before I start developing new features for it',
+    'notification_emails' => [
+    '0' => 'myself@torquemag.com',
+    '1' => 'other_person_interested_in_backup@torquemag.com'
+]
 ]
     ]);
 
@@ -6049,7 +6222,13 @@ headers = {
     'Content-Type': 'application/json'
 }
 
-data = {}
+data = {
+    "description": "Taking a backup of torquemag before I start developing new features for it",
+    "notification_emails": [
+        "myself@torquemag.com",
+        "other_person_interested_in_backup@torquemag.com"
+    ]
+}
 
 try:
     response = requests.post(url, headers=headers, json=data)
@@ -6071,7 +6250,13 @@ const config = {
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64'),
     'Content-Type': 'application/json'
   },
-  data: {}
+  data: {
+  "description": "Taking a backup of torquemag before I start developing new features for it",
+  "notification_emails": [
+    "myself@torquemag.com",
+    "other_person_interested_in_backup@torquemag.com"
+  ]
+}
 };
 
 async function makeRequest() {
@@ -6087,7 +6272,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 #### Responses
 
@@ -6179,20 +6363,17 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Retrieves the status of a backup of a WordPress installation
 
-Retrieves the status of a backup of a WordPress installation
+`GET /installs/{install_id}/backups/{backup_id}`
 
-Retrieves the status of a backup of a WordPress installation.
+Retrieves the status of a backup of a WordPress installation
 
 
 #### Parameters
 
-##### Path Parameters
-
-| Name | Type | Required | Description |
-|------|------|----------|-------------|
-| install_id | string (uuid) | yes | ID of install |
-| backup_id | string (uuid) | yes | ID of backup |
-
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| install_id | string (uuid) | path | yes | ID of install |
+| backup_id | string (uuid) | path | yes | ID of backup |
 
 
 #### Code Examples
@@ -6277,7 +6458,6 @@ makeRequest();
   </TabItem>
 </Tabs>
 
-
 #### Responses
 
 ##### 200 A backup
@@ -6353,27 +6533,28 @@ Manage Cache resources using the WP Engine Customer API.
 
 ### Purge an install&#x27;s cache
 
+`POST /installs/{install_id}/purge_cache`
+
 Purge an install&#x27;s cache
-
-This will purge the specified cache associated with the install.
-Allowed types:
-
-          - &quot;object&quot;
-          - &quot;page&quot;
-          - &quot;cdn&quot;
-          - &quot;all&quot;
-
 
 
 #### Parameters
 
-##### Path Parameters
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| install_id | string (uuid) | path | yes | ID of install |
+
+#### Request Body
 
 | Name | Type | Required | Description |
 |------|------|----------|-------------|
-| install_id | string (uuid) | yes | ID of install |
+| type | string | yes |  |
 
-
+```json
+{
+  "type": "object"
+}
+```
 
 #### Code Examples
 
@@ -6384,7 +6565,7 @@ Allowed types:
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
   -d '{
-  "type": "all"
+  "type": "object"
 }' \
   "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/purge_cache"
     ```
@@ -6406,7 +6587,7 @@ try {
             'Content-Type' => 'application/json'
         ],
         'json' => [
-    'type' => 'all'
+    'type' => 'object'
 ]
     ]);
 
@@ -6432,7 +6613,7 @@ headers = {
 }
 
 data = {
-    "type": "all"
+    "type": "object"
 }
 
 try:
@@ -6456,7 +6637,7 @@ const config = {
     'Content-Type': 'application/json'
   },
   data: {
-  "type": "all"
+  "type": "object"
 }
 };
 
@@ -6473,7 +6654,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 #### Responses
 
@@ -6569,14 +6749,14 @@ Manage User resources using the WP Engine Customer API.
 
 ### Get the current user
 
-Get the current user
+`GET /user`
 
-Returns the currently authenticated user
+Get the current user
 
 
 #### Parameters
 
-
+This endpoint has no parameters.
 
 
 #### Code Examples
@@ -6661,7 +6841,6 @@ makeRequest();
   </TabItem>
 </Tabs>
 
-
 #### Responses
 
 ##### 200 The currently authenticated user
@@ -6720,16 +6899,14 @@ Manage Ssh Key resources using the WP Engine Customer API.
 
 ### Get your SSH keys
 
+`GET /ssh_keys`
+
 Get your SSH keys
-
-# Description
-Use this to list the SSH keys that you&#x27;ve added to WP Engine.
-
 
 
 #### Parameters
 
-
+This endpoint has no parameters.
 
 
 #### Code Examples
@@ -6814,7 +6991,6 @@ makeRequest();
   </TabItem>
 </Tabs>
 
-
 #### Responses
 
 ##### 200 List of SSH keys
@@ -6884,17 +7060,26 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Add a new SSH key
 
+`POST /ssh_keys`
+
 Add a new SSH key
-
-# Description
-Use this to add a new SSH key to WP Engine.
-
 
 
 #### Parameters
 
+This endpoint has no parameters.
 
+#### Request Body
 
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| public_key | string | yes |  |
+
+```json
+{
+  "public_key": "ssh-rsa AAAAbcdefg+567te/4i9ASKGHtw9euaskl+Iksldfjw== joe@gmail.com"
+}
+```
 
 #### Code Examples
 
@@ -6905,8 +7090,7 @@ Use this to add a new SSH key to WP Engine.
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
   -d '{
-  "public_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQ...",
-  "comment": "user@example.com"
+  "public_key": "ssh-rsa AAAAbcdefg+567te/4i9ASKGHtw9euaskl+Iksldfjw== joe@gmail.com"
 }' \
   "https://api.wpengineapi.com/v1/ssh_keys"
     ```
@@ -6928,8 +7112,7 @@ try {
             'Content-Type' => 'application/json'
         ],
         'json' => [
-    'public_key' => 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQ...',
-    'comment' => 'user@example.com'
+    'public_key' => 'ssh-rsa AAAAbcdefg+567te/4i9ASKGHtw9euaskl+Iksldfjw== joe@gmail.com'
 ]
     ]);
 
@@ -6955,8 +7138,7 @@ headers = {
 }
 
 data = {
-    "public_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQ...",
-    "comment": "user@example.com"
+    "public_key": "ssh-rsa AAAAbcdefg+567te/4i9ASKGHtw9euaskl+Iksldfjw== joe@gmail.com"
 }
 
 try:
@@ -6980,8 +7162,7 @@ const config = {
     'Content-Type': 'application/json'
   },
   data: {
-  "public_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQ...",
-  "comment": "user@example.com"
+  "public_key": "ssh-rsa AAAAbcdefg+567te/4i9ASKGHtw9euaskl+Iksldfjw== joe@gmail.com"
 }
 };
 
@@ -6998,7 +7179,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 #### Responses
 
@@ -7081,21 +7261,16 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 
 ### Delete an existing SSH key
 
+`DELETE /ssh_keys/{ssh_key_id}`
+
 Delete an existing SSH key
-
-# Description
-This will delete the SSH key.
-
 
 
 #### Parameters
 
-##### Path Parameters
-
-| Name | Type | Required | Description |
-|------|------|----------|-------------|
-| ssh_key_id | string (uuid) | yes | The ID of the SSH key to delete |
-
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
+| ssh_key_id | string (uuid) | path | yes | The ID of the SSH key to delete |
 
 
 #### Code Examples
@@ -7179,7 +7354,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 #### Responses
 
@@ -7267,4 +7441,4 @@ This endpoint requires authentication. See the [Authentication guide](/api-refer
 - **Endpoint Categories**: 13
 - **Schema Definitions**: 27
 - **API Version**: 1.6.15
-- **Last Updated**: 2025-06-27T13:06:23.930Z
+- **Last Updated**: 2025-06-27T14:35:34.894Z

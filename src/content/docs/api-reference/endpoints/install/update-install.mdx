@@ -5,7 +5,7 @@ description: Update a WordPress installation
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T13:06:23.903Z */}
+{/* Last updated: 2025-06-27T14:35:34.869Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -26,21 +26,38 @@ Update a WordPress installation
 
 
 
+### Request Body
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| site_id | string (uuid) | no | The site ID |
+| environment | string | no |  |
+
+```json
+{
+  "site_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "environment": "development"
+}
+```
+
 ## Code Examples
 
 <Tabs>
   <TabItem label="cURL">
     ```bash
-    # Example cURL request
-curl -X PATCH \
+    curl -X PATCH \
   -u "API_USER_ID:API_USER_PASSWORD" \
-  "https://api.wpengineapi.com/v1/installs/\{install_id\}"
+  -H "Content-Type: application/json" \
+  -d '{
+  "site_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "environment": "development"
+}' \
+  "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0"
     ```
   </TabItem>
   <TabItem label="PHP">
     ```php
     <?php
-// Example PHP request using GuzzleHttp
 require_once 'vendor/autoload.php';
 
 use GuzzleHttp\Client;
@@ -49,12 +66,17 @@ $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
 try {
-    $response = $client->PATCH('https://api.wpengineapi.com/v1/installs/\{install_id\}', [
+    $response = $client->patch('https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0', [
         'headers' => [
-            'Authorization' => 'Basic ' . $auth
-        ]
+            'Authorization' => 'Basic ' . $auth,
+            'Content-Type' => 'application/json'
+        ],
+        'json' => [
+    'site_id' => '28c78b6d-c2da-4f09-85f5-1ad588089b2d',
+    'environment' => 'development'
+]
     ]);
-    
+
     $data = json_decode($response->getBody(), true);
     print_r($data);
 } catch (Exception $e) {
@@ -66,19 +88,26 @@ try {
   <TabItem label="Python">
     ```python
     import requests
+import json
 import base64
 
-url = "https://api.wpengineapi.com/v1/installs/\{install_id\}"
+url = "https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
 headers = {
-    'Authorization': f'Basic {auth_string}'
+    'Authorization': f'Basic {auth_string}',
+    'Content-Type': 'application/json'
+}
+
+data = {
+    "site_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+    "environment": "development"
 }
 
 try:
-    response = requests.PATCH(url, headers=headers)
+    response = requests.patch(url, headers=headers, json=data)
     response.raise_for_status()
     result = response.json()
-    print(result)
+    print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
     print(f"Error: {e}")
     ```
@@ -88,17 +117,22 @@ except requests.exceptions.RequestException as e:
     const axios = require('axios');
 
 const config = {
-  method: 'PATCH',
-  url: 'https://api.wpengineapi.com/v1/installs/\{install_id\}',
+  method: 'patch',
+  url: 'https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0',
   headers: {
-    'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
+    'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64'),
+    'Content-Type': 'application/json'
+  },
+  data: {
+  "site_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+  "environment": "development"
+}
 };
 
 async function makeRequest() {
   try {
     const response = await axios(config);
-    console.log(response.data);
+    console.log(JSON.stringify(response.data, null, 2));
   } catch (error) {
     console.error('Error:', error.response?.data || error.message);
   }
@@ -108,7 +142,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 ## Responses
 

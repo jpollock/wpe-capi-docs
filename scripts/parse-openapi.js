@@ -89,6 +89,8 @@ class OpenAPIParser {
    * Process a single endpoint
    */
   processEndpoint(path, method, operation) {
+    const parameters = operation.parameters || [];
+    
     const endpoint = {
       path,
       method: method.toUpperCase(),
@@ -96,8 +98,8 @@ class OpenAPIParser {
       summary: operation.summary || '',
       description: operation.description || '',
       tags: operation.tags || ['untagged'],
-      parameters: this.processParameters(operation.parameters || []),
-      requestBody: this.processRequestBody(operation.requestBody),
+      parameters: this.processParameters(parameters),
+      requestBody: this.processRequestBody(operation.requestBody, parameters),
       security: operation.security || this.spec.security || [],
       deprecated: operation.deprecated || false,
       examples: this.extractExamples(operation)
@@ -149,20 +151,74 @@ class OpenAPIParser {
   /**
    * Process request body (for OpenAPI 3.0, adapt for Swagger 2.0)
    */
-  processRequestBody(requestBody) {
-    if (!requestBody) return null;
-
-    // Handle Swagger 2.0 style (parameters with in: body)
-    if (typeof requestBody === 'object' && requestBody.schema) {
+  processRequestBody(requestBody, parameters = []) {
+    // Handle OpenAPI 3.0 style request body
+    if (requestBody && typeof requestBody === 'object' && requestBody.schema) {
       return {
         required: requestBody.required || false,
         description: requestBody.description || '',
         schema: requestBody.schema,
-        examples: this.extractBodyExamples(requestBody)
+        properties: this.processRequestBodyProperties(requestBody.schema),
+        examples: this.extractBodyExamples(requestBody),
+        example: this.generateRequestBodyExample(requestBody.schema)
+      };
+    }
+
+    // Handle Swagger 2.0 style (parameters with in: body)
+    const bodyParam = parameters.find(param => param.in === 'body');
+    if (bodyParam) {
+      return {
+        required: bodyParam.required || false,
+        description: bodyParam.description || '',
+        schema: bodyParam.schema,
+        properties: this.processRequestBodyProperties(bodyParam.schema),
+        examples: this.extractBodyExamples(bodyParam),
+        example: this.generateRequestBodyExample(bodyParam.schema)
       };
     }
 
     return null;
+  }
+
+  /**
+   * Process request body properties into flat structure with dot notation
+   */
+  processRequestBodyProperties(schema, parentKey = '', parentRequired = []) {
+    if (!schema || !schema.properties) {
+      return [];
+    }
+
+    const properties = [];
+    const required = schema.required || parentRequired;
+
+    for (const [propName, propSchema] of Object.entries(schema.properties)) {
+      const fullName = parentKey ? `${parentKey}.${propName}` : propName;
+      const isRequired = required.includes(propName);
+
+      const property = {
+        name: fullName,
+        required: isRequired,
+        description: propSchema.description || '',
+        type: propSchema.type || 'string',
+        format: propSchema.format,
+        enum: propSchema.enum
+      };
+
+      properties.push(property);
+
+      // Handle nested object properties recursively
+      if (propSchema.type === 'object' && propSchema.properties) {
+        const nestedRequired = propSchema.required || [];
+        const nestedProperties = this.processRequestBodyProperties(
+          propSchema, 
+          fullName, 
+          nestedRequired
+        );
+        properties.push(...nestedProperties);
+      }
+    }
+
+    return properties;
   }
 
   /**
@@ -250,6 +306,57 @@ class OpenAPIParser {
     }
     
     return examples;
+  }
+
+  /**
+   * Generate request body example from schema
+   */
+  generateRequestBodyExample(schema) {
+    if (!schema) return null;
+
+    try {
+      return this.generateExampleFromSchema(schema);
+    } catch (error) {
+      console.warn('Could not generate request body example:', error.message);
+      return null;
+    }
+  }
+
+  /**
+   * Generate example data from schema
+   */
+  generateExampleFromSchema(schema) {
+    if (!schema) return null;
+
+    if (schema.example !== undefined) {
+      return schema.example;
+    }
+
+    if (schema.type === 'object' && schema.properties) {
+      const example = {};
+      for (const [propName, propSchema] of Object.entries(schema.properties)) {
+        if (propSchema.example !== undefined) {
+          example[propName] = propSchema.example;
+        } else if (propSchema.type === 'string') {
+          example[propName] = propSchema.example || `example-${propName}`;
+        } else if (propSchema.type === 'number' || propSchema.type === 'integer') {
+          example[propName] = propSchema.example || 123;
+        } else if (propSchema.type === 'boolean') {
+          example[propName] = propSchema.example || true;
+        } else if (propSchema.type === 'array') {
+          example[propName] = propSchema.example || [this.generateExampleFromSchema(propSchema.items)];
+        } else if (propSchema.type === 'object') {
+          example[propName] = this.generateExampleFromSchema(propSchema);
+        }
+      }
+      return example;
+    }
+
+    if (schema.type === 'array' && schema.items) {
+      return [this.generateExampleFromSchema(schema.items)];
+    }
+
+    return null;
   }
 
   /**

@@ -251,8 +251,7 @@ export class CodeExampleGenerator {
    * Check if endpoint has JSON request body
    */
   hasJsonBody(endpoint) {
-    return endpoint.method !== 'GET' && endpoint.method !== 'DELETE' && 
-           (endpoint.requestBody || this.methodTypicallyHasBody(endpoint.method));
+    return endpoint.requestBody && endpoint.requestBody.schema;
   }
 
   /**
@@ -266,8 +265,16 @@ export class CodeExampleGenerator {
    * Get example request body as JSON string
    */
   getExampleRequestBody(endpoint) {
-    if (endpoint.requestBody && endpoint.requestBody.examples) {
-      return JSON.stringify(endpoint.requestBody.examples.default || Object.values(endpoint.requestBody.examples)[0], null, 2);
+    if (endpoint.requestBody) {
+      // Use the generated example from the parser
+      if (endpoint.requestBody.example) {
+        return JSON.stringify(endpoint.requestBody.example, null, 2);
+      }
+      
+      // Use examples if available
+      if (endpoint.requestBody.examples) {
+        return JSON.stringify(endpoint.requestBody.examples.default || Object.values(endpoint.requestBody.examples)[0], null, 2);
+      }
     }
     
     // Generate basic example based on endpoint
@@ -310,6 +317,11 @@ export class CodeExampleGenerator {
    * Get basic request object based on endpoint
    */
   getBasicRequestObject(endpoint) {
+    // Use the generated example from the parser if available
+    if (endpoint.requestBody && endpoint.requestBody.example) {
+      return endpoint.requestBody.example;
+    }
+    
     // Create a basic example based on the endpoint operation
     const operationId = endpoint.operationId || '';
     

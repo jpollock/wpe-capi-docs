@@ -5,7 +5,7 @@ description: The current swagger specification
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T13:06:23.891Z */}
+{/* Last updated: 2025-06-27T14:35:34.856Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -24,35 +24,27 @@ This will output the current swagger specification
 
 
 
+
 ## Code Examples
 
 <Tabs>
   <TabItem label="cURL">
     ```bash
-    # Example cURL request
-curl -X GET \
-  -u "API_USER_ID:API_USER_PASSWORD" \
+    curl -X GET \
   "https://api.wpengineapi.com/v1/swagger"
     ```
   </TabItem>
   <TabItem label="PHP">
     ```php
     <?php
-// Example PHP request using GuzzleHttp
 require_once 'vendor/autoload.php';
 
 use GuzzleHttp\Client;
 
 $client = new Client();
-$auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
-
 try {
-    $response = $client->GET('https://api.wpengineapi.com/v1/swagger', [
-        'headers' => [
-            'Authorization' => 'Basic ' . $auth
-        ]
-    ]);
-    
+    $response = $client->get('https://api.wpengineapi.com/v1/swagger');
+
     $data = json_decode($response->getBody(), true);
     print_r($data);
 } catch (Exception $e) {
@@ -64,19 +56,15 @@ try {
   <TabItem label="Python">
     ```python
     import requests
-import base64
+import json
 
 url = "https://api.wpengineapi.com/v1/swagger"
-auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
 
 try:
-    response = requests.GET(url, headers=headers)
+    response = requests.get(url)
     response.raise_for_status()
     result = response.json()
-    print(result)
+    print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
     print(f"Error: {e}")
     ```
@@ -86,17 +74,14 @@ except requests.exceptions.RequestException as e:
     const axios = require('axios');
 
 const config = {
-  method: 'GET',
-  url: 'https://api.wpengineapi.com/v1/swagger',
-  headers: {
-    'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
+  method: 'get',
+  url: 'https://api.wpengineapi.com/v1/swagger'
 };
 
 async function makeRequest() {
   try {
     const response = await axios(config);
-    console.log(response.data);
+    console.log(JSON.stringify(response.data, null, 2));
   } catch (error) {
     console.error('Error:', error.response?.data || error.message);
   }
@@ -106,7 +91,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 ## Responses
 

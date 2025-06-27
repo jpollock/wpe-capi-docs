@@ -56,98 +56,44 @@ This endpoint is deprecated and may be removed in future versions.
 {{/each}}
 {{/if}}
 
+{{#if endpoint.requestBody}}
+### Request Body
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+{{#each endpoint.requestBody.properties}}
+| {{name}} | {{type}}{{#if format}} ({{format}}){{/if}} | {{#if required}}yes{{else}}no{{/if}} | {{description}} |
+{{/each}}
+
+```json
+{{{rawJson endpoint.requestBody.example}}}
+```
+{{/if}}
+
 ## Code Examples
 
 <Tabs>
   <TabItem label="cURL">
     ```bash
-    {{#if examples.curl}}{{examples.curl}}{{else}}# Example cURL request
-curl -X {{endpoint.method}} \
-  -u "API_USER_ID:API_USER_PASSWORD" \
-  "{{spec.schemes.[0]}}://{{spec.host}}{{spec.basePath}}{{escapePath endpoint.path}}"{{/if}}
+    {{{codeExamples.curl}}}
     ```
   </TabItem>
   <TabItem label="PHP">
     ```php
-    {{#if examples.php}}{{examples.php}}{{else}}<?php
-// Example PHP request using GuzzleHttp
-require_once 'vendor/autoload.php';
-
-use GuzzleHttp\Client;
-
-$client = new Client();
-$auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
-
-try {
-    $response = $client->{{endpoint.method}}('{{spec.schemes.[0]}}://{{spec.host}}{{spec.basePath}}{{escapePath endpoint.path}}', [
-        'headers' => [
-            'Authorization' => 'Basic ' . $auth
-        ]
-    ]);
-    
-    $data = json_decode($response->getBody(), true);
-    print_r($data);
-} catch (Exception $e) {
-    echo 'Error: ' . $e->getMessage();
-}
-?>{{/if}}
+    {{{codeExamples.php}}}
     ```
   </TabItem>
   <TabItem label="Python">
     ```python
-    {{#if examples.python}}{{examples.python}}{{else}}import requests
-import base64
-
-url = "{{spec.schemes.[0]}}://{{spec.host}}{{spec.basePath}}{{escapePath endpoint.path}}"
-auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
-headers = {
-    'Authorization': f'Basic {auth_string}'
-}
-
-try:
-    response = requests.{{endpoint.method}}(url, headers=headers)
-    response.raise_for_status()
-    result = response.json()
-    print(result)
-except requests.exceptions.RequestException as e:
-    print(f"Error: {e}"){{/if}}
+    {{{codeExamples.python}}}
     ```
   </TabItem>
   <TabItem label="Node.js">
     ```javascript
-    {{#if examples.nodejs}}{{examples.nodejs}}{{else}}const axios = require('axios');
-
-const config = {
-  method: '{{endpoint.method}}',
-  url: '{{spec.schemes.[0]}}://{{spec.host}}{{spec.basePath}}{{escapePath endpoint.path}}',
-  headers: {
-    'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
-  }
-};
-
-async function makeRequest() {
-  try {
-    const response = await axios(config);
-    console.log(response.data);
-  } catch (error) {
-    console.error('Error:', error.response?.data || error.message);
-  }
-}
-
-makeRequest();{{/if}}
+    {{{codeExamples.nodejs}}}
     ```
   </TabItem>
 </Tabs>
-
-{{#if endpoint.requestBody}}
-## Request Body
-
-{{endpoint.requestBody.description}}
-
-```json
-{{endpoint.requestBody.example}}
-```
-{{/if}}
 
 ## Responses
 

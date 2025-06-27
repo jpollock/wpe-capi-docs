@@ -131,16 +131,16 @@ class DocumentationGenerator {
    */
   async generateEndpointDoc(endpoint) {
     // Generate code examples
-    const examples = this.codeGenerator.generateExamples(endpoint);
+    const codeExamples = this.codeGenerator.generateExamples(endpoint);
     
     // Prepare template data
     const templateData = {
       endpoint: {
         ...endpoint,
-        examples,
         tagDisplayNames: this.getTagDisplayNames(),
         tagSlugs: this.getTagSlugs()
       },
+      codeExamples,
       spec: this.data.spec,
       timestamp: new Date().toISOString(),
       generator: 'scripts/generate-docs.js v1.0.0',

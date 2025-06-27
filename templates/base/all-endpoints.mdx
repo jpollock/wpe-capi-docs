@@ -10,8 +10,6 @@ description: Complete reference for all WP Engine Customer API endpoints
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# API Endpoints
-
 This page documents all available endpoints in the WP Engine Customer API. For general API information, see the [API Overview](/api-reference/overview/). For authentication details, see [Authentication](/api-reference/authentication/). For information about working with paginated responses, see [Pagination](/api-reference/pagination/).
 
 {{#each tags}}
@@ -26,11 +24,9 @@ Manage {{displayName}} resources using the WP Engine Customer API.
 {{#each endpoints}}
 ### {{displayName}}
 
-{{summary}}
+`{{method}} {{path}}`
 
-{{#if description}}
-{{description}}
-{{/if}}
+{{summary}}
 
 {{#if deprecated}}
 :::caution[Deprecated]
@@ -40,34 +36,34 @@ This endpoint is deprecated and may be removed in future versions.
 
 #### Parameters
 
-{{#if parameters.path.length}}
-##### Path Parameters
-
-| Name | Type | Required | Description |
-|------|------|----------|-------------|
+{{#if (or parameters.path.length parameters.query.length parameters.header.length)}}
+| Name | Type | In | Required | Description |
+|------|------|----|---------|-----------| 
 {{#each parameters.path}}
-| {{name}} | {{type}}{{#if format}} ({{format}}){{/if}} | {{#if required}}yes{{else}}no{{/if}} | {{description}} |
+| {{name}} | {{type}}{{#if format}} ({{format}}){{/if}} | path | {{#if required}}yes{{else}}no{{/if}} | {{description}} |
 {{/each}}
-{{/if}}
-
-{{#if parameters.query.length}}
-##### Query Parameters
-
-| Name | Type | Required | Description | Default |
-|------|------|----------|-------------|---------|
 {{#each parameters.query}}
-| {{name}} | {{type}}{{#if format}} ({{format}}){{/if}} | {{#if required}}yes{{else}}no{{/if}} | {{description}} | {{#if default}}{{default}}{{else}}-{{/if}} |
+| {{name}} | {{type}}{{#if format}} ({{format}}){{/if}} | query | {{#if required}}yes{{else}}no{{/if}} | {{description}} |
 {{/each}}
+{{#each parameters.header}}
+| {{name}} | {{type}}{{#if format}} ({{format}}){{/if}} | header | {{#if required}}yes{{else}}no{{/if}} | {{description}} |
+{{/each}}
+{{else}}
+This endpoint has no parameters.
 {{/if}}
 
-{{#if parameters.header.length}}
-##### Header Parameters
+{{#if requestBody}}
+#### Request Body
 
 | Name | Type | Required | Description |
 |------|------|----------|-------------|
-{{#each parameters.header}}
+{{#each requestBody.properties}}
 | {{name}} | {{type}}{{#if format}} ({{format}}){{/if}} | {{#if required}}yes{{else}}no{{/if}} | {{description}} |
 {{/each}}
+
+```json
+{{{rawJson requestBody.example}}}
+```
 {{/if}}
 
 #### Code Examples
@@ -94,16 +90,6 @@ This endpoint is deprecated and may be removed in future versions.
     ```
   </TabItem>
 </Tabs>
-
-{{#if requestBody}}
-#### Request Body
-
-{{requestBody.description}}
-
-```json
-{{requestBody.example}}
-```
-{{/if}}
 
 #### Responses
 

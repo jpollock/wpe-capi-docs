@@ -117,7 +117,10 @@ Let's create a backup of your WordPress installation:
 curl -X POST https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-0727ba8ddde0/backups \
   -u "API_USER_ID:API_USER_PASSWORD" \
   -H "Content-Type: application/json" \
-  -d '{}'
+  -d '{
+    "description": "Quick start backup example",
+    "notification_emails": ["your-email@example.com"]
+  }'
 ```
 
 ### Example Response
@@ -129,7 +132,45 @@ curl -X POST https://api.wpengineapi.com/v1/installs/294deacc-d8b8-4005-82c4-072
 }
 ```
 
-## Step 6: Check Backup Status
+## Step 6: Create an Account User
+
+Let's create a new user for your account. You'll need your account ID from the previous responses:
+
+```bash
+curl -X POST https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users \
+  -u "API_USER_ID:API_USER_PASSWORD" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "user": {
+      "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+      "first_name": "John",
+      "last_name": "Doe",
+      "email": "john.doe@example.com",
+      "roles": "partial"
+    }
+  }'
+```
+
+### Example Response
+
+```json
+{
+  "message": "Your change was successful.",
+  "account_user": {
+    "user_id": "28c78b6d-c2da-4f09-85f5-1ad588089b2d",
+    "account_id": "eeda3227-9a39-46ae-9e14-20958bb4e6c9",
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john.doe@example.com",
+    "phone": null,
+    "invite_accepted": false,
+    "mfa_enabled": false,
+    "roles": "partial"
+  }
+}
+```
+
+## Step 7: Check Backup Status
 
 You can check the status of your backup:
 

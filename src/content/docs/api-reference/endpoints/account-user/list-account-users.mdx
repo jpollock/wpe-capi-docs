@@ -5,7 +5,7 @@ description: List your account users
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T13:06:23.893Z */}
+{/* Last updated: 2025-06-27T14:35:34.859Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -26,21 +26,20 @@ List your account users
 
 
 
+
 ## Code Examples
 
 <Tabs>
   <TabItem label="cURL">
     ```bash
-    # Example cURL request
-curl -X GET \
+    curl -X GET \
   -u "API_USER_ID:API_USER_PASSWORD" \
-  "https://api.wpengineapi.com/v1/accounts/\{account_id\}/account_users"
+  "https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users"
     ```
   </TabItem>
   <TabItem label="PHP">
     ```php
     <?php
-// Example PHP request using GuzzleHttp
 require_once 'vendor/autoload.php';
 
 use GuzzleHttp\Client;
@@ -49,12 +48,12 @@ $client = new Client();
 $auth = base64_encode('API_USER_ID:API_USER_PASSWORD');
 
 try {
-    $response = $client->GET('https://api.wpengineapi.com/v1/accounts/\{account_id\}/account_users', [
+    $response = $client->get('https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users', [
         'headers' => [
             'Authorization' => 'Basic ' . $auth
         ]
     ]);
-    
+
     $data = json_decode($response->getBody(), true);
     print_r($data);
 } catch (Exception $e) {
@@ -66,19 +65,20 @@ try {
   <TabItem label="Python">
     ```python
     import requests
+import json
 import base64
 
-url = "https://api.wpengineapi.com/v1/accounts/\{account_id\}/account_users"
+url = "https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users"
 auth_string = base64.b64encode('API_USER_ID:API_USER_PASSWORD'.encode()).decode()
 headers = {
     'Authorization': f'Basic {auth_string}'
 }
 
 try:
-    response = requests.GET(url, headers=headers)
+    response = requests.get(url, headers=headers)
     response.raise_for_status()
     result = response.json()
-    print(result)
+    print(json.dumps(result, indent=2))
 except requests.exceptions.RequestException as e:
     print(f"Error: {e}")
     ```
@@ -88,8 +88,8 @@ except requests.exceptions.RequestException as e:
     const axios = require('axios');
 
 const config = {
-  method: 'GET',
-  url: 'https://api.wpengineapi.com/v1/accounts/\{account_id\}/account_users',
+  method: 'get',
+  url: 'https://api.wpengineapi.com/v1/accounts/eeda3227-9a39-46ae-9e14-20958bb4e6c9/account_users',
   headers: {
     'Authorization': 'Basic ' + Buffer.from('API_USER_ID:API_USER_PASSWORD').toString('base64')
   }
@@ -98,7 +98,7 @@ const config = {
 async function makeRequest() {
   try {
     const response = await axios(config);
-    console.log(response.data);
+    console.log(JSON.stringify(response.data, null, 2));
   } catch (error) {
     console.error('Error:', error.response?.data || error.message);
   }
@@ -108,7 +108,6 @@ makeRequest();
     ```
   </TabItem>
 </Tabs>
-
 
 ## Responses
 
