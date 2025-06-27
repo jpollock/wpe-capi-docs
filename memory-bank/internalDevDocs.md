@@ -85,9 +85,10 @@ graph TB
 ```
 wpe-capi-docs/
 ├── .github/workflows/           # GitHub Actions workflows
-│   ├── documentation-pipeline.yml
-│   ├── cleanup-preview.yml
-│   └── security-audit.yml
+│   ├── documentation-pipeline.yml  # Main automation pipeline
+│   ├── cleanup-preview.yml         # Preview environment cleanup
+│   ├── test-pipeline.yml           # Testing and validation
+│   └── README.md                   # Workflow documentation
 ├── .clinerules                  # Project engineering rules
 ├── memory-bank/                 # Project documentation
 │   ├── project_brief.md

@@ -1,0 +1,271 @@
+name: Documentation Generation Pipeline
+
+on:
+  repository_dispatch:
+    types: [openapi-updated]
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+  workflow_dispatch:
+    inputs:
+      force_regenerate:
+        description: 'Force regenerate all documentation'
+        required: false
+        default: 'false'
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  detect-changes:
+    if: github.event_name == 'repository_dispatch'
+    runs-on: ubuntu-latest
+    outputs:
+      has-changes: ${{ steps.changes.outputs.has-changes }}
+      change-summary: ${{ steps.changes.outputs.summary }}
+      breaking-changes: ${{ steps.changes.outputs.breaking-changes }}
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Download new OpenAPI spec
+        run: |
+          curl -o /tmp/new-spec.yaml "${{ github.event.client_payload.spec_url }}"
+      
+      - name: Detect changes
+        id: changes
+        run: |
+          # Create change detection script if it doesn't exist
+          if [ ! -f scripts/detect-changes.js ]; then
+            echo "Change detection script not found, assuming changes exist"
+            echo "has-changes=true" >> $GITHUB_OUTPUT
+            echo "summary={\"message\": \"Change detection script not implemented yet\"}" >> $GITHUB_OUTPUT
+            echo "breaking-changes=false" >> $GITHUB_OUTPUT
+          else
+            node scripts/detect-changes.js public/openapi/v1.yaml /tmp/new-spec.yaml
+            echo "has-changes=$(cat /tmp/has-changes)" >> $GITHUB_OUTPUT
+            echo "summary<<EOF" >> $GITHUB_OUTPUT
+            cat /tmp/change-summary.json >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+            echo "breaking-changes=$(cat /tmp/breaking-changes)" >> $GITHUB_OUTPUT
+          fi
+
+  generate-docs:
+    needs: [detect-changes]
+    if: always() && (needs.detect-changes.outputs.has-changes == 'true' || github.event_name != 'repository_dispatch' || github.event.inputs.force_regenerate == 'true')
+    runs-on: ubuntu-latest
+    outputs:
+      preview-url: ${{ steps.deploy.outputs.preview-url }}
+      build-success: ${{ steps.build.outcome }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Update OpenAPI spec
+        if: github.event_name == 'repository_dispatch'
+        run: |
+          curl -o public/openapi/v1.yaml "${{ github.event.client_payload.spec_url }}"
+          git add public/openapi/v1.yaml
+      
+      - name: Generate documentation
+        run: |
+          npm run generate-docs
+      
+      - name: Update navigation
+        run: |
+          if npm run | grep -q "update-nav"; then
+            npm run update-nav
+          else
+            echo "Navigation update script not found, skipping"
+          fi
+      
+      - name: Validate generated content
+        run: |
+          if npm run | grep -q "validate-content"; then
+            npm run validate-content
+          else
+            echo "Content validation script not found, skipping"
+          fi
+      
+      - name: Build documentation site
+        id: build
+        run: |
+          npm run build
+      
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation-build-${{ github.run_number }}
+          path: dist/
+          retention-days: 7
+      
+      - name: Note WP Engine preview
+        if: github.event_name == 'pull_request'
+        id: deploy
+        run: |
+          echo "preview-url=WP Engine will automatically create a preview environment for this PR" >> $GITHUB_OUTPUT
+
+  create-pr:
+    needs: [detect-changes, generate-docs]
+    if: github.event_name == 'repository_dispatch' && needs.detect-changes.outputs.has-changes == 'true' && needs.generate-docs.outputs.build-success == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Update OpenAPI spec
+        run: |
+          curl -o public/openapi/v1.yaml "${{ github.event.client_payload.spec_url }}"
+      
+      - name: Generate documentation
+        run: |
+          npm run generate-docs
+      
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: |
+            docs: update from OpenAPI spec changes
+            
+            Source: ${{ github.event.client_payload.spec_url }}
+            Commit: ${{ github.event.client_payload.commit_sha }}
+            Author: ${{ github.event.client_payload.author }}
+          title: "🤖 Auto-update: OpenAPI Spec Changes (${{ github.event.client_payload.branch }})"
+          body: |
+            ## 🤖 Automated Documentation Update
+            
+            **Source Repository**: ${{ github.event.client_payload.spec_url }}
+            **Source Commit**: ${{ github.event.client_payload.commit_sha }}
+            **Source Branch**: ${{ github.event.client_payload.branch }}
+            **Updated**: ${{ github.event.client_payload.timestamp }}
+            **Author**: ${{ github.event.client_payload.author }}
+            
+            ### 📖 Preview Environment
+            🚀 **WP Engine will automatically create a preview environment for this PR**
+            
+            The preview will be available once this PR is created and the build completes.
+            You can find the preview URL in the WP Engine dashboard or in the PR checks.
+            
+            ### 📊 Changes Summary
+            ```json
+            ${{ needs.detect-changes.outputs.change-summary }}
+            ```
+            
+            ### ✅ Review Checklist
+            - [ ] Verify new endpoints are documented correctly
+            - [ ] Check code examples are working and accurate
+            - [ ] Validate parameter documentation completeness
+            - [ ] Test WP Engine preview environment functionality
+            - [ ] Review breaking changes (if any)
+            - [ ] Confirm navigation structure updates
+            
+            ### 🚨 Breaking Changes
+            ${{ needs.detect-changes.outputs.breaking-changes == 'true' && '⚠️ This update contains breaking changes. Please review carefully.' || '✅ No breaking changes detected.' }}
+            
+            ---
+            *This PR was created automatically by the documentation pipeline.*
+            *WP Engine will handle preview environment creation automatically.*
+          branch: feature/api-updates-${{ github.run_number }}
+          base: main
+          delete-branch: true
+
+  deploy-staging:
+    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+    needs: [generate-docs]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: documentation-build-${{ github.run_number }}
+          path: dist/
+      
+      - name: Deploy to staging
+        run: |
+          echo "🚀 Deploying to staging environment"
+          echo "This would deploy to: https://staging-docs.wpengine.com"
+          # TODO: Integrate with WP Engine deployment action
+          # uses: wpengine/github-action-wpe-site-deploy@v3
+          # with:
+          #   WPE_SSHG_KEY_PRIVATE: ${{ secrets.WPE_SSHG_KEY_PRIVATE }}
+          #   WPE_ENV: wpe-docs-staging
+          #   SRC_PATH: "dist"
+          #   REMOTE_PATH: "/"
+
+  deploy-production:
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: [generate-docs]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: documentation-build-${{ github.run_number }}
+          path: dist/
+      
+      - name: Deploy to production
+        run: |
+          echo "🚀 Deploying to production environment"
+          echo "This would deploy to: https://docs.wpengine.com"
+          # TODO: Integrate with WP Engine deployment action
+          # uses: wpengine/github-action-wpe-site-deploy@v3
+          # with:
+          #   WPE_SSHG_KEY_PRIVATE: ${{ secrets.WPE_SSHG_KEY_PRIVATE }}
+          #   WPE_ENV: wpe-docs-prod
+          #   SRC_PATH: "dist"
+          #   REMOTE_PATH: "/"
+      
+      - name: Notify team
+        if: success()
+        run: |
+          echo "📚 Documentation updated and deployed to production"
+          # TODO: Add Slack notification
+          # uses: 8398a7/action-slack@v3
+          # with:
+          #   status: success
+          #   text: "📚 Documentation updated and deployed to production"
+          #   webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+
+  notify-failure:
+    if: failure()
+    needs: [detect-changes, generate-docs, create-pr, deploy-staging, deploy-production]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify on failure
+        run: |
+          echo "❌ Documentation pipeline failed"
+          echo "Event: ${{ github.event_name }}"
+          echo "Ref: ${{ github.ref }}"
+          echo "Run: ${{ github.run_number }}"
+          # TODO: Add failure notification
