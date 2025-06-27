@@ -5,12 +5,12 @@ description: Get an install by ID
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T11:05:09.422Z */}
+{/* Last updated: 2025-06-27T13:06:23.902Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# GET /installs/{install_id}
+# GET /installs/\{install_id\}
 
 Get an install by ID
 
@@ -153,10 +153,20 @@ Not found
 ### 429 
 
 
+```json
+{
+  "message": "Rate limit exceeded - too many requests"
+}
+```
 
 ### 503 
 
 
+```json
+{
+  "message": "Service temporarily unavailable"
+}
+```
 
 
 ## Error Responses

@@ -5,12 +5,12 @@ description: Retrieve a status report for a domain
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T11:05:09.434Z */}
+{/* Last updated: 2025-06-27T13:06:23.912Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# GET /installs/{install_id}/domains/check_status/{report_id}
+# GET /installs/\{install_id\}/domains/check_status/\{report_id\}
 
 Retrieve a status report for a domain
 
@@ -244,6 +244,11 @@ Not found
 ### 429 
 
 
+```json
+{
+  "message": "Rate limit exceeded - too many requests"
+}
+```
 
 ### 500 Internal server error
 
@@ -258,6 +263,11 @@ Internal server error
 ### 503 
 
 
+```json
+{
+  "message": "Service temporarily unavailable"
+}
+```
 
 
 ## Error Responses

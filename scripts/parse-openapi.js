@@ -198,7 +198,7 @@ class OpenAPIParser {
           }
           
           if (example) {
-            processedResponse.jsonExample = JSON.stringify(example, null, 2);
+            processedResponse.jsonExample = example;
           }
         } catch (error) {
           console.warn(`Warning: Could not generate example for ${statusCode} response:`, error.message);

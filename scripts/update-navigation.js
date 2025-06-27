@@ -140,27 +140,23 @@ class NavigationUpdater {
     // Convert the section to a properly formatted string
     const sectionString = this.formatSidebarSection(newApiSection);
     
-    // Find the existing API Reference section and replace it
-    // Look for the second API Reference section (the one with endpoints)
-    const apiRefRegex = /{\s*label:\s*['"`]API Reference['"`],\s*items:\s*\[\s*{\s*label:\s*['"`]Overview['"`][\s\S]*?\]\s*},?/;
+    // Find the API Reference section more precisely
+    // Look for the pattern that includes the Endpoints subsection
+    const apiRefRegex = /{\s*label:\s*['"`]API Reference['"`],\s*items:\s*\[\s*{\s*label:\s*['"`]Overview['"`][\s\S]*?{\s*label:\s*['"`]Endpoints['"`][\s\S]*?\]\s*}\s*\]\s*},?/;
     
     if (apiRefRegex.test(configContent)) {
+      this.log('Found existing API Reference section, replacing...');
       return configContent.replace(apiRefRegex, sectionString + ',');
     } else {
-      // If no existing detailed API Reference section, replace the simple one
-      const simpleApiRefRegex = /{\s*label:\s*['"`]API Reference['"`],\s*items:\s*\[[\s\S]*?\],?\s*},?/;
-      
-      if (simpleApiRefRegex.test(configContent)) {
-        return configContent.replace(simpleApiRefRegex, sectionString + ',');
-      } else {
-        // If no existing API Reference section, add it before the Try section
-        const tryRegex = /({\s*label:\s*['"`]Try!['"`])/;
-        if (tryRegex.test(configContent)) {
-          return configContent.replace(tryRegex, `${sectionString},\n              $1`);
-        }
+      this.log('No existing API Reference section found, adding new one...');
+      // If no existing API Reference section, add it before the Try section
+      const tryRegex = /({\s*label:\s*['"`]Try!['"`])/;
+      if (tryRegex.test(configContent)) {
+        return configContent.replace(tryRegex, `${sectionString},\n              $1`);
       }
     }
     
+    this.log('Warning: Could not find insertion point for API Reference section');
     return configContent;
   }
 

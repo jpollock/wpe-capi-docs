@@ -5,12 +5,12 @@ description: Create a new account user
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T11:05:09.408Z */}
+{/* Last updated: 2025-06-27T13:06:23.894Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# POST /accounts/{account_id}/account_users
+# POST /accounts/\{account_id\}/account_users
 
 Create a new account user
 
@@ -175,10 +175,20 @@ Not authorized
 ### 429 
 
 
+```json
+{
+  "message": "Rate limit exceeded - too many requests"
+}
+```
 
 ### 503 
 
 
+```json
+{
+  "message": "Service temporarily unavailable"
+}
+```
 
 
 ## Error Responses

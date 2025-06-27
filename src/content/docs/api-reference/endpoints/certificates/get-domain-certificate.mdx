@@ -5,12 +5,12 @@ description: Get SSL certificate information for a domain
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T11:05:09.433Z */}
+{/* Last updated: 2025-06-27T13:06:23.911Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# GET /installs/{install_id}/domains/{domain_id}/ssl_certificate
+# GET /installs/\{install_id\}/domains/\{domain_id\}/ssl_certificate
 
 Get SSL certificate information for a domain
 
@@ -183,10 +183,20 @@ Not found
 ### 429 
 
 
+```json
+{
+  "message": "Rate limit exceeded - too many requests"
+}
+```
 
 ### 503 
 
 
+```json
+{
+  "message": "Service temporarily unavailable"
+}
+```
 
 
 ## Error Responses

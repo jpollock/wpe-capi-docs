@@ -5,12 +5,12 @@ description: Get a site by ID
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T11:05:09.416Z */}
+{/* Last updated: 2025-06-27T13:06:23.898Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# GET /sites/{site_id}
+# GET /sites/\{site_id\}
 
 Get a site by ID
 
@@ -164,10 +164,20 @@ Not found
 ### 429 
 
 
+```json
+{
+  "message": "Rate limit exceeded - too many requests"
+}
+```
 
 ### 503 
 
 
+```json
+{
+  "message": "Service temporarily unavailable"
+}
+```
 
 
 ## Error Responses

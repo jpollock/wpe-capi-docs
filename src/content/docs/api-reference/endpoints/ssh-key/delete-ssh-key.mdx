@@ -5,12 +5,12 @@ description: Delete an existing SSH key
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T11:05:09.437Z */}
+{/* Last updated: 2025-06-27T13:06:23.917Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# DELETE /ssh_keys/{ssh_key_id}
+# DELETE /ssh_keys/\{ssh_key_id\}
 
 Delete an existing SSH key
 
@@ -124,24 +124,49 @@ Deleted
 
 Bad Request
 
+```json
+{
+  "message": "Bad request - invalid parameters"
+}
+```
 
 ### 401 Authentication Error
 
 Authentication Error
 
+```json
+{
+  "message": "Authentication required"
+}
+```
 
 ### 403 Not authorized
 
 Not authorized
 
+```json
+{
+  "message": "Insufficient permissions to access this resource"
+}
+```
 
 ### 429 
 
 
+```json
+{
+  "message": "Rate limit exceeded - too many requests"
+}
+```
 
 ### 503 
 
 
+```json
+{
+  "message": "Service temporarily unavailable"
+}
+```
 
 
 ## Error Responses

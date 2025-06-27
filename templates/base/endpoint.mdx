@@ -10,7 +10,7 @@ description: {{endpoint.summary}}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# {{endpoint.method}} {{endpoint.path}}
+# {{endpoint.method}} {{escapePath endpoint.path}}
 
 {{endpoint.summary}}
 
@@ -158,9 +158,9 @@ makeRequest();{{/if}}
 {{description}}
 {{/if}}
 
-{{#if schema}}
+{{#if jsonExample}}
 ```json
-{{{jsonExample}}}
+{{{rawJson jsonExample}}}
 ```
 {{/if}}
 

@@ -5,12 +5,12 @@ description: List your account users
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T11:05:09.407Z */}
+{/* Last updated: 2025-06-27T13:06:23.893Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# GET /accounts/{account_id}/account_users
+# GET /accounts/\{account_id\}/account_users
 
 List your account users
 
@@ -157,10 +157,20 @@ Authentication Error
 ### 429 
 
 
+```json
+{
+  "message": "Rate limit exceeded - too many requests"
+}
+```
 
 ### 503 
 
 
+```json
+{
+  "message": "Service temporarily unavailable"
+}
+```
 
 
 ## Error Responses

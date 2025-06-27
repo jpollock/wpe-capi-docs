@@ -5,12 +5,12 @@ description: Configure offload settings for an install
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T11:05:09.426Z */}
+{/* Last updated: 2025-06-27T13:06:23.904Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# POST /installs/{install_id}/offload_settings/files
+# POST /installs/\{install_id\}/offload_settings/files
 
 Configure offload settings for an install
 
@@ -171,10 +171,20 @@ Not found
 
 Too many requests
 
+```json
+{
+  "message": "Rate limit exceeded - too many requests"
+}
+```
 
 ### 503 
 
 
+```json
+{
+  "message": "Service temporarily unavailable"
+}
+```
 
 
 ## Error Responses

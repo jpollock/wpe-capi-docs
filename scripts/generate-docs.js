@@ -274,28 +274,9 @@ class DocumentationGenerator {
    * Update navigation configuration
    */
   async updateNavigation() {
-    this.log('🧭 Updating navigation...');
-    
-    try {
-      const { NavigationUpdater } = await import('./update-navigation.js');
-      const updater = new NavigationUpdater({
-        dryRun: this.options.dryRun,
-        verbose: this.options.verbose
-      });
-      
-      // Parse the same data we already have
-      updater.data = this.data;
-      
-      // Skip the parsing step and go straight to config update
-      await updater.readConfig();
-      await updater.updateSidebar();
-      await updater.writeConfig();
-      
-      this.log('✅ Navigation updated successfully');
-    } catch (error) {
-      console.warn(chalk.yellow(`⚠️  Navigation update failed: ${error.message}`));
-      this.log('💡 You can manually run: npm run update-nav');
-    }
+    this.log('🧭 Skipping navigation update (manual sidebar configuration)...');
+    this.log('💡 Navigation is manually configured in astro.config.mjs');
+    this.log('💡 To update navigation, run: npm run update-nav');
   }
 
   /**
@@ -337,7 +318,21 @@ class DocumentationGenerator {
     
     // Helper for raw JSON formatting (no HTML escaping)
     handlebars.registerHelper('rawJson', (obj) => {
-      return new handlebars.SafeString(JSON.stringify(obj, null, 2));
+      if (obj === null || obj === undefined) {
+        return new handlebars.SafeString('null');
+      }
+      
+      if (typeof obj === 'string') {
+        // If it's already a string, return as-is
+        return new handlebars.SafeString(obj);
+      }
+      
+      try {
+        const jsonString = JSON.stringify(obj, null, 2);
+        return new handlebars.SafeString(jsonString);
+      } catch (error) {
+        return new handlebars.SafeString('{"error": "Failed to serialize JSON"}');
+      }
     });
     
     // Helper for kebab-case conversion

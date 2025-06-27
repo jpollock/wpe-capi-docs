@@ -5,12 +5,12 @@ description: Delete an account user
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T11:05:09.410Z */}
+{/* Last updated: 2025-06-27T13:06:23.896Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# DELETE /accounts/{account_id}/account_users/{user_id}
+# DELETE /accounts/\{account_id\}/account_users/\{user_id\}
 
 Delete an account user
 
@@ -162,10 +162,20 @@ Not found
 ### 429 
 
 
+```json
+{
+  "message": "Rate limit exceeded - too many requests"
+}
+```
 
 ### 503 
 
 
+```json
+{
+  "message": "Service temporarily unavailable"
+}
+```
 
 
 ## Error Responses

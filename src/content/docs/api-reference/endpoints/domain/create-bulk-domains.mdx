@@ -5,12 +5,12 @@ description: Add multiple domains and redirects to an existing install
 
 {/* AUTO-GENERATED: Do not edit directly */}
 {/* Source: public/openapi/v1.yaml */}
-{/* Last updated: 2025-06-27T11:05:09.430Z */}
+{/* Last updated: 2025-06-27T13:06:23.907Z */}
 {/* Generator: scripts/generate-docs.js v1.0.0 */}
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# POST /installs/{install_id}/domains/bulk
+# POST /installs/\{install_id\}/domains/bulk
 
 Add multiple domains and redirects to an existing install
 
@@ -173,10 +173,20 @@ Not authorized
 
 Too many requests
 
+```json
+{
+  "message": "Rate limit exceeded - too many requests"
+}
+```
 
 ### 503 
 
 
+```json
+{
+  "message": "Service temporarily unavailable"
+}
+```
 
 
 ## Error Responses
