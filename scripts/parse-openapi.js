@@ -37,7 +37,17 @@ class OpenAPIParser {
       const specContent = await fs.readFile(this.specPath, 'utf8');
       this.spec = yaml.load(specContent);
       
-      console.log(chalk.green(`✅ Loaded OpenAPI spec: ${this.spec.info.title} v${this.spec.info.version}`));
+      // Debug: Check if spec was loaded properly
+      if (!this.spec) {
+        throw new Error('Failed to parse OpenAPI specification - file appears to be empty or invalid');
+      }
+      
+      if (!this.spec.info) {
+        console.error('Spec structure:', Object.keys(this.spec));
+        throw new Error('OpenAPI specification missing info section');
+      }
+      
+      console.log(chalk.green(`✅ Loaded OpenAPI spec: ${this.spec.info.title || 'Unknown'} v${this.spec.info.version || 'Unknown'}`));
       
       this.validateSpec();
       this.extractSchemas();
