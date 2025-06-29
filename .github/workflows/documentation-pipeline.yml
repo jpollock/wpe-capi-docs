@@ -79,7 +79,7 @@ jobs:
 
   generate-docs:
     needs: [detect-changes]
-    if: always() && (needs.detect-changes.result == 'skipped' || needs.detect-changes.outputs.has-changes == 'true' || github.event.inputs.force_regenerate == 'true')
+    if: always() && (github.event_name == 'repository_dispatch' || needs.detect-changes.outputs.has-changes == 'true' || github.event.inputs.force_regenerate == 'true')
     runs-on: ubuntu-latest
     outputs:
       preview-url: ${{ steps.deploy.outputs.preview-url }}
@@ -154,7 +154,7 @@ jobs:
 
   create-pr:
     needs: [detect-changes, generate-docs]
-    if: github.event_name == 'repository_dispatch' && needs.detect-changes.outputs.has-changes == 'true' && needs.generate-docs.outputs.build-success == 'success'
+    if: github.event_name == 'repository_dispatch' && needs.generate-docs.result == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
