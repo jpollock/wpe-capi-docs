@@ -39,7 +39,11 @@ jobs:
       
       - name: Download new OpenAPI spec
         run: |
-          curl -o /tmp/new-spec.yaml "${{ github.event.client_payload.spec_url }}"
+          # Use GitHub API for private repository access
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+               -H "Accept: application/vnd.github.v3.raw" \
+               -o /tmp/new-spec.yaml \
+               "${{ github.event.client_payload.spec_url }}"
       
       - name: Detect changes
         id: changes
@@ -103,7 +107,11 @@ jobs:
       - name: Update OpenAPI spec
         if: github.event_name == 'repository_dispatch'
         run: |
-          curl -o public/openapi/v1.yaml "${{ github.event.client_payload.spec_url }}"
+          # Use GitHub API for private repository access
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+               -H "Accept: application/vnd.github.v3.raw" \
+               -o public/openapi/v1.yaml \
+               "${{ github.event.client_payload.spec_url }}"
           git add public/openapi/v1.yaml
       
       - name: Generate documentation
@@ -164,7 +172,11 @@ jobs:
       
       - name: Update OpenAPI spec
         run: |
-          curl -o public/openapi/v1.yaml "${{ github.event.client_payload.spec_url }}"
+          # Use GitHub API for private repository access
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+               -H "Accept: application/vnd.github.v3.raw" \
+               -o public/openapi/v1.yaml \
+               "${{ github.event.client_payload.spec_url }}"
       
       - name: Generate documentation
         run: |
