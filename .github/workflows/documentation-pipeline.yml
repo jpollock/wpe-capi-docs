@@ -40,7 +40,7 @@ jobs:
       - name: Download new OpenAPI spec
         run: |
           # Use GitHub API for private repository access
-          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          curl -H "Authorization: token ${{ secrets.DOCS_REPO_TOKEN }}" \
                -H "Accept: application/vnd.github.v3.raw" \
                -o /tmp/new-spec.yaml \
                "${{ github.event.client_payload.spec_url }}"
@@ -108,7 +108,7 @@ jobs:
         if: github.event_name == 'repository_dispatch'
         run: |
           # Use GitHub API for private repository access
-          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          curl -H "Authorization: token ${{ secrets.DOCS_REPO_TOKEN }}" \
                -H "Accept: application/vnd.github.v3.raw" \
                -o public/openapi/v1.yaml \
                "${{ github.event.client_payload.spec_url }}"
@@ -173,7 +173,7 @@ jobs:
       - name: Update OpenAPI spec
         run: |
           # Use GitHub API for private repository access
-          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          curl -H "Authorization: token ${{ secrets.DOCS_REPO_TOKEN }}" \
                -H "Accept: application/vnd.github.v3.raw" \
                -o public/openapi/v1.yaml \
                "${{ github.event.client_payload.spec_url }}"
