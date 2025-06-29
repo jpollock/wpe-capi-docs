@@ -66,6 +66,11 @@ jobs:
             echo "❌ Main endpoints file not found"
             exit 1
           fi
+          
+          if [ ! -f "src/content/docs/api-reference/endpoints/index.mdx" ]; then
+            echo "❌ Endpoints index file not found"
+            exit 1
+          fi
                     
           if [ ! -f "dist/client/index.html" ]; then
             echo "❌ Built index.html not found"
