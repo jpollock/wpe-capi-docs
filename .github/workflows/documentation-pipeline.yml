@@ -230,6 +230,60 @@ jobs:
           branch: feature/api-updates-${{ github.run_number }}
           base: main
           delete-branch: true
+      
+      - name: Get PR URL
+        id: pr-url
+        run: |
+          # Extract PR number from the create-pull-request action output
+          echo "pr-url=https://github.com/${{ github.repository }}/pull/${{ steps.create-pr.outputs.pull-request-number }}" >> $GITHUB_OUTPUT
+
+  notify-success:
+    needs: [detect-changes, generate-docs, create-pr]
+    if: github.event_name == 'repository_dispatch' && needs.create-pr.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Email Notification
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "🤖 Documentation Updated: OpenAPI Changes Detected"
+          to: ${{ secrets.NOTIFICATION_EMAIL }}
+          cc: ${{ secrets.NOTIFICATION_EMAIL_CC }}
+          bcc: ${{ secrets.NOTIFICATION_EMAIL_BCC }}
+          from: "WP Engine Docs Bot <${{ secrets.EMAIL_USERNAME }}>"
+          html_body: |
+            <h2>🤖 Automated Documentation Update</h2>
+            
+            <p>A new pull request has been automatically created for OpenAPI specification changes.</p>
+            
+            <h3>📋 Details:</h3>
+            <ul>
+              <li><strong>Source Repository:</strong> ${{ github.event.client_payload.spec_url }}</li>
+              <li><strong>Source Commit:</strong> ${{ github.event.client_payload.commit_sha }}</li>
+              <li><strong>Source Branch:</strong> ${{ github.event.client_payload.branch }}</li>
+              <li><strong>Updated:</strong> ${{ github.event.client_payload.timestamp }}</li>
+              <li><strong>Author:</strong> ${{ github.event.client_payload.author }}</li>
+            </ul>
+            
+            <h3>🔗 Actions Required:</h3>
+            <p><strong><a href="https://github.com/${{ github.repository }}/pulls" style="background-color: #0366d6; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">📖 Review Pull Request</a></strong></p>
+            
+            <h3>📊 Changes Summary:</h3>
+            <pre style="background-color: #f6f8fa; padding: 10px; border-radius: 5px; overflow-x: auto;">
+            ${{ needs.detect-changes.outputs.change-summary }}
+            </pre>
+            
+            <h3>🚨 Breaking Changes:</h3>
+            <p>${{ needs.detect-changes.outputs.breaking-changes == 'true' && '⚠️ This update contains breaking changes. Please review carefully.' || '✅ No breaking changes detected.' }}</p>
+            
+            <h3>🚀 Preview Environment:</h3>
+            <p>WP Engine will automatically create a preview environment for this PR. You can find the preview URL in the WP Engine dashboard or in the PR checks once the build completes.</p>
+            
+            <hr>
+            <p><small>This email was sent automatically by the WP Engine Documentation Pipeline.</small></p>
 
   # Note: WP Engine handles deployments automatically through platform integration
   # No manual deployment jobs needed - WP Engine deploys on push to connected branches
