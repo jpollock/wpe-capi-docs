@@ -52,11 +52,25 @@ jobs:
             echo "breaking-changes=false" >> $GITHUB_OUTPUT
           else
             node scripts/detect-changes.js public/openapi/v1.yaml /tmp/new-spec.yaml
-            echo "has-changes=$(cat /tmp/has-changes)" >> $GITHUB_OUTPUT
-            echo "summary<<EOF" >> $GITHUB_OUTPUT
-            cat /tmp/change-summary.json >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
-            echo "breaking-changes=$(cat /tmp/breaking-changes)" >> $GITHUB_OUTPUT
+            if [ -f /tmp/has-changes ]; then
+              echo "has-changes=$(cat /tmp/has-changes)" >> $GITHUB_OUTPUT
+            else
+              echo "has-changes=true" >> $GITHUB_OUTPUT
+            fi
+            
+            if [ -f /tmp/change-summary.json ]; then
+              echo "summary<<EOF" >> $GITHUB_OUTPUT
+              cat /tmp/change-summary.json >> $GITHUB_OUTPUT
+              echo "EOF" >> $GITHUB_OUTPUT
+            else
+              echo "summary={\"message\": \"Change summary not available\"}" >> $GITHUB_OUTPUT
+            fi
+            
+            if [ -f /tmp/breaking-changes ]; then
+              echo "breaking-changes=$(cat /tmp/breaking-changes)" >> $GITHUB_OUTPUT
+            else
+              echo "breaking-changes=false" >> $GITHUB_OUTPUT
+            fi
           fi
 
   generate-docs:
