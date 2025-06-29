@@ -4,7 +4,7 @@ swagger: '2.0'
 #  https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-swagger-extensions.html
 info:
   description: |
-    The API described in this document is subject to change.
+    The API described in this document is subject to change. But you will be notified!
   version: 1.6.15
   title: WP Engine API
   termsOfService: https://wpengine.com/legal/terms-of-service/
@@ -19,7 +19,7 @@ paths:
     get:
       tags:
         - status
-      summary: The status of the WP Engine Public API
+      summary: The status of the WP Engine Public API, i.e. if available or not.
       description: |
         # Description
         This endpoint will report the system status and any outages that might be occurring.
@@ -3903,9 +3903,4 @@ parameters:
     required: false
     default: 0
     minimum: 0
-    description: (Optional) The first record of the result set to be retrieved# Test change Sun Jun 29 15:19:35 CEST 2025
-# Test change Sun Jun 29 15:31:14 CEST 2025
-# Test change Sun Jun 29 15:33:18 CEST 2025
-# Test change Sun Jun 29 16:06:21 CEST 2025
-# Test change Sun Jun 29 16:15:27 CEST 2025
-# Test change Sun Jun 29 16:25:26 CEST 2025
+    description: (Optional) The first record of the result set to be retrieved
