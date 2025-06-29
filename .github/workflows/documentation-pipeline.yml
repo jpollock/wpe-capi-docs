@@ -59,9 +59,7 @@ jobs:
             fi
             
             if [ -f /tmp/change-summary.json ]; then
-              echo "summary<<EOF" >> $GITHUB_OUTPUT
-              cat /tmp/change-summary.json >> $GITHUB_OUTPUT
-              echo "EOF" >> $GITHUB_OUTPUT
+              echo "summary=$(cat /tmp/change-summary.json)" >> $GITHUB_OUTPUT
             else
               echo "summary={\"message\": \"Change summary not available\"}" >> $GITHUB_OUTPUT
             fi
