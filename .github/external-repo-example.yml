@@ -1,0 +1,45 @@
+# Example workflow for external API repository
+# This file should be placed at .github/workflows/notify-docs.yml in the source API repository
+
+name: Notify Documentation on OpenAPI Changes
+
+on:
+  push:
+    paths: 
+      - 'openapi/v1.yaml'
+      - 'swagger.yaml'
+      - 'api-spec/**'
+    branches: [main, develop]
+
+jobs:
+  notify-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get changed files
+        id: changes
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            openapi:
+              - 'openapi/v1.yaml'
+              - 'swagger.yaml'
+              - 'api-spec/**'
+      
+      - name: Repository Dispatch to Documentation Repo
+        if: steps.changes.outputs.openapi == 'true'
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.DOCS_REPO_TOKEN }}
+          repository: wpengine/customer-api-docs  # Replace with actual docs repo
+          event-type: openapi-updated
+          client-payload: |
+            {
+              "spec_url": "https://raw.githubusercontent.com/${{ github.repository }}/${{ github.ref_name }}/openapi/v1.yaml",
+              "commit_sha": "${{ github.sha }}",
+              "branch": "${{ github.ref_name }}",
+              "timestamp": "${{ github.event.head_commit.timestamp }}",
+              "author": "${{ github.event.head_commit.author.name }}"
+            }
+
+# Required Secret:
+# DOCS_REPO_TOKEN - GitHub Personal Access Token with repo permissions for the documentation repository
