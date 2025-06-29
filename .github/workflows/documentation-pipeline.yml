@@ -124,11 +124,11 @@ jobs:
           path: dist/
           retention-days: 7
       
-      - name: Note WP Engine preview
+      - name: Set preview environment info
         if: github.event_name == 'pull_request'
         id: deploy
         run: |
-          echo "preview-url=WP Engine will automatically create a preview environment for this PR" >> $GITHUB_OUTPUT
+          echo "preview-url=automatic" >> $GITHUB_OUTPUT
 
   create-pr:
     needs: [detect-changes, generate-docs]
@@ -205,66 +205,12 @@ jobs:
           base: main
           delete-branch: true
 
-  deploy-staging:
-    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
-    needs: [generate-docs]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: documentation-build-${{ github.run_number }}
-          path: dist/
-      
-      - name: Deploy to staging
-        run: |
-          echo "🚀 Deploying to staging environment"
-          echo "This would deploy to: https://staging-docs.wpengine.com"
-          # TODO: Integrate with WP Engine deployment action
-          # uses: wpengine/github-action-wpe-site-deploy@v3
-          # with:
-          #   WPE_SSHG_KEY_PRIVATE: ${{ secrets.WPE_SSHG_KEY_PRIVATE }}
-          #   WPE_ENV: wpe-docs-staging
-          #   SRC_PATH: "dist"
-          #   REMOTE_PATH: "/"
-
-  deploy-production:
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    needs: [generate-docs]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: documentation-build-${{ github.run_number }}
-          path: dist/
-      
-      - name: Deploy to production
-        run: |
-          echo "🚀 Deploying to production environment"
-          echo "This would deploy to: https://docs.wpengine.com"
-          # TODO: Integrate with WP Engine deployment action
-          # uses: wpengine/github-action-wpe-site-deploy@v3
-          # with:
-          #   WPE_SSHG_KEY_PRIVATE: ${{ secrets.WPE_SSHG_KEY_PRIVATE }}
-          #   WPE_ENV: wpe-docs-prod
-          #   SRC_PATH: "dist"
-          #   REMOTE_PATH: "/"
-      
-      - name: Notify team
-        if: success()
-        run: |
-          echo "📚 Documentation updated and deployed to production"
-          # TODO: Add Slack notification
-          # uses: 8398a7/action-slack@v3
-          # with:
-          #   status: success
-          #   text: "📚 Documentation updated and deployed to production"
-          #   webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+  # Note: WP Engine handles deployments automatically through platform integration
+  # No manual deployment jobs needed - WP Engine deploys on push to connected branches
 
   notify-failure:
     if: failure()
-    needs: [detect-changes, generate-docs, create-pr, deploy-staging, deploy-production]
+    needs: [detect-changes, generate-docs, create-pr]
     runs-on: ubuntu-latest
     steps:
       - name: Notify on failure

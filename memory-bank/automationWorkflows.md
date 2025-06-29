@@ -327,91 +327,27 @@ jobs:
 
 ## WP Engine Preview Environment Integration
 
-### Environment Configuration
-```javascript
-// scripts/utils/environment-config.js
-export const environments = {
-  production: {
-    name: 'production',
-    url: 'https://docs.wpengine.com',
-    wpe_env: 'wpe-docs-prod',
-    branch: 'main',
-    auto_deploy: true
-  },
-  
-  staging: {
-    name: 'staging',
-    url: 'https://staging-docs.wpengine.com', 
-    wpe_env: 'wpe-docs-staging',
-    branch: 'develop',
-    auto_deploy: true
-  },
-  
-  preview: {
-    name: 'preview',
-    url_pattern: 'https://preview-{branch}.docs.wpengine.com',
-    wpe_env_pattern: 'wpe-docs-preview-{branch}',
-    branches: ['feature/*', 'auto-update/*'],
-    auto_deploy: true,
-    lifecycle: {
-      max_age: '7 days',
-      cleanup_on_merge: true,
-      cleanup_on_close: true
-    }
-  }
-};
+### Simple Platform Integration
+WP Engine preview environments are a **built-in platform feature** that requires minimal setup:
 
-export function getEnvironmentConfig(branch, eventType) {
-  if (branch === 'main') return environments.production;
-  if (branch === 'develop') return environments.staging;
-  
-  // Preview environment for feature branches and PRs
-  return {
-    ...environments.preview,
-    url: environments.preview.url_pattern.replace('{branch}', sanitizeBranchName(branch)),
-    wpe_env: environments.preview.wpe_env_pattern.replace('{branch}', sanitizeBranchName(branch))
-  };
-}
+#### Setup Requirements
+1. **One-time toggle**: Enable preview environments in WP Engine User Portal (Environment Settings)
+2. **Repository connection**: Ensure GitHub repository is connected to WP Engine
+3. **Branch configuration**: WP Engine automatically monitors connected branches
 
-function sanitizeBranchName(branch) {
-  return branch
-    .replace(/[^a-zA-Z0-9-]/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '')
-    .toLowerCase()
-    .substring(0, 30);
-}
-```
+#### Automatic Process
+- **Trigger**: Opening a PR automatically creates a preview environment
+- **Build**: WP Engine builds the PR branch code automatically
+- **Notification**: WP Engine bot posts preview URL in PR comments
+- **Cleanup**: Closing/merging PR automatically deletes preview environment
 
-### Preview Environment Cleanup
-```yaml
-# .github/workflows/cleanup-preview.yml
-name: Cleanup Preview Environments
-
-on:
-  pull_request:
-    types: [closed]
-  schedule:
-    - cron: '0 2 * * *'  # Daily at 2 AM
-
-jobs:
-  cleanup:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Cleanup closed PR environments
-        if: github.event_name == 'pull_request'
-        run: |
-          # Remove WP Engine preview environment
-          # This would integrate with WP Engine API to remove the environment
-          echo "Cleaning up preview environment for PR #${{ github.event.number }}"
-      
-      - name: Cleanup stale environments
-        if: github.event_name == 'schedule'
-        run: |
-          # Find and remove environments older than 7 days
-          # This would query WP Engine API for preview environments
-          echo "Cleaning up stale preview environments"
-```
+#### No Custom Integration Required
+- ❌ No custom webhook setup needed
+- ❌ No manual environment provisioning APIs
+- ❌ No complex CI/CD pipeline modifications
+- ❌ No custom deployment scripts
+- ✅ Simple toggle activation in WP Engine Portal
+- ✅ Automatic environment lifecycle management
 
 ## Internal Development Documentation
 
