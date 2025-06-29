@@ -19,7 +19,7 @@ paths:
     get:
       tags:
         - status
-      summary: The status of the WP Engine Public API, i.e. if available or not.
+      summary: The status of the WP Engine Public API, i.e. if available or not. This is useful.
       description: |
         # Description
         This endpoint will report the system status and any outages that might be occurring.
